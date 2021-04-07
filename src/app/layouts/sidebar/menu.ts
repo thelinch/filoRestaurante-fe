@@ -40,7 +40,7 @@ export const MENU: MenuItem[] = [
       },
     ], */
   },
-/*   {
+  /*   {
     id: 7,
     isLayout: true,
   }, */
@@ -92,19 +92,19 @@ export const MENU: MenuItem[] = [
       {
         id: 13,
         label: "Roles",
-        link: "/ecommerce/products",
+        link: "/seguridad/roles",
         parentId: 12,
       },
       {
         id: 14,
         label: "Acciones",
-        link: "/ecommerce/product-detail/1",
+        link: "/seguridad/acciones",
         parentId: 12,
       },
       {
         id: 15,
         label: "Usuarios",
-        link: "/ecommerce/orders",
+        link: "/seguridad/usuarios",
         parentId: 12,
       },
       {
@@ -139,7 +139,7 @@ export const MENU: MenuItem[] = [
       }, */
     ],
   },
- /*  {
+  /*  {
     id: 21,
     label: "MENUITEMS.CRYPTO.TEXT",
     icon: "bx-bitcoin",

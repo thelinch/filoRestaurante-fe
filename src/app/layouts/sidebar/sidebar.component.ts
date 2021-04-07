@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.initialize();
-    document.body.setAttribute('data-sidebar', 'dark');
+  //  document.body.setAttribute('data-sidebar', 'light');
     this.configData = {
       suppressScrollX: true
     };

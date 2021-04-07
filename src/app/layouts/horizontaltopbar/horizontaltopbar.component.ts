@@ -259,8 +259,8 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
    */
   topbarLight() {
     document.body.setAttribute('data-topbar', 'light');
-    document.body.removeAttribute('data-layout-size');
-    document.body.removeAttribute('data-layout-scrollable');
+   /*  document.body.removeAttribute('data-layout-size');
+    document.body.removeAttribute('data-layout-scrollable'); */
   }
 
   /**
