@@ -4,10 +4,12 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   PipeTransform,
   QueryList,
+  SimpleChanges,
   ViewChildren,
 } from "@angular/core";
 import { HaderTable, SearchResult } from "./tableModel";
@@ -85,17 +87,18 @@ function matches(tables: any, term: string, pipe: PipeTransform) {
   styleUrls: ["./table-custom-generic.component.scss"],
 })
 export class TableCustomGenericComponent
-  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
+  implements OnInit, OnDestroy, OnChanges {
   @Input() haders: Array<HaderTable> = [];
+  @Input() data: Array<any> = [];
   @ViewChildren(AdvancedSortableDirective)
   headers: QueryList<AdvancedSortableDirective>;
-  @ViewChildren("button") buttons: QueryList<ElementRef>;
+
   private _loading$ = new BehaviorSubject<boolean>(true);
   // tslint:disable-next-line: variable-name
   private _search$ = new Subject<any>();
   // tslint:disable-next-line: variable-name
-  private _tables$ = new BehaviorSubject<any[]>([]);
-  private _tablesCopy$ = new BehaviorSubject<any[]>([]);
+  private _tables$ = new BehaviorSubject<any[]>(this.data);
+  private _tablesCopy$ = new BehaviorSubject<any[]>(this.data);
   // tslint:disable-next-line: variable-name
   private _total$ = new BehaviorSubject<number>(0);
   subscription;
@@ -113,6 +116,7 @@ export class TableCustomGenericComponent
     totalRecords: 0,
   };
   ngOnInit(): void {
+    const $this = this;
     this.subscription = this._search$
       .pipe(
         debounceTime(200),
@@ -124,16 +128,25 @@ export class TableCustomGenericComponent
         this._tables$.next(result.tables);
         this._total$.next(result.total);
       });
+
     this.subscriptionTable = this._tables$.subscribe((data) => {
+      console.log("data su", data);
       const elements = document.querySelectorAll("button.buttonEvent");
       for (let i = 0; i < elements.length; i++) {
         if (elements[i].getAttribute("data-click") !== "si") {
-          console.log("entro al click");
           elements[i].setAttribute("data-click", "si");
-          elements[i].addEventListener("click", () => {
-            this.eventService.broadcast(
-              elements[i].getAttribute("data-function"),
-              this._tablesCopy$.value[elements[i].getAttribute("data-index")]
+          elements[i].addEventListener("click", function () {
+            console.log(
+              "data function",
+              this.getAttribute("data-function"),
+              "table",
+              $this.data,
+              "data index",
+              this.getAttribute("data-index")
+            );
+            $this.eventService.broadcast(
+              this.getAttribute("data-function"),
+              $this.data[this.getAttribute("data-index")]
             );
           });
         }
@@ -143,6 +156,16 @@ export class TableCustomGenericComponent
 
   constructor(private eventService: EventService) {
     //  this._search$.next();
+    this._tablesCopy$.next([]);
+    this._tables$.next([]);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.data?.firstChange) {
+      this.data = changes.data.currentValue;
+      this._tablesCopy$.next(changes.data.currentValue);
+      console.log("entro al if", this.data, this._tablesCopy$);
+      this._search$.next(this._state);
+    }
   }
   ngAfterViewChecked(): void {}
   ngAfterViewInit(): void {}
@@ -152,8 +175,9 @@ export class TableCustomGenericComponent
     }
     this.subscriptionTable?.unsubscribe();
   }
-  public setDataTable(data: Array<any>) {
-    console.log("data", data);
+  public setDataTable(data: Array<any>, object: string = "") {
+    console.log("data", data, "object", object);
+    this.data = data;
     this._tablesCopy$.next(data);
     this._search$.next(this._state);
   }
@@ -166,6 +190,9 @@ export class TableCustomGenericComponent
     });
     this.sortColumn = column;
     this.sortDirection = direction;
+  }
+  getValueData(bindValue: string, object: any) {
+    return bindValue.split(".").reduce((p, c) => p?.[c], object);
   }
   /**
    * Returns the value
@@ -261,7 +288,7 @@ export class TableCustomGenericComponent
     let tables = this._tablesCopy$.value.filter(
       (table) =>
         arrayHeadersValues.find((val) =>
-          table[val]
+          this.getValueData(val, table)
             ?.toString()
             .toLocaleLowerCase()
             .includes(searchTerm.toLocaleLowerCase())

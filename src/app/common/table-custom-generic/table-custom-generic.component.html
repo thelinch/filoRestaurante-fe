@@ -39,7 +39,7 @@
             <tbody>
                 <tr *ngFor="let table of tables$ | async;let i=index">
                     <td *ngFor="let header of haders">
-                        <ngb-highlight *ngIf="!header.isActions" [result]="table[header.bindValue]" [term]="searchTerm">
+                        <ngb-highlight *ngIf="!header.isActions" [result]="this.getValueData(header.bindValue,table)" [term]="searchTerm">
                         </ngb-highlight>
                         <ng-template [ngIf]="header.isActions">
                             <div [innerHTML]="table.acciones.join('')| safeHtml"></div>

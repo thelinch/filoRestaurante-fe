@@ -43,9 +43,7 @@ export class RolesComponent implements OnInit, OnDestroy {
     this.listRoles();
   }
   async listRoles() {
-    const $this = this;
     this.isLoadingRoles = true;
-    console.log(this.editRol);
     const roles = await this.http
       .get<Array<any>>(environment.apiUrl + "/proyRol/todos")
       .toPromise();
