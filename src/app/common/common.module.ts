@@ -7,9 +7,10 @@ import {
   NgbTypeaheadModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from "@angular/forms";
+import { SafeHtmlPipe } from './table-custom-generic/safe-html.pipe';
 
 @NgModule({
-  declarations: [TableCustomGenericComponent],
+  declarations: [TableCustomGenericComponent, SafeHtmlPipe],
   imports: [
     CommonModule,
     NgbPaginationModule,

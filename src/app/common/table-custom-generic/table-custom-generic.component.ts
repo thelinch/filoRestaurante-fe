@@ -1,5 +1,8 @@
 import {
+  AfterViewChecked,
+  AfterViewInit,
   Component,
+  ElementRef,
   Input,
   OnDestroy,
   OnInit,
@@ -29,8 +32,8 @@ import {
   take,
   tap,
 } from "rxjs/operators";
-import { DecimalPipe } from "@angular/common";
-import { flatMap } from "rxjs/internal/operators";
+import { EventService } from "src/app/core/services/event.service";
+
 interface State {
   page: number;
   pageSize: number;
@@ -81,10 +84,12 @@ function matches(tables: any, term: string, pipe: PipeTransform) {
   templateUrl: "./table-custom-generic.component.html",
   styleUrls: ["./table-custom-generic.component.scss"],
 })
-export class TableCustomGenericComponent implements OnInit, OnDestroy {
+export class TableCustomGenericComponent
+  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
   @Input() haders: Array<HaderTable> = [];
   @ViewChildren(AdvancedSortableDirective)
   headers: QueryList<AdvancedSortableDirective>;
+  @ViewChildren("button") buttons: QueryList<ElementRef>;
   private _loading$ = new BehaviorSubject<boolean>(true);
   // tslint:disable-next-line: variable-name
   private _search$ = new Subject<any>();
@@ -118,17 +123,30 @@ export class TableCustomGenericComponent implements OnInit, OnDestroy {
         this._tables$.next(result.tables);
         this._total$.next(result.total);
       });
+    this._tables$.subscribe((data) => {
+      document.querySelectorAll("button.buttonEvent").forEach((button) => {
+        button.addEventListener("click", () => {
+          this.eventService.broadcast(
+            button.getAttribute("data-function"),
+            this._tablesCopy$.value[button.getAttribute("data-index")]
+          );
+        });
+      });
+    });
   }
 
-  constructor() {
+  constructor(private eventService: EventService) {
     //  this._search$.next();
   }
+  ngAfterViewChecked(): void {}
+  ngAfterViewInit(): void {}
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
   public setDataTable(data: Array<any>) {
+    console.log("data", data);
     this._tablesCopy$.next(data);
     this._search$.next(this._state);
   }
@@ -145,6 +163,9 @@ export class TableCustomGenericComponent implements OnInit, OnDestroy {
   /**
    * Returns the value
    */
+  editRol(rol) {
+    console.log("ro");
+  }
   get tables$() {
     return this._tables$.asObservable();
   }
