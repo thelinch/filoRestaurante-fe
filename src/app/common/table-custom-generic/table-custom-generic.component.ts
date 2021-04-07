@@ -16,7 +16,7 @@ import {
   SortDirection,
   SortEvent,
 } from "./advanced-sortable.directive";
-import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+import { BehaviorSubject, Observable, of, Subject, Subscription } from "rxjs";
 import {
   debounceTime,
   delay,
@@ -99,6 +99,7 @@ export class TableCustomGenericComponent
   // tslint:disable-next-line: variable-name
   private _total$ = new BehaviorSubject<number>(0);
   subscription;
+  private subscriptionTable: Subscription;
 
   // tslint:disable-next-line: variable-name
   private _state: State = {
@@ -123,15 +124,20 @@ export class TableCustomGenericComponent
         this._tables$.next(result.tables);
         this._total$.next(result.total);
       });
-    this._tables$.subscribe((data) => {
-      document.querySelectorAll("button.buttonEvent").forEach((button) => {
-        button.addEventListener("click", () => {
-          this.eventService.broadcast(
-            button.getAttribute("data-function"),
-            this._tablesCopy$.value[button.getAttribute("data-index")]
-          );
-        });
-      });
+    this.subscriptionTable = this._tables$.subscribe((data) => {
+      const elements = document.querySelectorAll("button.buttonEvent");
+      for (let i = 0; i < elements.length; i++) {
+        if (elements[i].getAttribute("data-click") !== "si") {
+          console.log("entro al click");
+          elements[i].setAttribute("data-click", "si");
+          elements[i].addEventListener("click", () => {
+            this.eventService.broadcast(
+              elements[i].getAttribute("data-function"),
+              this._tablesCopy$.value[elements[i].getAttribute("data-index")]
+            );
+          });
+        }
+      }
     });
   }
 
@@ -144,6 +150,7 @@ export class TableCustomGenericComponent
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.subscriptionTable?.unsubscribe();
   }
   public setDataTable(data: Array<any>) {
     console.log("data", data);
@@ -163,9 +170,6 @@ export class TableCustomGenericComponent
   /**
    * Returns the value
    */
-  editRol(rol) {
-    console.log("ro");
-  }
   get tables$() {
     return this._tables$.asObservable();
   }

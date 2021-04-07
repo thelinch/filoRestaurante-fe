@@ -26,11 +26,10 @@ export class AuthfakeauthenticationService {
       .post<any>(`${environment.apiUrl}/auth`, { email, Password })
       .pipe(
         map((dataUser) => {
-          console.log("user", dataUser);
           // login successful if there's a jwt token in the response
           if (dataUser && dataUser.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem("currentUser", JSON.stringify(dataUser.User));
+            localStorage.setItem("currentUser", JSON.stringify(dataUser));
             this.currentUserSubject.next(dataUser);
           }
           return dataUser;
