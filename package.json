@@ -37,6 +37,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^9.0.0",
     "@types/chartist": "^0.11.0",
+    "@types/jquery": "^3.5.5",
     "angular-archwizard": "^6.1.0",
     "apexcharts": "^3.22.2",
     "bootstrap": "^5.0.0-beta1",
@@ -45,6 +46,7 @@
     "chartist": "^0.11.4",
     "echarts": "^4.9.0",
     "firebase": "^8.1.1",
+    "jquery": "^3.6.0",
     "metismenujs": "^1.2.1",
     "ng-apexcharts": "^1.5.6",
     "ng-chartist": "^4.1.0",
@@ -69,6 +71,7 @@
     "sass-loader": "^10.1.0",
     "sweetalert2": "^10.10.1",
     "tslib": "^2.0.0",
+    "uuid": "^8.3.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

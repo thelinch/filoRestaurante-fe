@@ -6,6 +6,9 @@
     <!-- end page title -->
     <div class="row">
         <div class="col-sm-12">
+            <button class="btn btn-success" (click)="crearNuevoRol()">Crear</button>
+        </div>
+        <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <app-table-custom-generic [haders]="headers"></app-table-custom-generic>
@@ -20,3 +23,48 @@
 
 
 </div> <!-- container-fluid -->
+<ng-template #editAndCreateRol let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Rol</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="formularioRole" id="formRol" (ngSubmit)="crearYActualizarRole(formularioRole.value)">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Rol</label>
+                        <input [ngClass]="{'is-invalid': submitFormRol && controlsFormularioRoles.rol.errors}"
+                            class="form-control" placeholder="Nombre de rol" type="text" name="Rol"
+                            formControlName="Rol">
+                        <div *ngIf="submitFormRol && controlsFormularioRoles.rol.errors" class="valid-feedback">
+                            <span *ngIf="controlsFormularioRoles.rol.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Acciones</label>
+                        <select [ngClass]="{'is-invalid': submitFormRol && controlsFormularioRoles.acciones.errors}"
+                            multiple [compareWith]="compareWithAccion" class="form-control" name="acciones"
+                            formControlName="acciones">
+                            <option *ngFor="let accion of listAccionesData" [value]="accion"> {{ accion.Accion
+                                }}
+                            </option>
+                        </select>
+                        <div *ngIf="submitFormRol && controlsFormularioRoles.acciones.errors" class="valid-feedback">
+                            <span *ngIf="controlsFormularioRoles.acciones.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" form="formRol" class="btn btn-success ms-1">Save</button>
+    </div>
+</ng-template>

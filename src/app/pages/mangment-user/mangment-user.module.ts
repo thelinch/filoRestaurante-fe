@@ -7,6 +7,7 @@ import { ManagmentUserRoutingModule } from "./managment-user-routing.module";
 import { JwtInterceptor } from "src/app/core/helpers/jwt.interceptor";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CommonModuleCustom } from "src/app/common/common.module";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [RolesComponent, AccionesComponent, UsuariosComponent],
@@ -15,6 +16,7 @@ import { CommonModuleCustom } from "src/app/common/common.module";
     ManagmentUserRoutingModule,
     HttpClientModule,
     CommonModuleCustom,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -33,7 +33,10 @@
               "src/assets/scss/app.scss",
               "src/assets/scss/icons.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "../node_modules/jquery/dist/jquery.js"
+            ]
+          
           },
           "configurations": {
             "production": {

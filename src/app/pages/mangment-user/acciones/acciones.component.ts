@@ -74,7 +74,7 @@ export class AccionesComponent implements OnInit, OnDestroy {
     const acciones = await this.http
       .get<Array<any>>(environment.apiUrl + "/proyAccion")
       .toPromise();
-    this.listAccionesData = acciones.map((accion, index) => ({
+    this.listAccionesData =[...acciones.map((accion, index) => ({
       ...accion,
       acciones: [
         `<div class="button-items">
@@ -82,14 +82,14 @@ export class AccionesComponent implements OnInit, OnDestroy {
     <button type="button" data-index=${index}  data-function="deleteAccion" class="btn buttonEvent btn- btn-danger">Eliminar</button>
     </div>`,
       ],
-    }));
+    }))];
     this.isLoadingAcciones = false;
   }
   async listarMenus() {
     const menus = await this.http
       .get<Array<any>>(environment.apiUrl + "/proyMenu")
       .toPromise();
-    this.listMenusData = menus.map((accion, index) => ({
+    this.listMenusData = [...menus.map((accion, index) => ({
       ...accion,
       acciones: [
         `<div class="button-items">
@@ -97,6 +97,6 @@ export class AccionesComponent implements OnInit, OnDestroy {
           <button type="button" data-index=${index}  data-function="deleteMenu" class="btn buttonEvent btn- btn-danger">Eliminar</button>
           </div>`,
       ],
-    }));
+    }))];
   }
 }

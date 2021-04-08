@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [id]="uuid">
 
     <div class="row mb-md-2">
         <div class="col-sm-12 col-md-6">
@@ -39,7 +39,8 @@
             <tbody>
                 <tr *ngFor="let table of tables$ | async;let i=index">
                     <td *ngFor="let header of haders">
-                        <ngb-highlight *ngIf="!header.isActions" [result]="this.getValueData(header.bindValue,table)" [term]="searchTerm">
+                        <ngb-highlight *ngIf="!header.isActions" [result]="this.getValueData(header.bindValue,table)"
+                            [term]="searchTerm">
                         </ngb-highlight>
                         <ng-template [ngIf]="header.isActions">
                             <div [innerHTML]="table.acciones.join('')| safeHtml"></div>
