@@ -12,6 +12,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Subscription } from "rxjs";
 import { TableCustomGenericComponent } from "src/app/common/table-custom-generic/table-custom-generic.component";
 import { EventService } from "src/app/core/services/event.service";
+import { LoaderService } from "src/app/core/services/loader.service";
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -22,6 +23,7 @@ import { environment } from "src/environments/environment";
 export class RolesComponent implements OnInit, OnDestroy {
   isLoadingRoles = true;
   roles: Array<any> = [];
+  isLoadingForms;
   headers = [
     { headerName: "Rol", bindValue: "Rol", isActions: false },
     { headerName: "Acciones", bindValue: "Acciones", isActions: true },
@@ -39,9 +41,11 @@ export class RolesComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private eventService: EventService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private loaderService: LoaderService
   ) {
     this.listAccionesData = [];
+    this.isLoadingForms = this.loaderService.isLoading;
   }
   ngOnDestroy(): void {
     this.editRolEvent?.unsubscribe();
@@ -68,8 +72,7 @@ export class RolesComponent implements OnInit, OnDestroy {
   }
   crearNuevoRol() {
     this.formularioRole.reset();
-    this.modalService.open(this.modalFormRol).result.then(() => {
-      console.log("entro alccerrado");
+    this.modalService.open(this.modalFormRol).hidden.subscribe(() => {
       this.listRoles();
     });
   }
@@ -101,8 +104,6 @@ export class RolesComponent implements OnInit, OnDestroy {
     return this.formularioRole.controls;
   }
   async crearYActualizarRole(rol: any) {
-    console.log("rol", rol);
-
     this.submitFormRol = true;
     if (this.formularioRole.invalid) {
       return;
@@ -120,8 +121,9 @@ export class RolesComponent implements OnInit, OnDestroy {
       .get(environment.apiUrl + "/proyRol/" + rol.idRol)
       .toPromise();
     this.formularioRole.patchValue(nuevoRol);
-    this.modalService.open(this.modalFormRol);
-    console.log("rol", rol);
+    this.modalService.open(this.modalFormRol).hidden.subscribe(() => {
+      this.listRoles();
+    });
   }
   deleteRol(rol: any) {
     console.log("delete rol", rol);

@@ -5,10 +5,10 @@
  -->
     <!-- end page title -->
     <div class="row">
-        <div class="col-sm-12">
-            <button class="btn btn-success" (click)="crearNuevoRol()">Crear</button>
+        <div class="col-sm-12 d-flex justify-content-end">
+            <button class="btn btn-success " (click)="crearNuevoRol()">Crear</button>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-12 mt-2">
             <div class="card">
                 <div class="card-body">
                     <app-table-custom-generic [haders]="headers"></app-table-custom-generic>
@@ -34,11 +34,11 @@
                 <div class="col-12">
                     <div class="mb-3">
                         <label class="control-label">Rol</label>
-                        <input [ngClass]="{'is-invalid': submitFormRol && controlsFormularioRoles.rol.errors}"
+                        <input [ngClass]="{'is-invalid': submitFormRol && controlsFormularioRoles.Rol.errors}"
                             class="form-control" placeholder="Nombre de rol" type="text" name="Rol"
                             formControlName="Rol">
-                        <div *ngIf="submitFormRol && controlsFormularioRoles.rol.errors" class="valid-feedback">
-                            <span *ngIf="controlsFormularioRoles.rol.errors.required">Requerido</span>
+                        <div *ngIf="submitFormRol && controlsFormularioRoles.Rol.errors" class="invalid-feedback">
+                            <span *ngIf="controlsFormularioRoles.Rol.errors.required">Requerido</span>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                                 }}
                             </option>
                         </select>
-                        <div *ngIf="submitFormRol && controlsFormularioRoles.acciones.errors" class="valid-feedback">
+                        <div *ngIf="submitFormRol && controlsFormularioRoles.acciones.errors" class="invalid-feedback">
                             <span *ngIf="controlsFormularioRoles.acciones.errors.required">Requerido</span>
                         </div>
                     </div>
@@ -65,6 +65,11 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
-        <button type="submit" form="formRol" class="btn btn-success ms-1">Save</button>
+        <button type="submit" form="formRol" class="btn btn-success ms-1">
+            <ng-template [ngIf]="isLoadingForms | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            {{formularioRole.get('idRol').value==null? 'Guardar':'Editar'}}
+        </button>
     </div>
 </ng-template>
