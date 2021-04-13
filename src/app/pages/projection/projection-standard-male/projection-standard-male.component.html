@@ -1,0 +1,123 @@
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <!--     <app-page-title title="Invoice List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+ -->
+    <!-- end page title -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="d-flex justify-content-between">
+                <h4 class="m-0 title-uppercase d-inline-block">Proyeccion Machos</h4>
+                <button class="btn btn-success pull-right" (click)="crearNuevoStandardMacho()">Crear</button>
+            </div>
+
+        </div>
+        <div class="col-sm-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <app-table-custom-generic [data]="listaStandardHembra" [haders]="headersStandardMacho">
+                    </app-table-custom-generic>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end row -->
+
+
+
+</div> <!-- container-fluid -->
+<ng-template #editAndCreateProyStandardMacho let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Proyeccion Hembra</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="formularioProyeccionMacho" id="formProyHembra"
+            (ngSubmit)="crearYActualizarProyStandardHembra(formularioProyeccionMacho.value)">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Semana</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioProyeccionMachoControles.semana.touched && formularioProyeccionMachoControles.semana.errors}"
+                            class="form-control" min="25" placeholder="numero de la Semana" type="number"
+                            formControlName="semana">
+                        <div *ngIf="formularioProyeccionMachoControles.semana.touched && formularioProyeccionMachoControles.semana.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioProyeccionMachoControles.semana.errors.required">Requerido</span>
+                            <span *ngIf="formularioProyeccionMachoControles.semana.errors.min">El valor minimo es
+                                25</span>
+
+                            <span *ngIf="formularioProyeccionMachoControles.semana.errors.pattern">La semana debe ser
+                                entero y mayor a cero</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Porcentaje Postura</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioProyeccionMachoControles.porc_postura.touched && formularioProyeccionMachoControles.porc_postura.errors}"
+                            class="form-control" type="number" min="25" placeholder="Porcentaje" type="number"
+                            name="Rol" formControlName="porc_postura">
+                        <div *ngIf="formularioProyeccionMachoControles.porc_postura.touched && formularioProyeccionMachoControles.porc_postura.errors"
+                            class="invalid-feedback">
+                            <span
+                                *ngIf="formularioProyeccionMachoControles.porc_postura.errors.required">Requerido</span>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Porcentaje Huevos Incubable</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioProyeccionMachoControles.porc_hi.touched && formularioProyeccionMachoControles.porc_hi.errors}"
+                            class="form-control" placeholder="Porcentaje" type="number" formControlName="porc_hi">
+                        <div *ngIf="formularioProyeccionMachoControles.porc_hi.touched && formularioProyeccionMachoControles.porc_hi.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioProyeccionMachoControles.porc_hi.errors.required">Requerido</span>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Porcentaje Nacimiento</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioProyeccionMachoControles.porc_nacimiento.touched && formularioProyeccionMachoControles.porc_nacimiento.errors}"
+                            class="form-control" placeholder="Porcentaje" type="number"
+                            formControlName="porc_nacimiento">
+                        <div *ngIf="formularioProyeccionMachoControles.porc_nacimiento.touched && formularioProyeccionMachoControles.porc_nacimiento.errors"
+                            class="invalid-feedback">
+                            <span
+                                *ngIf="formularioProyeccionMachoControles.porc_nacimiento.errors.required">Requerido</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" form="formProyHembra" class="btn btn-success ms-1">
+            <ng-template [ngIf]="isLoadingForms | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            {{formularioProyeccionMacho.get('idStandardProyMacho').value==null? 'Guardar':'Editar'}}
+        </button>
+    </div>
+</ng-template>

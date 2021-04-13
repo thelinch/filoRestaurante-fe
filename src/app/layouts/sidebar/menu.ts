@@ -65,7 +65,21 @@ export const MENU: MenuItem[] = [
     id: 9,
     label: "Referencias",
     icon: "bx-calendar",
-    link: "/calendar",
+
+    subItems: [
+      {
+        id: 13,
+        label: "Proyeccion Hembras",
+        link: "/referencia/proyeccionHembras",
+        parentId: 9,
+      },
+      {
+        id: 15,
+        label: "Proyeccion Machos",
+        link: "/referencia/proyeccionMacho",
+        parentId: 9,
+      },
+    ],
   },
   /*     {
         id: 10,
@@ -107,12 +121,7 @@ export const MENU: MenuItem[] = [
         link: "/seguridad/usuarios",
         parentId: 12,
       },
-      {
-        id: 16,
-        label: "Usuarios y Roles",
-        link: "/ecommerce/customers",
-        parentId: 12,
-      },
+    
       /*     {
         id: 17,
         label: "MENUITEMS.ECOMMERCE.LIST.CART",

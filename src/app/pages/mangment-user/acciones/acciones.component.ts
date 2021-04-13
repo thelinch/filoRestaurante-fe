@@ -29,6 +29,7 @@ export class AccionesComponent implements OnInit, OnDestroy {
     { headerName: "Accion", bindValue: "Accion", isActions: false },
     { headerName: "Codigo", bindValue: "codigo", isActions: false },
     { headerName: "Acciones", bindValue: "Acciones", isActions: true },
+
   ];
   headerMenu = [
     { headerName: "Menu", bindValue: "Menu", isActions: false },

@@ -96,6 +96,11 @@ const routes: Routes = [
         (m) => m.MangmentUserModule
       ),
   },
+  {
+    path: "referencia",
+    loadChildren: () =>
+      import("./projection/projection.module").then((m) => m.ProjectionModule),
+  },
 ];
 
 @NgModule({
