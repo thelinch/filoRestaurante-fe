@@ -79,6 +79,12 @@ export const MENU: MenuItem[] = [
         link: "/referencia/proyeccionMacho",
         parentId: 9,
       },
+      {
+        id: 13,
+        label: "Factor",
+        link: "/referencia/factor",
+        parentId: 9,
+      },
     ],
   },
   /*     {
@@ -121,7 +127,7 @@ export const MENU: MenuItem[] = [
         link: "/seguridad/usuarios",
         parentId: 12,
       },
-    
+
       /*     {
         id: 17,
         label: "MENUITEMS.ECOMMERCE.LIST.CART",

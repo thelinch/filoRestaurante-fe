@@ -1,0 +1,115 @@
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <!--     <app-page-title title="Invoice List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+ -->
+    <!-- end page title -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="d-flex justify-content-between">
+                <h4 class="m-0 title-uppercase d-inline-block">Factores</h4>
+                <button class="btn btn-success pull-right" (click)="crearNuevoFactor()">Crear</button>
+            </div>
+
+        </div>
+        <div class="col-sm-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
+                    </app-table-custom-generic>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end row -->
+
+
+
+</div>
+<ng-template #editAndCreateFactorMortalidad let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Factor</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="formularioFactor" id="formFactorMortalidad"
+            (ngSubmit)="crearYEditarFactor(formularioFactor.value)">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Factor Levante</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioFactorControles.factormort_lev.touched && formularioFactorControles.factormort_lev.errors}"
+                            class="form-control" min="25" placeholder="numero de la Semana" type="number"
+                            formControlName="factormort_lev">
+                        <div *ngIf="formularioFactorControles.factormort_lev.touched && formularioFactorControles.factormort_lev.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioFactorControles.factormort_lev.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Factor Mort.Linea Hembra</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioFactorControles.factormort_prod_lh.touched && formularioFactorControles.factormort_prod_lh.errors}"
+                            class="form-control" type="number" placeholder="Porcentaje" type="number"
+                            formControlName="factormort_prod_lh">
+                        <div *ngIf="formularioFactorControles.factormort_prod_lh.touched && formularioFactorControles.factormort_prod_lh.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioFactorControles.factormort_prod_lh.errors.required">Requerido</span>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Factor Mort.Linea Macho</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioFactorControles.factormort_prod_lm.touched && formularioFactorControles.factormort_prod_lm.errors}"
+                            class="form-control" placeholder="Porcentaje" type="number"
+                            formControlName="factormort_prod_lm">
+                        <div *ngIf="formularioFactorControles.factormort_prod_lm.touched && formularioFactorControles.factormort_prod_lm.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioFactorControles.factormort_prod_lm.errors.required">Requerido</span>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Factor Castigo</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioFactorControles.factorcastigo.touched && formularioFactorControles.factorcastigo.errors}"
+                            class="form-control" placeholder="Porcentaje" type="number" formControlName="factorcastigo">
+                        <div *ngIf="formularioFactorControles.factorcastigo.touched && formularioFactorControles.factorcastigo.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioFactorControles.factorcastigo.errors.required">Requerido</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" form="formFactorMortalidad" class="btn btn-success ms-1">
+            <ng-template [ngIf]="isLoadingForms | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            {{formularioFactor.get('id').value==null? 'Guardar':'Editar'}}
+        </button>
+    </div>
+</ng-template>

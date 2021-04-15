@@ -8,11 +8,13 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { JwtInterceptor } from "src/app/core/helpers/jwt.interceptor";
 import { LoaderInterceptorService } from "src/app/core/services/interceptors/loader-interceptor.service";
+import { FactorComponent } from './factor/factor.component';
 
 @NgModule({
   declarations: [
     ProjectionStandardFemaleComponent,
     ProjectionStandardMaleComponent,
+    FactorComponent,
   ],
   imports: [
     CommonModule,
