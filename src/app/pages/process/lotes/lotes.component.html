@@ -12,10 +12,23 @@
             </div>
 
         </div>
-        <div class="col-sm-12 mt-2">
+        <div class="col-sm-12 col-lg-4 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
             <div class="card">
+                <div class="card-header bg-success">{{ingresoLoteItem.numeroIngreso}}</div>
                 <div class="card-body">
-                   <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
+                    <p class="card-text">
+                        <strong>NOMBRE INGRESO :</strong><span>{{ingresoLoteItem.nombreIngreso}}</span><br>
+                        <strong>FECHA INGRESO :</strong><span>{{ingresoLoteItem.fecIngresoLevante}}</span><br>
+                        <strong>POBLACION HEMBRA : </strong><span>{{ingresoLoteItem.poblacionLh}}</span><br>
+                        <strong>POBLACION MACHO : </strong><span>{{ingresoLoteItem.poblacionLm}}</span><br>
+
+                    </p>
+                    <div class="button-items">
+                        <button (click)="editarLote(ingresoLoteItem)" class="btn btn-success">Editar</button>
+                    </div>
+
+
+                    <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
                     </app-table-custom-generic> -->
 
                 </div>
@@ -56,8 +69,8 @@
                         <div *ngIf="formularioIngresoLotesControles.poblacionLh.touched && formularioIngresoLotesControles.poblacionLh.errors"
                             class="invalid-feedback">
                             <span *ngIf="formularioIngresoLotesControles.poblacionLh.errors.required">Requerido</span>
-                            <span
-                            *ngIf="formularioIngresoLotesControles.poblacionLh.errors.min">El valor minimo es 1</span>
+                            <span *ngIf="formularioIngresoLotesControles.poblacionLh.errors.min">El valor minimo es
+                                1</span>
 
                         </div>
                     </div>
@@ -74,9 +87,9 @@
                         <div *ngIf="formularioIngresoLotesControles.poblacionLm.touched && formularioIngresoLotesControles.poblacionLm.errors"
                             class="invalid-feedback">
                             <span *ngIf="formularioIngresoLotesControles.poblacionLm.errors.required">Requerido</span>
-                            
-                            <span
-                            *ngIf="formularioIngresoLotesControles.poblacionLm.errors.min">El valor minimo es 1</span>
+
+                            <span *ngIf="formularioIngresoLotesControles.poblacionLm.errors.min">El valor minimo es
+                                1</span>
 
                         </div>
                     </div>
@@ -94,8 +107,8 @@
                             class="invalid-feedback">
                             <span
                                 *ngIf="formularioIngresoLotesControles.semanasLevante.errors.required">Requerido</span>
-                                <span
-                                *ngIf="formularioIngresoLotesControles.semanasLevante.errors.min">El valor minimo es 1</span>
+                            <span *ngIf="formularioIngresoLotesControles.semanasLevante.errors.min">El valor minimo es
+                                1</span>
 
                         </div>
                     </div>
@@ -113,8 +126,8 @@
                             class="invalid-feedback">
                             <span
                                 *ngIf="formularioIngresoLotesControles.semanasProduccion.errors.required">Requerido</span>
-                                <span
-                                *ngIf="formularioIngresoLotesControles.semanasProduccion.errors.min">El valor minimo es 1</span>
+                            <span *ngIf="formularioIngresoLotesControles.semanasProduccion.errors.min">El valor minimo
+                                es 1</span>
 
                         </div>
                     </div>

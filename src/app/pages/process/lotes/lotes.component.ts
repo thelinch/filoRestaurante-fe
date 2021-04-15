@@ -63,15 +63,17 @@ export class LotesComponent implements OnInit {
       .toPromise();
   }
   async crearyEditaIngresoLotes(lote: Lote) {
+    console.log("lote", lote);
     this.formularioIngresoLotes.markAllAsTouched();
     if (this.formularioIngresoLotes.invalid) {
       return;
     }
     let url = environment.apiUrl + "/proyIngresoLote/";
-    if (lote.IdProyIngresoLote > 0) {
+    if (lote.idProyIngresoLote > 0) {
       url = url.concat("editar");
     }
     const data = await this.http.post(url, lote).toPromise();
+    this.modalService.dismissAll();
   }
   get formularioIngresoLotesControles() {
     return this.formularioIngresoLotes.controls;

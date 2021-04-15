@@ -1,5 +1,5 @@
 export interface Lote {
-  IdProyIngresoLote?: number;
+  idProyIngresoLote?: number;
   numeroIngreso: number;
   loteInicial: number;
   nombreIngreso: string;
