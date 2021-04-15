@@ -101,6 +101,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./projection/projection.module").then((m) => m.ProjectionModule),
   },
+  {
+    path: "procesos",
+    loadChildren: () =>
+      import("./process/process.module").then((m) => m.ProcessModule),
+  },
 ];
 
 @NgModule({

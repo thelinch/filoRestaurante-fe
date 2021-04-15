@@ -1,0 +1,135 @@
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <!--     <app-page-title title="Invoice List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+ -->
+    <!-- end page title -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="d-flex justify-content-between">
+                <h4 class="m-0 title-uppercase d-inline-block">Ingreso de Lotes</h4>
+                <button class="btn btn-success pull-right" (click)="nuevoIngresoLotes()">Crear</button>
+            </div>
+
+        </div>
+        <div class="col-sm-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                   <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
+                    </app-table-custom-generic> -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end row -->
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<ng-template #editAndCreateIngresoLote let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Ingreso de lotes</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="formularioIngresoLotes" id="formFactorMortalidad"
+            (ngSubmit)="crearyEditaIngresoLotes(formularioIngresoLotes.value)">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Poblacion Inicial Hembra</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioIngresoLotesControles.poblacionLh.touched && formularioIngresoLotesControles.poblacionLh.errors}"
+                            class="form-control" placeholder="numero inicial linea Hembra" type="number"
+                            formControlName="poblacionLh">
+                        <div *ngIf="formularioIngresoLotesControles.poblacionLh.touched && formularioIngresoLotesControles.poblacionLh.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioIngresoLotesControles.poblacionLh.errors.required">Requerido</span>
+                            <span
+                            *ngIf="formularioIngresoLotesControles.poblacionLh.errors.min">El valor minimo es 1</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Poblacion Inicial Machos</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioIngresoLotesControles.poblacionLm.touched && formularioIngresoLotesControles.poblacionLm.errors}"
+                            class="form-control" type="number" placeholder="Porcentaje" type="number"
+                            formControlName="poblacionLm">
+                        <div *ngIf="formularioIngresoLotesControles.poblacionLm.touched && formularioIngresoLotesControles.poblacionLm.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioIngresoLotesControles.poblacionLm.errors.required">Requerido</span>
+                            
+                            <span
+                            *ngIf="formularioIngresoLotesControles.poblacionLm.errors.min">El valor minimo es 1</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Semanas Levante</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioIngresoLotesControles.semanasLevante.touched && formularioIngresoLotesControles.semanasLevante.errors}"
+                            class="form-control" placeholder="Porcentaje" type="number"
+                            formControlName="semanasLevante">
+                        <div *ngIf="formularioIngresoLotesControles.semanasLevante.touched && formularioIngresoLotesControles.semanasLevante.errors"
+                            class="invalid-feedback">
+                            <span
+                                *ngIf="formularioIngresoLotesControles.semanasLevante.errors.required">Requerido</span>
+                                <span
+                                *ngIf="formularioIngresoLotesControles.semanasLevante.errors.min">El valor minimo es 1</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Semanas de Produccion</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioIngresoLotesControles.semanasProduccion.touched && formularioIngresoLotesControles.semanasProduccion.errors}"
+                            class="form-control" placeholder="Porcentaje" type="number"
+                            formControlName="semanasProduccion">
+                        <div *ngIf="formularioIngresoLotesControles.semanasProduccion.touched && formularioIngresoLotesControles.semanasProduccion.errors"
+                            class="invalid-feedback">
+                            <span
+                                *ngIf="formularioIngresoLotesControles.semanasProduccion.errors.required">Requerido</span>
+                                <span
+                                *ngIf="formularioIngresoLotesControles.semanasProduccion.errors.min">El valor minimo es 1</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" form="formFactorMortalidad" class="btn btn-success ms-1">
+            <ng-template [ngIf]="isLoadingForms | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            {{formularioIngresoLotes.get('idProyIngresoLote').value==null? 'Guardar':'Editar'}}
+        </button>
+    </div>
+</ng-template>

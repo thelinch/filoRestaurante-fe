@@ -54,6 +54,14 @@ export const MENU: MenuItem[] = [
     label: "Procesos",
     icon: "bx-calendar",
     link: "/calendar",
+    subItems: [
+      {
+        id: 13,
+        label: "Lotes",
+        link: "/procesos/lotes",
+        parentId: 60,
+      },
+    ],
   },
   {
     id: 30,
