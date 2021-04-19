@@ -24,9 +24,9 @@ export class DefaultComponent implements OnInit {
     this.fetchData();
   }
   ngAfterViewInit() {
-    setTimeout(() => {
+    /* setTimeout(() => {
       this.openModal();
-    }, 2000);
+    }, 2000); */
   }
   /**
    * Fetches the data

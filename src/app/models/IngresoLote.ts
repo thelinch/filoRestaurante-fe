@@ -1,4 +1,4 @@
-export interface Lote {
+export interface IngresoLote {
   idProyIngresoLote?: number;
   numeroIngreso: number;
   loteInicial: number;

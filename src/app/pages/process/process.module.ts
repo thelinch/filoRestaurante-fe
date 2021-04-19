@@ -7,9 +7,10 @@ import { CommonModuleCustom } from "src/app/common/common.module";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { JwtInterceptor } from "src/app/core/helpers/jwt.interceptor";
 import { LoaderInterceptorService } from "src/app/core/services/interceptors/loader-interceptor.service";
+import { ProjectionComponent } from './projection/projection.component';
 
 @NgModule({
-  declarations: [LotesComponent],
+  declarations: [LotesComponent, ProjectionComponent],
   imports: [
     CommonModule,
     ProcessRoutingModule,

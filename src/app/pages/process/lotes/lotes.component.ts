@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable } from "rxjs";
 import { LoaderService } from "src/app/core/services/loader.service";
-import { Lote } from "src/app/models/IngresoLote";
+import { IngresoLote } from "src/app/models/IngresoLote";
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -17,7 +17,7 @@ export class LotesComponent implements OnInit {
   isLoadingForms: Observable<boolean>;
   @ViewChild("editAndCreateIngresoLote")
   modalFormularioIngresoLotes: TemplateRef<any>;
-  listaDeLotes: Array<Lote>;
+  listaDeLotes: Array<IngresoLote>;
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -49,7 +49,7 @@ export class LotesComponent implements OnInit {
         this.listarLotes();
       });
   }
-  editarLote(lote: Lote) {
+  editarLote(lote: IngresoLote) {
     this.formularioIngresoLotes.patchValue(lote);
     this.modalService
       .open(this.modalFormularioIngresoLotes)
@@ -59,10 +59,10 @@ export class LotesComponent implements OnInit {
   }
   async listarLotes() {
     this.listaDeLotes = await this.http
-      .get<Array<Lote>>(environment.apiUrl + "/proyIngresoLote")
+      .get<Array<IngresoLote>>(environment.apiUrl + "/proyIngresoLote")
       .toPromise();
   }
-  async crearyEditaIngresoLotes(lote: Lote) {
+  async crearyEditaIngresoLotes(lote: IngresoLote) {
     console.log("lote", lote);
     this.formularioIngresoLotes.markAllAsTouched();
     if (this.formularioIngresoLotes.invalid) {

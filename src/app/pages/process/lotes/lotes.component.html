@@ -12,9 +12,9 @@
             </div>
 
         </div>
-        <div class="col-sm-12 col-lg-4 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
+        <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
             <div class="card">
-                <div class="card-header bg-success">{{ingresoLoteItem.numeroIngreso}}</div>
+                <div class="card-header bg-success text-white">{{ingresoLoteItem.numeroIngreso}}</div>
                 <div class="card-body">
                     <p class="card-text">
                         <strong>NOMBRE INGRESO :</strong><span>{{ingresoLoteItem.nombreIngreso}}</span><br>
@@ -26,8 +26,6 @@
                     <div class="button-items">
                         <button (click)="editarLote(ingresoLoteItem)" class="btn btn-success">Editar</button>
                     </div>
-
-
                     <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
                     </app-table-custom-generic> -->
 
