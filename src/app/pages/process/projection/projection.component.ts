@@ -51,4 +51,7 @@ export class ProjectionComponent implements OnInit {
   get formularioEdicionFactorProduccionControles() {
     return this.formularioEdicionFactorProduccion.controls;
   }
+  async proyectar(ingresoLote: IngresoLote) {
+    await this.http.post(environment.apiUrl+"/proyLoteDetalle/proyectar", ingresoLote).toPromise();
+  }
 }
