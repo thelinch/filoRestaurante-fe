@@ -14,9 +14,10 @@ import { environment } from "src/environments/environment";
 })
 export class ProjectionComponent implements OnInit {
   formularioEdicionFactorProduccion: FormGroup;
-  isLoadingForms: Observable<boolean>;
+  isLoading: Observable<boolean>;
   @ViewChild("editFactorProduccion")
   modalFormularioFactorProduccion: TemplateRef<any>;
+  ingresoLoteSeleccionado: IngresoLote;
   listaDeLotes: Array<IngresoLote>;
   constructor(
     private fb: FormBuilder,
@@ -24,7 +25,7 @@ export class ProjectionComponent implements OnInit {
     private loadingService: LoaderService,
     private modalService: NgbModal
   ) {
-    this.isLoadingForms = loadingService.isLoading;
+    this.isLoading = loadingService.isLoading;
   }
 
   ngOnInit(): void {
@@ -52,6 +53,9 @@ export class ProjectionComponent implements OnInit {
     return this.formularioEdicionFactorProduccion.controls;
   }
   async proyectar(ingresoLote: IngresoLote) {
-    await this.http.post(environment.apiUrl+"/proyLoteDetalle/proyectar", ingresoLote).toPromise();
+    this.ingresoLoteSeleccionado = ingresoLote;
+    await this.http
+      .post(environment.apiUrl + "/proyLoteDetalle/proyectar", ingresoLote)
+      .toPromise();
   }
 }

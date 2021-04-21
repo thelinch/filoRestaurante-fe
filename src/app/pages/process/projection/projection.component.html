@@ -22,7 +22,12 @@
 
                     </p>
                     <div class="button-items">
-                        <button class="btn btn-primary" (click)="proyectar(ingresoLoteItem)">Proyectar</button>
+                        <button class="btn btn-primary" (click)="proyectar(ingresoLoteItem)">
+                            <ng-template [ngIf]="(isLoading | async) && ingresoLoteItem==ingresoLoteSeleccionado">
+                                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                            </ng-template>
+                            <span *ngIf="!((isLoading | async) && ingresoLoteItem==ingresoLoteSeleccionado)">Proyectar</span>
+                        </button>
                         <button class="btn btn-secondary"
                             (click)="openModalFormularioEdicionFactorProduccion()">Ed.Produccion</button>
 
@@ -144,7 +149,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
         <button type="submit" form="formEdicionFactorProduccion" class="btn btn-success ms-1">
-            <ng-template [ngIf]="isLoadingForms | async">
+            <ng-template [ngIf]="isLoading | async">
                 <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
             </ng-template>
             {{formularioEdicionFactorProduccion.get('id').value==0? 'Guardar':'Editar'}}

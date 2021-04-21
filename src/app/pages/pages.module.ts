@@ -48,6 +48,9 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin
 import interactionPlugin from "@fullcalendar/interaction"; // a plugin
 import bootstrapPlugin from "@fullcalendar/bootstrap";
 import { FilemanagerComponent } from "./filemanager/filemanager.component";
+import { ErrorsModule } from "./errors/errors.module";
+import { ErrorDialogComponent } from "../shared/errors/error-dialog/error-dialog.component";
+import { JwtInterceptor } from "../core/helpers/jwt.interceptor";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -75,6 +78,7 @@ FullCalendarModule.registerPlugins([
     CryptoModule,
     EcommerceModule,
     EmailModule,
+    ErrorsModule,
     InvoicesModule,
     HttpClientModule,
     ProjectsModule,
@@ -96,10 +100,16 @@ FullCalendarModule.registerPlugins([
     NgbCollapseModule,
     PerfectScrollbarModule,
   ],
+  entryComponents: [ErrorDialogComponent],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptorService,
+      multi: true,
     },
     LoaderService,
     {
@@ -107,6 +117,7 @@ FullCalendarModule.registerPlugins([
       useClass: LoaderInterceptorService,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
 })
 export class PagesModule {}
