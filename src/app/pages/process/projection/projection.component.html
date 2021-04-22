@@ -23,16 +23,17 @@
                     </p>
                     <div class="button-items">
                         <button class="btn btn-primary" (click)="proyectar(ingresoLoteItem)">
-                            <ng-template [ngIf]="(isLoading | async) && ingresoLoteItem==ingresoLoteSeleccionado">
+                            <ng-template
+                                [ngIf]="((isLoading | async) && ingresoLoteItem==ingresoLoteSeleccionado) && mostrarCargaProyeccion">
                                 <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
                             </ng-template>
-                            <span *ngIf="!((isLoading | async) && ingresoLoteItem==ingresoLoteSeleccionado)">Proyectar</span>
+                            <span
+                                *ngIf="!((isLoading | async) && ingresoLoteItem==ingresoLoteSeleccionado) && !mostrarCargaProyeccion">Proyectar</span>
                         </button>
                         <button class="btn btn-secondary"
-                            (click)="openModalFormularioEdicionFactorProduccion()">Ed.Produccion</button>
+                            (click)="openModalFormularioEdicionFactorProduccion(ingresoLoteItem)">Ed.Produccion</button>
 
-                        <button class="btn btn-primary"
-                            (click)="openModalFormularioEdicionFactorProduccion()">Ver</button>
+                        <button class="btn btn-primary" (click)="listarProyeccionDetalle(ingresoLoteItem)">Ver</button>
                     </div>
 
 
@@ -64,21 +65,35 @@
         <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body p-4">
-        <form [formGroup]="formularioEdicionFactorProduccion" id="formEdicionFactorProduccion">
+        <form [formGroup]="formularioEdicionFactorProduccion" id="formEdicionFactorProduccion"
+            (ngSubmit)="editarLoteDetalle(formularioEdicionFactorProduccion.value)">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Genero</label>
+                        <select
+                            [ngClass]="{'is-invalid': formularioEdicionFactorProduccionControles.genero.touched && formularioEdicionFactorProduccionControles.genero.errors}"
+                            class="form-control" formControlName="genero">
+                            <option value="LH">LH</option>
+                            <option value="LM">LM</option>
+                        </select>
+                        <div *ngIf="formularioEdicionFactorProduccionControles.genero.touched && formularioEdicionFactorProduccionControles.genero.errors"
+                            class="invalid-feedback">
+                            <span
+                                *ngIf="formularioEdicionFactorProduccionControles.genero.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="mb-3">
                         <label class="control-label">Semana</label>
                         <select
                             [ngClass]="{'is-invalid': formularioEdicionFactorProduccionControles.semana.touched && formularioEdicionFactorProduccionControles.semana.errors}"
-                            class="form-control" placeholder="numero inicial linea Hembra" type="number"
-                            formControlName="semana">
-                            <option>25</option>
-                            <option>26</option>
-                            <option>27</option>
-                            <option>28</option>
-                            <option>29</option>
-                            <option>30</option>
+                            class="form-control" formControlName="semana">
+                            <option *ngFor="let proyDetalleRow of listaProyLoteFila" [ngValue]="proyDetalleRow">
+                                {{proyDetalleRow.semana}}</option>
                         </select>
                         <div *ngIf="formularioEdicionFactorProduccionControles.semana.touched && formularioEdicionFactorProduccionControles.semana.errors"
                             class="invalid-feedback">
@@ -149,10 +164,76 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
         <button type="submit" form="formEdicionFactorProduccion" class="btn btn-success ms-1">
-            <ng-template [ngIf]="isLoading | async">
+            <ng-template [ngIf]="(isLoading | async) && mostrarCargaEdicionLoteDetalle">
                 <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
             </ng-template>
-            {{formularioEdicionFactorProduccion.get('id').value==0? 'Guardar':'Editar'}}
+            EDitar
         </button>
+    </div>
+</ng-template>
+
+
+<ng-template #listaProyLoteDetalle let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Proyeccion</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+
+        <div class="table-responsive">
+            <table class="table table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Tipo</th>
+
+                        <th rowspan="2">Fecha</th>
+                        <th rowspan="2">SEM</th>
+                        <th colspan="6" class="text-center">LINEA HEMBRA</th>
+                        <th colspan="6" class="text-center">LINEA MACHO</th>
+
+                    </tr>
+
+                    <tr>
+                        <th>#AVES</th>
+                        <th>#HI</th>
+                        <th>#P.BBS</th>
+                        <th>%POSTURA</th>
+                        <th>%H.I.</th>
+                        <th>%NAC</th>
+                        <th>#AVES</th>
+                        <th>#HI</th>
+                        <th>#P.BBS</th>
+                        <th>%POSTURA</th>
+                        <th>%H.I.</th>
+                        <th>%NAC</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let proyDetalleItem of listaLoteDetallePorIngresoLote">
+                        <td>{{proyDetalleItem.tipo}}</td>
+                        <td>{{proyDetalleItem.fechaMovimiento}}</td>
+                        <td>{{proyDetalleItem.semana}}</td>
+                        <td>{{proyDetalleItem.lineaHembra.saldoAves | number:'1.0-0' }}</td>
+                        <td>{{proyDetalleItem.lineaHembra.saldoHi | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaHembra.saldoBbs | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaHembra.porcentajePostura | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaHembra.porcentajeHi | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaHembra.porcentajeNacimiento | number:'1.0-0'}}</td>
+
+                        <td>{{proyDetalleItem.lineaMacho.saldoAves | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaMacho.saldoHi | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaMacho.saldoBbs | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaMacho.porcentajePostura | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaMacho.porcentajeHi | number:'1.0-0'}}</td>
+                        <td>{{proyDetalleItem.lineaMacho.porcentajeNacimiento | number:'1.0-0'}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
     </div>
 </ng-template>

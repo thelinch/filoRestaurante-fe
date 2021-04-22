@@ -48,6 +48,11 @@ export class FactorComponent implements OnInit, OnDestroy {
       bindValue: "factorcastigo",
       isActions: false,
     },
+    {
+      headerName: "Factor Bbs",
+      bindValue: "factor_bbs",
+      isActions: false,
+    },
     { headerName: "Acciones", bindValue: "factorcastigo", isActions: true },
   ];
   constructor(
@@ -126,6 +131,7 @@ export class FactorComponent implements OnInit, OnDestroy {
       factormort_prod_lh: ["", [Validators.required]],
       factormort_prod_lm: ["", [Validators.required]],
       factorcastigo: ["", [Validators.required]],
+      factor_bbs: ["", [Validators.required]],
     });
   }
 }

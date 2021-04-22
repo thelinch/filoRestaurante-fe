@@ -100,6 +100,21 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Factor Bbs</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioFactorControles.factor_bbs.touched && formularioFactorControles.factor_bbs.errors}"
+                            class="form-control" placeholder="factor bbs" type="number" formControlName="factor_bbs">
+                        <div *ngIf="formularioFactorControles.factor_bbs.touched && formularioFactorControles.factor_bbs.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioFactorControles.factor_bbs.errors.required">Requerido</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </form>
     </div>

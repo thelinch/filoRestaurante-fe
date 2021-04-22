@@ -3,8 +3,10 @@ import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable } from "rxjs";
+import { filter } from "rxjs/operators";
 import { LoaderService } from "src/app/core/services/loader.service";
 import { IngresoLote } from "src/app/models/IngresoLote";
+import { LoteDetalleView } from "src/app/models/loteDetalle";
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -17,8 +19,14 @@ export class ProjectionComponent implements OnInit {
   isLoading: Observable<boolean>;
   @ViewChild("editFactorProduccion")
   modalFormularioFactorProduccion: TemplateRef<any>;
+  @ViewChild("listaProyLoteDetalle")
+  modalListaProyLoteDetalle: TemplateRef<any>;
   ingresoLoteSeleccionado: IngresoLote;
+  listaLoteDetallePorIngresoLote: Array<LoteDetalleView>;
   listaDeLotes: Array<IngresoLote>;
+  mostrarCargaEdicionLoteDetalle: boolean;
+  mostrarCargaProyeccion: boolean;
+  listaProyLoteFila: Array<any> = [];
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -26,18 +34,51 @@ export class ProjectionComponent implements OnInit {
     private modalService: NgbModal
   ) {
     this.isLoading = loadingService.isLoading;
+    this.listaLoteDetallePorIngresoLote = [];
+    this.mostrarCargaEdicionLoteDetalle = false;
+    this.mostrarCargaProyeccion = false;
   }
 
   ngOnInit(): void {
     this.crearFormularioFactorProduccion();
     this.listarLotes();
+    this.formularioEdicionFactorProduccion
+      .get("genero")
+      .valueChanges.pipe(filter((f) => f))
+      .subscribe(async (genero: string) => {
+        this.listaProyLoteFila = await this.http
+          .get<Array<any>>(
+            environment.apiUrl +
+              "/proyLoteDetalle/listarSemanas/ingresoLote/" +
+              this.ingresoLoteSeleccionado.idProyIngresoLote +
+              "/tipoGenero/" +
+              genero
+          )
+          .toPromise();
+      });
+    this.formularioEdicionFactorProduccion
+      .get("semana")
+      .valueChanges.subscribe((loteDetalle) => {
+        if (loteDetalle) {
+          this.formularioEdicionFactorProduccion.patchValue({
+            id: loteDetalle.id,
+            porcentajeHi: loteDetalle.porcentajeHi,
+            porcentajePostura: loteDetalle.porcentajePostura,
+            porcentajeNacimiento: loteDetalle.porcentajeNacimiento,
+          });
+        }
+      });
   }
-  openModalFormularioEdicionFactorProduccion() {
+  openModalFormularioEdicionFactorProduccion(ingresoLote: IngresoLote) {
+    this.ingresoLoteSeleccionado = ingresoLote;
+    this.formularioEdicionFactorProduccion.reset();
+    this.listaProyLoteFila = [];
     this.modalService.open(this.modalFormularioFactorProduccion);
   }
   crearFormularioFactorProduccion() {
     this.formularioEdicionFactorProduccion = this.fb.group({
       id: [0],
+      genero: [null, [Validators.required]],
       porcentajePostura: [null, [Validators.required]],
       porcentajeHi: [null, [Validators.required]],
       porcentajeNacimiento: [null, [Validators.required]],
@@ -49,13 +90,36 @@ export class ProjectionComponent implements OnInit {
       .get<Array<IngresoLote>>(environment.apiUrl + "/proyIngresoLote")
       .toPromise();
   }
+  async editarLoteDetalle(loteDetalle: any) {
+    await this.http
+      .post(
+        environment.apiUrl +
+          "/proyLoteDetalle/editar/" +
+          this.ingresoLoteSeleccionado.idProyIngresoLote,
+        loteDetalle
+      )
+      .toPromise();
+    this.modalService.dismissAll();
+  }
   get formularioEdicionFactorProduccionControles() {
     return this.formularioEdicionFactorProduccion.controls;
   }
+  async listarProyeccionDetalle(ingresoLote: IngresoLote) {
+    this.listaLoteDetallePorIngresoLote = (await this.http
+      .get<Array<LoteDetalleView>>(
+        environment.apiUrl +
+          "/proyLoteDetalle/listar/" +
+          ingresoLote.idProyIngresoLote
+      )
+      .toPromise());
+    this.modalService.open(this.modalListaProyLoteDetalle, { size: "xl" });
+  }
   async proyectar(ingresoLote: IngresoLote) {
     this.ingresoLoteSeleccionado = ingresoLote;
+    this.mostrarCargaProyeccion = true;
     await this.http
       .post(environment.apiUrl + "/proyLoteDetalle/proyectar", ingresoLote)
       .toPromise();
+    this.mostrarCargaProyeccion = false;
   }
 }
