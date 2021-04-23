@@ -91,6 +91,10 @@ export class ProjectionComponent implements OnInit {
       .toPromise();
   }
   async editarLoteDetalle(loteDetalle: any) {
+    this.formularioEdicionFactorProduccion.markAllAsTouched();
+    if (this.formularioEdicionFactorProduccion.invalid) {
+      return;
+    }
     await this.http
       .post(
         environment.apiUrl +
@@ -105,13 +109,14 @@ export class ProjectionComponent implements OnInit {
     return this.formularioEdicionFactorProduccion.controls;
   }
   async listarProyeccionDetalle(ingresoLote: IngresoLote) {
-    this.listaLoteDetallePorIngresoLote = (await this.http
+    this.ingresoLoteSeleccionado = ingresoLote;
+    this.listaLoteDetallePorIngresoLote = await this.http
       .get<Array<LoteDetalleView>>(
         environment.apiUrl +
           "/proyLoteDetalle/listar/" +
           ingresoLote.idProyIngresoLote
       )
-      .toPromise());
+      .toPromise();
     this.modalService.open(this.modalListaProyLoteDetalle, { size: "xl" });
   }
   async proyectar(ingresoLote: IngresoLote) {
@@ -121,5 +126,6 @@ export class ProjectionComponent implements OnInit {
       .post(environment.apiUrl + "/proyLoteDetalle/proyectar", ingresoLote)
       .toPromise();
     this.mostrarCargaProyeccion = false;
+    this.listarLotes();
   }
 }

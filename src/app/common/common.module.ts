@@ -7,10 +7,11 @@ import {
   NgbTypeaheadModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from "@angular/forms";
-import { SafeHtmlPipe } from './table-custom-generic/safe-html.pipe';
+import { SafeHtmlPipe } from "./table-custom-generic/safe-html.pipe";
+import { EstadosDirective } from "./directivas/estados.directive";
 
 @NgModule({
-  declarations: [TableCustomGenericComponent, SafeHtmlPipe],
+  declarations: [TableCustomGenericComponent, SafeHtmlPipe, EstadosDirective],
   imports: [
     CommonModule,
     NgbPaginationModule,
@@ -18,6 +19,6 @@ import { SafeHtmlPipe } from './table-custom-generic/safe-html.pipe';
     NgbCollapseModule,
     FormsModule,
   ],
-  exports: [TableCustomGenericComponent],
+  exports: [TableCustomGenericComponent, EstadosDirective],
 })
 export class CommonModuleCustom {}

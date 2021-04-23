@@ -62,6 +62,17 @@ export class LotesComponent implements OnInit {
       .get<Array<IngresoLote>>(environment.apiUrl + "/proyIngresoLote")
       .toPromise();
   }
+  async cerrarProyIngresoLote(proyIngresoLoteId: number) {
+    await this.http
+      .get(
+        environment.apiUrl +
+          "/proyIngresoLote/actualizar/" +
+          proyIngresoLoteId +
+          "/estado/1"
+      )
+      .toPromise();
+    this.listarLotes();
+  }
   async crearyEditaIngresoLotes(lote: IngresoLote) {
     console.log("lote", lote);
     this.formularioIngresoLotes.markAllAsTouched();

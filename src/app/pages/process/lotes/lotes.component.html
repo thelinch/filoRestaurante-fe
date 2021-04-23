@@ -14,17 +14,29 @@
         </div>
         <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
             <div class="card">
-                <div class="card-header bg-success text-white">{{ingresoLoteItem.numeroIngreso}}</div>
+                <div class="card-header bg-success text-white d-flex justify-content-between">
+                    <div class="numero_ingreso text-white"> {{ingresoLoteItem.numeroIngreso}}</div>
+                    <p class="badge bg-danger m-0 d-flex align-items-center">{{ingresoLoteItem.estadoNombre}}</p>
+                </div>
                 <div class="card-body">
                     <p class="card-text">
                         <strong>NOMBRE INGRESO :</strong><span>{{ingresoLoteItem.nombreIngreso}}</span><br>
                         <strong>FECHA INGRESO :</strong><span>{{ingresoLoteItem.fecIngresoLevante}}</span><br>
                         <strong>POBLACION HEMBRA : </strong><span>{{ingresoLoteItem.poblacionLh}}</span><br>
                         <strong>POBLACION MACHO : </strong><span>{{ingresoLoteItem.poblacionLm}}</span><br>
+                        <strong>SEMANAS LEVANTE : </strong><span>{{ingresoLoteItem.semanasLevante}}</span><br>
+                        <strong>SEMANAS PRODUCCION : </strong><span>{{ingresoLoteItem.semanasProduccion}}</span><br>
+
 
                     </p>
                     <div class="button-items">
-                        <button (click)="editarLote(ingresoLoteItem)" class="btn btn-success">Editar</button>
+                        <button appEstados [estados]="['abierto','proyectado']"
+                            [estadoActual]="ingresoLoteItem.estadoNombre" (click)="editarLote(ingresoLoteItem)"
+                            class="btn btn-success">Editar</button>
+                        <button appEstados [estados]="['abierto','proyectado']"
+                            [estadoActual]="ingresoLoteItem.estadoNombre"
+                            (click)="cerrarProyIngresoLote(ingresoLoteItem.idProyIngresoLote)"
+                            class="btn btn-primary">Cerrar</button>
                     </div>
                     <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
                     </app-table-custom-generic> -->

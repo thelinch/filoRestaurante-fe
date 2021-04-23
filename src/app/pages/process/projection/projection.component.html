@@ -12,28 +12,37 @@
         </div>
         <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
             <div class="card">
-                <div class="card-header bg-success text-white">{{ingresoLoteItem.numeroIngreso}}</div>
+                <div class="card-header bg-success text-white d-flex justify-content-between">
+                    <div class="numero_ingreso text-white"> {{ingresoLoteItem.numeroIngreso}}</div>
+                    <p class="badge bg-danger m-0 d-flex align-items-center">{{ingresoLoteItem.estadoNombre}}</p>
+                </div>
                 <div class="card-body">
                     <p class="card-text">
                         <strong>NOMBRE INGRESO :</strong><span>{{ingresoLoteItem.nombreIngreso}}</span><br>
                         <strong>FECHA INGRESO :</strong><span>{{ingresoLoteItem.fecIngresoLevante}}</span><br>
                         <strong>POBLACION HEMBRA : </strong><span>{{ingresoLoteItem.poblacionLh}}</span><br>
                         <strong>POBLACION MACHO : </strong><span>{{ingresoLoteItem.poblacionLm}}</span><br>
+                        <strong>SEMANAS LEVANTE : </strong><span>{{ingresoLoteItem.semanasLevante}}</span><br>
+                        <strong>SEMANAS PRODUCCION : </strong><span>{{ingresoLoteItem.semanasProduccion}}</span><br>
 
                     </p>
                     <div class="button-items">
-                        <button class="btn btn-primary" (click)="proyectar(ingresoLoteItem)">
-                            <ng-template
-                                [ngIf]="((isLoading | async) && ingresoLoteItem==ingresoLoteSeleccionado) && mostrarCargaProyeccion">
+                        <button class="btn btn-primary" (click)="proyectar(ingresoLoteItem)" appEstados
+                            [estados]="['abierto','proyectado']" [estadoActual]="ingresoLoteItem.estadoNombre">
+                            <ng-template [ngIf]="ingresoLoteItem==ingresoLoteSeleccionado && mostrarCargaProyeccion">
                                 <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
                             </ng-template>
                             <span
-                                *ngIf="!((isLoading | async) && ingresoLoteItem==ingresoLoteSeleccionado) && !mostrarCargaProyeccion">Proyectar</span>
+                                *ngIf="!(ingresoLoteItem==ingresoLoteSeleccionado && mostrarCargaProyeccion)">Proyectar</span>
                         </button>
                         <button class="btn btn-secondary"
-                            (click)="openModalFormularioEdicionFactorProduccion(ingresoLoteItem)">Ed.Produccion</button>
+                            (click)="openModalFormularioEdicionFactorProduccion(ingresoLoteItem)" appEstados
+                            [estados]="['proyectado']"
+                            [estadoActual]="ingresoLoteItem.estadoNombre">Ed.Produccion</button>
 
-                        <button class="btn btn-primary" (click)="listarProyeccionDetalle(ingresoLoteItem)">Ver</button>
+                        <button class="btn btn-primary" appEstados [estados]="['proyectado','cerrado']"
+                            [estadoActual]="ingresoLoteItem.estadoNombre"
+                            (click)="listarProyeccionDetalle(ingresoLoteItem)">Ver</button>
                     </div>
 
 
@@ -167,7 +176,7 @@
             <ng-template [ngIf]="(isLoading | async) && mostrarCargaEdicionLoteDetalle">
                 <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
             </ng-template>
-            EDitar
+            Editar
         </button>
     </div>
 </ng-template>
@@ -175,7 +184,7 @@
 
 <ng-template #listaProyLoteDetalle let-modal>
     <div class="modal-header">
-        <h5 class="modal-title">Proyeccion</h5>
+        <h5 class="modal-title">Proyeccion-{{ingresoLoteSeleccionado?.nombreIngreso}}</h5>
         <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body p-4">
