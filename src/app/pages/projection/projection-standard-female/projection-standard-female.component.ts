@@ -11,6 +11,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, Subscription } from "rxjs";
 import { EventService } from "src/app/core/services/event.service";
 import { LoaderService } from "src/app/core/services/loader.service";
+import { IngresoLote } from "src/app/models/IngresoLote";
 import { environment } from "src/environments/environment";
 import { ProyStandardHembra } from "../../../models/proyStandardFemale";
 @Component({
@@ -20,6 +21,7 @@ import { ProyStandardHembra } from "../../../models/proyStandardFemale";
 })
 export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
   formularioProyeccionHembra: FormGroup;
+  listaIngresoLote: Array<IngresoLote>;
   headersStandardHembra = [
     { headerName: "semana", bindValue: "semana", isActions: false },
     {
@@ -44,7 +46,12 @@ export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
   modalFormProyStandandHembra: TemplateRef<any>;
   subscriptionEditProjectionHembraEvent: Subscription;
   subscriptionRemoveProjectionHembraEvent: Subscription;
+
+  formularioIngresoLote: FormGroup;
+  //
+  isLoadingIngresoLote: boolean;
   isLoadingForms: Observable<boolean>;
+  isLoadingProyeccion: boolean;
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
@@ -53,6 +60,9 @@ export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
     private loadingService: LoaderService
   ) {
     this.isLoadingForms = this.loadingService.isLoading;
+    this.listaIngresoLote = [];
+    this.isLoadingIngresoLote = true;
+    this.isLoadingProyeccion = false;
   }
   ngOnDestroy(): void {
     this.subscriptionEditProjectionHembraEvent?.unsubscribe();
@@ -61,6 +71,8 @@ export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.crearFormularioProyeccionStandardHembra();
+    this.crearFormularioIngresoLote();
+    this.listarProyIngreso();
     this.listarStandardHembra();
     this.subscriptionEditProjectionHembraEvent = this.eventService.subscribe(
       "editProyeccionHembra",
@@ -82,6 +94,24 @@ export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
       .dismissed.subscribe(() => {
         this.listarStandardHembra();
       });
+  }
+  async listarProyIngreso() {
+    this.isLoadingIngresoLote = true;
+    this.listaIngresoLote = await this.http
+      .get<Array<IngresoLote>>(
+        environment.apiUrl + "/proyIngresoLote/listarAprobadosyProyectados"
+      )
+      .toPromise();
+    this.isLoadingIngresoLote = false;
+  }
+  crearFormularioIngresoLote() {
+    this.formularioIngresoLote = this.fb.group({
+      ingresoLotes: [null, [Validators.required]],
+    });
+  }
+  actualizarProyeccionPorIngresoDeLotes(ingresoLotes: Array<IngresoLote>) {
+    this.isLoadingProyeccion = true;
+    console.log("a", ingresoLotes);
   }
   async crearYActualizarProyStandardHembra(
     proyeccionStandardHembra: ProyStandardHembra
@@ -106,7 +136,7 @@ export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
       });
   }
   async removeStandardHembra(proyStandardHembra: ProyStandardHembra) {
-    console.log(proyStandardHembra)
+    console.log(proyStandardHembra);
     await this.http
       .get(
         environment.apiUrl +

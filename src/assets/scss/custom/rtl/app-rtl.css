@@ -82,7 +82,7 @@ File: Main Css File
     display: inline-block; } }
 
 .page-content {
-  padding: calc(70px + 24px) calc(24px / 2) 60px calc(24px / 2); }
+  padding: calc(1px + 24px) calc(24px / 2) 60px calc(24px / 2); }
 
 .header-item {
   height: 70px;
@@ -312,7 +312,7 @@ body[data-layout="horizontal"] .footer {
   bottom: 0;
   margin-top: 0;
   position: fixed;
-  top: 70px;
+  top: 1px;
   -webkit-box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
           box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03); }
 

@@ -6,12 +6,45 @@
     <!-- end page title -->
     <div class="row">
         <div class="col-sm-12 ">
-            <div class="d-flex justify-content-between">
-                <h4 class="m-0 title-uppercase d-inline-block">Proyeccion Hembras</h4>
-                <button class="btn btn-success pull-right" (click)="crearNuevoStandardHembra()">Crear</button>
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Proyeccion Hembras</h4>
+                <div class="page-title-right">
+                    <button class="btn btn-success pull-right" (click)="crearNuevoStandardHembra()">Crear</button>
+
+                </div>
             </div>
 
         </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Actualizacion de proyeccion por lotes</div>
+
+                    <form [formGroup]="formularioIngresoLote"
+                        (ngSubmit)="actualizarProyeccionPorIngresoDeLotes(formularioIngresoLote.value)">
+                        <div class=" mb-3 row"><label class="col-md-2 col-form-label">Ingreso Lotes</label>
+                            <div class="col-md-10">
+                                <ng-select formControlName="ingresoLotes" bindLabel="nombreIngreso" [multiple]="true"
+                                    [loading]="isLoadingIngresoLote" [items]="listaIngresoLote"></ng-select>
+                            </div>
+
+                        </div>
+                        <div class="mb-3 row">
+                            <button class="btn btn-primary">
+                                <ng-template [ngIf]="isLoadingProyeccion">
+                                    <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                                </ng-template>
+                                <span *ngIf="!isLoadingProyeccion">
+                                    Actualizar Proyeccion
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-12 mt-2">
             <div class="card">
                 <div class="card-body">

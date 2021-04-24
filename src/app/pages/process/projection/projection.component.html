@@ -193,28 +193,28 @@
             <table class="table table-bordered mb-0">
                 <thead>
                     <tr>
-                        <th rowspan="2">Tipo</th>
+                        <th rowspan="2" class="fondo-gris">Tipo</th>
 
-                        <th rowspan="2">Fecha</th>
-                        <th rowspan="2">SEM</th>
-                        <th colspan="6" class="text-center">LINEA HEMBRA</th>
-                        <th colspan="6" class="text-center">LINEA MACHO</th>
+                        <th rowspan="2" class="fondo-gris">Fecha</th>
+                        <th rowspan="2" class="fondo-gris">SEM</th>
+                        <th colspan="6" class="text-center fondo-gris">LINEA HEMBRA</th>
+                        <th colspan="6" class="text-center fondo-gris">LINEA MACHO</th>
 
                     </tr>
 
                     <tr>
-                        <th>#AVES</th>
-                        <th>#HI</th>
-                        <th>#P.BBS</th>
-                        <th>%POSTURA</th>
-                        <th>%H.I.</th>
-                        <th>%NAC</th>
-                        <th>#AVES</th>
-                        <th>#HI</th>
-                        <th>#P.BBS</th>
-                        <th>%POSTURA</th>
-                        <th>%H.I.</th>
-                        <th>%NAC</th>
+                        <th class="fondo-gris">#AVES</th>
+                        <th class="fondo-gris">#HI</th>
+                        <th class="fondo-gris">#P.BBS</th>
+                        <th class="fondo-gris">%POSTURA</th>
+                        <th class="fondo-gris">%H.I.</th>
+                        <th class="fondo-gris">%NAC</th>
+                        <th class="fondo-gris">#AVES</th>
+                        <th class="fondo-gris">#HI</th>
+                        <th class="fondo-gris">#P.BBS</th>
+                        <th class="fondo-gris">%POSTURA</th>
+                        <th class="fondo-gris">%H.I.</th>
+                        <th class="fondo-gris">%NAC</th>
 
                     </tr>
                 </thead>
@@ -223,19 +223,20 @@
                         <td>{{proyDetalleItem.tipo}}</td>
                         <td>{{proyDetalleItem.fechaMovimiento}}</td>
                         <td>{{proyDetalleItem.semana}}</td>
-                        <td>{{proyDetalleItem.lineaHembra.saldoAves | number:'1.0-0' }}</td>
-                        <td>{{proyDetalleItem.lineaHembra.saldoHi | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaHembra.saldoBbs | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaHembra.porcentajePostura | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaHembra.porcentajeHi | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaHembra.porcentajeNacimiento | number:'1.0-0'}}</td>
+                        <td class="fondo-rosado">{{proyDetalleItem.lineaHembra.saldoAves | number:'1.0-0' }}</td>
+                        <td class="fondo-rosado">{{proyDetalleItem.lineaHembra.saldoHi | number:'1.0-0'}}</td>
+                        <td class="fondo-rosado">{{proyDetalleItem.lineaHembra.saldoBbs | number:'1.0-0'}}</td>
+                        <td class="fondo-rosado">{{proyDetalleItem.lineaHembra.porcentajePostura | number:'1.0-0'}}</td>
+                        <td class="fondo-rosado">{{proyDetalleItem.lineaHembra.porcentajeHi | number:'1.0-0'}}</td>
+                        <td class="fondo-rosado">{{proyDetalleItem.lineaHembra.porcentajeNacimiento | number:'1.0-0'}}
+                        </td>
 
-                        <td>{{proyDetalleItem.lineaMacho.saldoAves | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaMacho.saldoHi | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaMacho.saldoBbs | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaMacho.porcentajePostura | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaMacho.porcentajeHi | number:'1.0-0'}}</td>
-                        <td>{{proyDetalleItem.lineaMacho.porcentajeNacimiento | number:'1.0-0'}}</td>
+                        <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.saldoAves | number:'1.0-0'}}</td>
+                        <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.saldoHi | number:'1.0-0'}}</td>
+                        <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.saldoBbs | number:'1.0-0'}}</td>
+                        <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.porcentajePostura | number:'1.0-0'}}</td>
+                        <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.porcentajeHi | number:'1.0-0'}}</td>
+                        <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.porcentajeNacimiento | number:'1.0-0'}}</td>
 
                     </tr>
                 </tbody>

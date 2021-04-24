@@ -1,8 +1,10 @@
 <div id="layout-wrapper">
 
-  <app-topbar (settingsButtonClicked)="onSettingsButtonClicked()" (mobileMenuButtonClicked)="onToggleMobileMenu()">
-  </app-topbar>
-
+  <!--   <app-topbar  >
+  </app-topbar> -->
+  <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
+    <i class="fa fa-fw fa-bars"></i>
+  </button>
   <app-sidebar [isCondensed]="isCondensed"></app-sidebar>
 
   <div class="main-content">
@@ -12,7 +14,6 @@
     </div>
 
     <!-- footer -->
-    <app-footer></app-footer>
   </div>
 </div>
 

@@ -8,7 +8,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { JwtInterceptor } from "src/app/core/helpers/jwt.interceptor";
 import { LoaderInterceptorService } from "src/app/core/services/interceptors/loader-interceptor.service";
-import { FactorComponent } from './factor/factor.component';
+import { FactorComponent } from "./factor/factor.component";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -21,15 +22,15 @@ import { FactorComponent } from './factor/factor.component';
     ProjectionRoutingModule,
     CommonModuleCustom,
     ReactiveFormsModule,
-    HttpClientModule,
+    NgSelectModule,
   ],
-  providers: [
+/*   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptorService,
       multi: true,
     },
-  ],
+  ], */
 })
 export class ProjectionModule {}
