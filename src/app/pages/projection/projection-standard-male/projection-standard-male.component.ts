@@ -5,6 +5,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, Subscription } from "rxjs";
 import { EventService } from "src/app/core/services/event.service";
 import { LoaderService } from "src/app/core/services/loader.service";
+import { IngresoLote } from "src/app/models/IngresoLote";
 import { ProyStandardMacho } from "src/app/models/proyStandardMale";
 import { environment } from "src/environments/environment";
 
@@ -38,8 +39,12 @@ export class ProjectionStandardMaleComponent implements OnInit {
   @ViewChild("editAndCreateProyStandardMacho")
   modalFormProyStandandMacho: TemplateRef<any>;
   subscriptionEditProjectionMachoEvent: Subscription;
+  listaIngresoLote: Array<IngresoLote>;
+  isLoadingIngresoLote: boolean;
   subscriptionRemoveProjectionMachoEvent: Subscription;
   isLoadingForms: Observable<boolean>;
+  formularioIngresoLote: FormGroup;
+  isLoadingProyeccion: boolean;
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
@@ -48,6 +53,9 @@ export class ProjectionStandardMaleComponent implements OnInit {
     private loadingService: LoaderService
   ) {
     this.isLoadingForms = this.loadingService.isLoading;
+    this.listaIngresoLote = [];
+    this.isLoadingIngresoLote = true;
+    this.isLoadingProyeccion = false;
   }
   ngOnDestroy(): void {
     this.subscriptionEditProjectionMachoEvent?.unsubscribe();
@@ -56,7 +64,10 @@ export class ProjectionStandardMaleComponent implements OnInit {
 
   ngOnInit(): void {
     this.crearFormularioProyeccionStandardMacho();
+    this.crearFormularioIngresoLote();
+
     this.listarStandardMacho();
+    this.listarProyIngreso();
     this.subscriptionEditProjectionMachoEvent = this.eventService.subscribe(
       "editProyeccionMacho",
       (proyecionHembraEdit: ProyStandardMacho) => {
@@ -70,6 +81,19 @@ export class ProjectionStandardMaleComponent implements OnInit {
       }
     );
   }
+  async actualizarProyeccionPorIngresoDeLotes(
+    ingresoLotes: Array<IngresoLote>
+  ) {
+    this.isLoadingProyeccion = true;
+    await this.http
+      .post(
+        environment.apiUrl + "/proyLoteDetalle/proyectar/lista",
+        ingresoLotes
+      )
+      .toPromise();
+    this.isLoadingProyeccion = false;
+    console.log("a", ingresoLotes);
+  }
   crearNuevoStandardMacho() {
     this.formularioProyeccionMacho.reset();
     this.modalService
@@ -77,6 +101,15 @@ export class ProjectionStandardMaleComponent implements OnInit {
       .dismissed.subscribe(() => {
         this.listarStandardMacho();
       });
+  }
+  async listarProyIngreso() {
+    this.isLoadingIngresoLote = true;
+    this.listaIngresoLote = await this.http
+      .get<Array<IngresoLote>>(
+        environment.apiUrl + "/proyIngresoLote/listarAprobadosyProyectados"
+      )
+      .toPromise();
+    this.isLoadingIngresoLote = false;
   }
   async crearYActualizarProyStandardHembra(
     proyeccionStandardHembra: ProyStandardMacho
@@ -134,6 +167,11 @@ export class ProjectionStandardMaleComponent implements OnInit {
       porc_postura: ["", [Validators.required]],
       porc_hi: ["", [Validators.required]],
       porc_nacimiento: ["", [Validators.required]],
+    });
+  }
+  crearFormularioIngresoLote() {
+    this.formularioIngresoLote = this.fb.group({
+      ingresoLotes: [null, [Validators.required]],
     });
   }
   get formularioProyeccionMachoControles() {

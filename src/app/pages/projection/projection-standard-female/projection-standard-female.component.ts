@@ -109,9 +109,17 @@ export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
       ingresoLotes: [null, [Validators.required]],
     });
   }
-  actualizarProyeccionPorIngresoDeLotes(ingresoLotes: Array<IngresoLote>) {
+  async actualizarProyeccionPorIngresoDeLotes(
+    ingresoLotes: Array<IngresoLote>
+  ) {
     this.isLoadingProyeccion = true;
-    console.log("a", ingresoLotes);
+    await this.http
+      .post(
+        environment.apiUrl + "/proyLoteDetalle/proyectar/lista",
+        ingresoLotes
+      )
+      .toPromise();
+    this.isLoadingProyeccion = false;
   }
   async crearYActualizarProyStandardHembra(
     proyeccionStandardHembra: ProyStandardHembra
