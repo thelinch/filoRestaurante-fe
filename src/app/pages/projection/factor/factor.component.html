@@ -115,7 +115,21 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Factor venta macho</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioFactorControles.factor_venta_macho.touched && formularioFactorControles.factor_venta_macho.errors}"
+                            class="form-control" placeholder="factor venta de machos" type="number" formControlName="factor_venta_macho">
+                        <div *ngIf="formularioFactorControles.factor_venta_macho.touched && formularioFactorControles.factor_venta_macho.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioFactorControles.factor_venta_macho.errors.required">Requerido</span>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">

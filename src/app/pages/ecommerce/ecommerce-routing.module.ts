@@ -39,10 +39,10 @@ const routes: Routes = [
         path: 'customers',
         component: CustomersComponent
     },
-    {
+/*     {
         path: 'orders',
         component: OrdersComponent
-    }
+    } */
 ];
 
 @NgModule({

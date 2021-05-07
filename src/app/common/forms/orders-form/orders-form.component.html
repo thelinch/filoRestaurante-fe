@@ -1,0 +1,23 @@
+<div class="row m-0">
+    <div class="col-sm-12">
+        <form id="formularioPedidoVenta" [formGroup]="this.formGroupPedido"
+            (ngSubmit)="this.creacionYEdicionDePedidoVenta()">
+
+
+
+
+
+        </form>
+    </div>
+    <div class="col-sm-12">
+        <form [formGroup]="this.formGroupPedidoDetalle" id="formularioPedidoVentaDetalle">
+
+
+        </form>
+    </div>
+    <div class="col-sm-12"></div>
+    <div *ngIf="mostrarBotonSubmit" class="col-sm-12">
+        
+        <button type="submit" form="formularioPedidoVenta" class="btn btn-success">Crear</button>
+    </div>
+</div>

@@ -67,6 +67,12 @@ export const MENU: MenuItem[] = [
         link: "/procesos/proyeccion",
         parentId: 60,
       },
+      {
+        id: 18,
+        label: "Pedidos",
+        link: "/procesos/pedidos",
+        parentId: 60,
+      },
     ],
   },
   {

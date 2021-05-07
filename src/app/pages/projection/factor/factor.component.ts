@@ -29,28 +29,33 @@ export class FactorComponent implements OnInit, OnDestroy {
   isLoadingForms: Observable<boolean>;
   headerListaFactor = [
     {
-      headerName: "Factor Levante",
+      headerName: "F.Levante",
       bindValue: "factormort_lev",
       isActions: false,
     },
     {
-      headerName: "factor mort.Linea Hembra",
+      headerName: "F.M.Linea Hembra",
       bindValue: "factormort_prod_lh",
       isActions: false,
     },
     {
-      headerName: "factor mort.Linea Macho",
+      headerName: "FM.Linea Macho",
       bindValue: "factormort_prod_lm",
       isActions: false,
     },
     {
-      headerName: "Factor castigo",
+      headerName: "F.Castigo",
       bindValue: "factorcastigo",
       isActions: false,
     },
     {
-      headerName: "Factor Bbs",
+      headerName: "F.Bbs",
       bindValue: "factor_bbs",
+      isActions: false,
+    },
+    {
+      headerName: "F.Venta machos",
+      bindValue: "factor_venta_macho",
       isActions: false,
     },
     { headerName: "Acciones", bindValue: "factorcastigo", isActions: true },
@@ -132,6 +137,7 @@ export class FactorComponent implements OnInit, OnDestroy {
       factormort_prod_lm: ["", [Validators.required]],
       factorcastigo: ["", [Validators.required]],
       factor_bbs: ["", [Validators.required]],
+      factor_venta_macho: ["", [Validators.required]],
     });
   }
 }
