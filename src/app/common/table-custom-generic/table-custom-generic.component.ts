@@ -123,10 +123,10 @@ export class TableCustomGenericComponent
     const $this = this;
     this.subscription = this._search$
       .pipe(
-        debounceTime(200),
+        debounceTime(90),
         distinctUntilChanged(),
         switchMap(() => this._search()),
-        delay(200)
+        delay(90)
       )
       .subscribe((result) => {
         this._tables$.next(result.tables);
@@ -156,12 +156,17 @@ export class TableCustomGenericComponent
   }
   ngAfterViewInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.data?.firstChange) {
+    console.log("change", changes);
+    /*   if (!changes.data?.firstChange) {
       this.data = [...changes.data.currentValue];
 
       this._tablesCopy$.next([...changes.data.currentValue]);
       this._search$.next(this._state);
-    }
+    } */
+    this.data = [...changes.data.currentValue];
+
+    this._tablesCopy$.next([...changes.data.currentValue]);
+    this._search$.next(this._state);
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -170,9 +175,8 @@ export class TableCustomGenericComponent
     this.subscriptionTable?.unsubscribe();
   }
   public setDataTable(data: Array<any>, object: string = "") {
-    console.log("data", data, "object", object);
-    this.data = data;
-    this._tablesCopy$.next(data);
+    this.data = [...data];
+    this._tablesCopy$.next([...data]);
     this._search$.next(this._state);
   }
   onSort({ column, direction }: SortEvent) {

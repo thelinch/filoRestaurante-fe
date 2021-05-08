@@ -4,12 +4,51 @@
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <h4 class="mb-0 font-size-18">Pedidos</h4>
                 <div class="page-title-right">
-                    <button class="btn btn-success pull-right">Crear</button>
+                    <button class="btn btn-success pull-right" (click)="crearNuevoPedido()">Crear</button>
                 </div>
             </div>
         </div>
+        <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let pedidoVentaItem of listaPedidoVenta">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>{{pedidoVentaItem.nombreCliente}}</strong>
+                    </p>
+                    <div class="button-items">
+                        <button class="btn btn-success w-100" (click)="editar(pedidoVentaItem)">Editar</button>
 
+<!--                         <button class="btn btn-info">Ver</button>
+ -->
+                    </div>
+                    <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
+                    </app-table-custom-generic> -->
+
+                </div>
+            </div>
+        </div>
     </div>
 
 
 </div>
+
+<ng-template #editAndCreateOrder let-modalAccion>
+    <div class="modal-header">
+        <h5 class="modal-title">Orden</h5>
+        <button type="button" class="btn-close" aria-hidden="true"
+            (click)="modalAccion.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <app-orders-form [mostrarBotonSubmit]="false" [pedidoVentaEdicion]="pedidoVentaEdicion"></app-orders-form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modalAccion.dismiss('Close')">Cancelar</button>
+        <button type="submit" form="formularioPedidoVenta" class="btn btn-success ms-1">
+            <!--    <ng-template [ngIf]="isLoadingForms | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template> -->
+            <!--  {{formularioAcciones.get('idAcciones').value==0?
+            'Guardar':'Editar'}} -->
+            Guardar
+        </button>
+    </div>
+</ng-template>

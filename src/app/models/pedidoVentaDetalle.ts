@@ -4,6 +4,7 @@ export interface pedidoVentaDetalle {
   cantidadHembras: number;
   cantidadMachos: number;
   fechaRegistro: string | Date;
+  acciones?: Array<string>;
 }
 /* class pedidoVentaDetalleClass implements pedidoVentaDetalle {
   id?: number;

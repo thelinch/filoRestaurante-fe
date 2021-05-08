@@ -2,22 +2,71 @@
     <div class="col-sm-12">
         <form id="formularioPedidoVenta" [formGroup]="this.formGroupPedido"
             (ngSubmit)="this.creacionYEdicionDePedidoVenta()">
-
-
-
-
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="col-md-2 col-form-label">Cliente</label>
+                        <ng-select [compareWith]="compareCliente" [loading]="estaCargandoListaClientes"
+                            formControlName="cliente" [items]="listaClientes" bindLabel="CL_CNOMCLI"></ng-select>
+                        <div *ngIf="formularioPedidoVentaControles.cliente.touched && formularioPedidoVentaControles.cliente.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioPedidoVentaControles.cliente.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-12">
+        <h5>Detalle</h5>
+        <hr>
+    </div>
+    <div class="col-sm-12 mb-2">
+        <form [formGroup]="this.formGroupPedidoDetalle"
+            (ngSubmit)="agregarPedidoDetalle(this.formGroupPedidoDetalle.value)" id="formularioPedidoVentaDetalle">
+            <div class="row d-flex align-items-center">
+                <div class=" col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label class="control-label">Fecha Pedido</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioPedidoDetalleControles.fechaPedido.touched  && formularioPedidoDetalleControles.fechaPedido.errors}"
+                            class="form-control" placeholder="fecha de pedido" type="date"
+                            formControlName="fechaPedido">
+                        <div *ngIf="formularioPedidoDetalleControles.fechaPedido.touched  && formularioPedidoDetalleControles.fechaPedido.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioPedidoDetalleControles.fechaPedido.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-3">
+                        <label class="control-label">Cantidad Hembras</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioPedidoDetalleControles.cantidadHembras.touched  && formularioPedidoDetalleControles.cantidadHembras.errors}"
+                            class="form-control" placeholder="Numero de hembras" type="number"
+                            formControlName="cantidadHembras">
+                        <div *ngIf="formularioPedidoDetalleControles.cantidadHembras.touched  && formularioPedidoDetalleControles.cantidadHembras.errors"
+                            class="invalid-feedback">
+                            <span
+                                *ngIf="formularioPedidoDetalleControles.cantidadHembras.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 d-flex justify-content-end">
+                    <button type="submit" form="formularioPedidoVentaDetalle"
+                        class="btn btn-success">{{estaEditandoPedidoVentaDetalle? "Editar":"Agrear"}}</button>
+                </div>
+            </div>
 
         </form>
     </div>
     <div class="col-sm-12">
-        <form [formGroup]="this.formGroupPedidoDetalle" id="formularioPedidoVentaDetalle">
+        <app-table-custom-generic [haders]="headers" [data]="listaPedidoDetalle">
+        </app-table-custom-generic>
 
-
-        </form>
     </div>
-    <div class="col-sm-12"></div>
     <div *ngIf="mostrarBotonSubmit" class="col-sm-12">
-        
+
         <button type="submit" form="formularioPedidoVenta" class="btn btn-success">Crear</button>
     </div>
 </div>
