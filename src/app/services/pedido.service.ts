@@ -34,6 +34,12 @@ export class PedidoService {
       pedidoVentaDetalle
     );
   }
+  editar(pedidoVenta: PedidoVenta) {
+    return this.http.post(
+      environment.apiUrl + "/pedidoVenta/editar",
+      pedidoVenta
+    );
+  }
   listar(): Observable<Array<PedidoVenta>> {
     return this.http.get<Array<PedidoVenta>>(
       environment.apiUrl + "/pedidoVenta"
@@ -45,7 +51,9 @@ export class PedidoService {
       null
     );
   }
-  listarPedidoDetallePorIdPedidoVenta(pedidoVentaId: number):Observable<Array<pedidoVentaDetalle>> {
+  listarPedidoDetallePorIdPedidoVenta(
+    pedidoVentaId: number
+  ): Observable<Array<pedidoVentaDetalle>> {
     return this.http.get<Array<pedidoVentaDetalle>>(
       environment.apiUrl + "/pedidoVentaDetalle/listarPorVenta/" + pedidoVentaId
     );

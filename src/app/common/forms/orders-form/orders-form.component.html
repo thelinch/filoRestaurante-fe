@@ -6,8 +6,9 @@
                 <div class="col-12">
                     <div class="mb-3">
                         <label class="col-md-2 col-form-label">Cliente</label>
-                        <ng-select [compareWith]="compareCliente" [loading]="estaCargandoListaClientes"
-                            formControlName="cliente" [items]="listaClientes" bindLabel="CL_CNOMCLI"></ng-select>
+                        <ng-select [readonly]="disabledSelectCliente" [compareWith]="compareCliente"
+                            [loading]="estaCargandoListaClientes" formControlName="cliente" [items]="listaClientes"
+                            bindLabel="CL_CNOMCLI"></ng-select>
                         <div *ngIf="formularioPedidoVentaControles.cliente.touched && formularioPedidoVentaControles.cliente.errors"
                             class="invalid-feedback">
                             <span *ngIf="formularioPedidoVentaControles.cliente.errors.required">Requerido</span>
@@ -25,7 +26,7 @@
         <form [formGroup]="this.formGroupPedidoDetalle"
             (ngSubmit)="agregarPedidoDetalle(this.formGroupPedidoDetalle.value)" id="formularioPedidoVentaDetalle">
             <div class="row d-flex align-items-center">
-                <div class=" col-sm-12 col-lg-6">
+                <div class=" col-sm-12 col-lg-4">
                     <div class="mb-3">
                         <label class="control-label">Fecha Pedido</label>
                         <input
@@ -35,10 +36,15 @@
                         <div *ngIf="formularioPedidoDetalleControles.fechaPedido.touched  && formularioPedidoDetalleControles.fechaPedido.errors"
                             class="invalid-feedback">
                             <span *ngIf="formularioPedidoDetalleControles.fechaPedido.errors.required">Requerido</span>
+                            <span *ngIf="formularioPedidoDetalleControles.fechaPedido.errors.invalidDate">Ya esta
+                                registrada la fecha</span>
+                            <span *ngIf="formularioPedidoDetalleControles.fechaPedido.errors.onlyLunes">Solo esta
+                                permito registrar el dia Lunes</span>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-lg-6">
+                <div class="col-sm-12 col-lg-4">
                     <div class="mb-3">
                         <label class="control-label">Cantidad Hembras</label>
                         <input
@@ -49,12 +55,22 @@
                             class="invalid-feedback">
                             <span
                                 *ngIf="formularioPedidoDetalleControles.cantidadHembras.errors.required">Requerido</span>
+                                <span
+                                *ngIf="formularioPedidoDetalleControles.cantidadHembras.errors.min">Tiene que ser positivo</span>
+                                
                         </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    <div class="mb-3">
+                        <label class="control-label">Cantidad Machos</label>
+                        <input disabled [value]="cantidadMachosValue" class="form-control"
+                            placeholder="Numero de Machos">
                     </div>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-end">
                     <button type="submit" form="formularioPedidoVentaDetalle"
-                        class="btn btn-success">{{estaEditandoPedidoVentaDetalle? "Editar":"Agrear"}}</button>
+                        class="btn btn-success">{{indiceEdicionPedidoDetalle>=0? "Editar":"Agrear"}}</button>
                 </div>
             </div>
 

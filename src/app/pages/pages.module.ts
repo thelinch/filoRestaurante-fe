@@ -78,9 +78,8 @@ FullCalendarModule.registerPlugins([
     CryptoModule,
     EcommerceModule,
     EmailModule,
-    ErrorsModule,
+    //ErrorsModule,
     InvoicesModule,
-    HttpClientModule,
     ProjectsModule,
     UIModule,
     TasksModule,
@@ -106,18 +105,13 @@ FullCalendarModule.registerPlugins([
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
-    {
+/*     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptorService,
       multi: true,
     },
     LoaderService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoaderInterceptorService,
-      multi: true,
-    },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }, */
   ],
 })
 export class PagesModule {}
