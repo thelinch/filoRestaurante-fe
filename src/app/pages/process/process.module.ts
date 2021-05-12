@@ -8,9 +8,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LoaderInterceptorService } from "src/app/core/services/interceptors/loader-interceptor.service";
 import { ProjectionComponent } from "./projection/projection.component";
 import { OrdersComponent } from './orders/orders.component';
+import { TotlaIncomeComponent } from './totla-income/totla-income.component';
 
 @NgModule({
-  declarations: [LotesComponent, ProjectionComponent, OrdersComponent],
+  declarations: [LotesComponent, ProjectionComponent, OrdersComponent, TotlaIncomeComponent],
   imports: [
     CommonModule,
     ProcessRoutingModule,

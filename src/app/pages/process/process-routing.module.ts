@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { OrdersComponent } from "./orders/orders.component";
 import { LotesComponent } from "./lotes/lotes.component";
 import { ProjectionComponent } from "./projection/projection.component";
+import { TotlaIncomeComponent } from "./totla-income/totla-income.component";
 
 const routes: Routes = [
   {
@@ -16,7 +17,10 @@ const routes: Routes = [
   {
     path: "pedidos",
     component: OrdersComponent,
-  },
+  },{
+    path:"total-ingresos",
+    component:TotlaIncomeComponent
+  }
 ];
 
 @NgModule({
