@@ -132,6 +132,7 @@ export class OrdersFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.formGroupPedido = this.fb.group({
       id: [0],
       cliente: [null, [Validators.required]],
+      color: [null, [Validators.required]],
     });
   }
   compareCliente(cliente: any, clientep: any) {
@@ -227,10 +228,9 @@ export class OrdersFormComponent implements OnInit, AfterViewInit, OnDestroy {
   async creacionYEdicionDePedidoVenta() {
     const pedidoVenta = this.formGroupPedido.value as PedidoVenta;
     pedidoVenta.detalles = this.listaPedidoDetalle;
-    if(!this.pedidoVentaEdicion){
-      
+    if (!this.pedidoVentaEdicion) {
     }
-    pedidoVenta.id = !this.pedidoVentaEdicion && uuidv4() || pedidoVenta.id;
+    pedidoVenta.id = (!this.pedidoVentaEdicion && uuidv4()) || pedidoVenta.id;
     console.log("id", pedidoVenta.id);
     if (this.formGroupPedido.invalid) {
       Swal.fire({ text: "Debe elegir un cliente", icon: "error" });

@@ -35,10 +35,13 @@ export class OrdersComponent implements OnInit {
       "submitSuccessPedidoVentaDetalle",
       (pedidoVenta: PedidoVenta) => {
         console.log("pedidoVenta", pedidoVenta);
-        if (
-          !this.listaPedidoVenta.find((pedido) => pedido.id == pedidoVenta.id)
-        ) {
+        const index = this.listaPedidoVenta.findIndex(
+          (pedido) => pedido.id == pedidoVenta.id
+        );
+        if (index == -1) {
           this.listaPedidoVenta.push(pedidoVenta);
+        } else {
+          this.listaPedidoVenta[index] = pedidoVenta;
         }
         this.cerrarModalFormularioPedidoVenta();
       }

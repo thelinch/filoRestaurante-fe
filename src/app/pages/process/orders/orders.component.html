@@ -11,6 +11,7 @@
         <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let pedidoVentaItem of listaPedidoVenta">
             <div class="card">
                 <div class="card-body">
+                    <div style="width: 10px;height: 10px; border-radius: 50%;" [ngStyle]="{'backgroundColor':pedidoVentaItem.color}"></div>
                     <p class="card-text">
                         <strong>{{pedidoVentaItem.nombreCliente}}</strong>
                     </p>
