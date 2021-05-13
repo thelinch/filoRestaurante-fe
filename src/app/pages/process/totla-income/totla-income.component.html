@@ -29,9 +29,18 @@
                                 <th class="text-center fondo-gris" colspan="2">
                                     TOTAL (EN MILES DE UNIDADES)
                                 </th>
+                                <th class="text-center fondo-gris text-white" rowspan="3">
+                                    MACHOS
+                                </th>
+                                <th class="text-center fondo-gris text-white" rowspan="3">
+                                    MACHOS Sobrante/Faltante
+                                </th>
                                 <th class="text-center text-white" [ngStyle]="{'backgroundColor':clienteItem.color}"
                                     rowspan="3" *ngFor="let clienteItem of totalIngreso.clientes ">
                                     {{clienteItem.nombreCliente}}
+                                </th>
+                                <th class="text-center fondo-gris text-white" rowspan="3">
+                                    HEMBRA Sobrante/Faltante
                                 </th>
                             </tr>
                             <tr>
@@ -73,11 +82,18 @@
                                 <td>{{dataReporteItem.totalLineaHembra.sumaTotalBbsHembra}}</td>
                                 <td>{{dataReporteItem.totalLineaMacho.sumaTotalHuevosIncubablesMachos}}</td>
                                 <td>{{dataReporteItem.totalLineaMacho.sumaTotalBbsMacho}}</td>
+                                <td>{{dataReporteItem.totalMacho}}</td>
+                                <td>{{dataReporteItem.totalLineaMacho.sumaTotalBbsMacho-dataReporteItem.totalMacho}}
+                                </td>
+
+
                                 <ng-template ngFor let-pedidoItem [ngForOf]="dataReporteItem.pedidos ">
                                     <td class="text-white" [ngStyle]="{'backgroundColor':pedidoItem.color}">
                                         {{pedidoItem.pedidoHembra}}</td>
                                 </ng-template>
-
+                                <td>
+                                    {{dataReporteItem.totalLineaHembra.sumaTotalBbsHembra-dataReporteItem.sumaTotalPedidoHembra}}
+                                </td>
 
                             </tr>
                         </tbody>
