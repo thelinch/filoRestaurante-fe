@@ -18,6 +18,7 @@ export class TotlaIncomeComponent implements OnInit {
   ngOnInit(): void {
     this.traerTotalIngreso();
   }
+  async exportarExcel() {}
   async traerTotalIngreso() {
     this.estaCargandoTotalIngreso = true;
     this.totalIngreso = await this.http

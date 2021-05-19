@@ -15,7 +15,6 @@ import { LoaderInterceptorService } from "src/app/core/services/interceptors/loa
   imports: [
     CommonModule,
     ManagmentUserRoutingModule,
-    HttpClientModule,
     CommonModuleCustom,
     ReactiveFormsModule,
   ],
