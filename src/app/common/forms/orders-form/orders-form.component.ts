@@ -132,7 +132,7 @@ export class OrdersFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.formGroupPedido = this.fb.group({
       id: [0],
       cliente: [null, [Validators.required]],
-      color: [null, [Validators.required]],
+      color: ["#13B97B", [Validators.required]],
     });
   }
   compareCliente(cliente: any, clientep: any) {
@@ -231,9 +231,7 @@ export class OrdersFormComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.pedidoVentaEdicion) {
     }
     pedidoVenta.id = (!this.pedidoVentaEdicion && uuidv4()) || pedidoVenta.id;
-    console.log("id", pedidoVenta.id);
     if (this.formGroupPedido.invalid) {
-      Swal.fire({ text: "Debe elegir un cliente", icon: "error" });
       return;
     }
     if (this.listaPedidoDetalle.length == 0) {

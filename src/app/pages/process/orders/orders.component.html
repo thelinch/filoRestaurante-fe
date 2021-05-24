@@ -1,17 +1,64 @@
-<div class="container-fluid">
+<div class="container-fluid" style="height: 100vh;">
     <div class="row">
         <div class="col-sm-12">
             <div class="page-title-box d-flex align-items-center justify-content-between">
-                <h4 class="mb-0 font-size-18">Pedidos</h4>
+                <h4 class="mb-0 font-size-18">Lista de Pedidos</h4>
                 <div class="page-title-right">
                     <button class="btn btn-success pull-right" (click)="crearNuevoPedido()">Crear</button>
                 </div>
             </div>
         </div>
+        <div class="col-sm-12">
+            <form [formGroup]="formularioFiltradoPedidos" (ngSubmit)="exportarExcel()">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="mb-3 selected">
+                            <app-clientes-select-form [from]="formularioFiltradoPedidos"
+                                [props]="propsFormularioCliente" isMultiple="true">
+                            </app-clientes-select-form>
+                            <div *ngIf="formularioClientesControles.rucClientes.touched && formularioClientesControles.rucClientes.errors"
+                                class="invalid-feedback">
+                                <span *ngIf="formularioClientesControles.rucClientes.errors.required">Requerido</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2">
+                        <div class="mb-3">
+                            <label class=" col-form-label">Fecha Inicio</label>
+                            <input class="form-control" [ngClass]="{'is-invalid': formularioClientesControles.fechaInicio.touched  && formularioClientesControles.fechaInicio.errors}" type="date" formControlName="fechaInicio" />
+                            <div *ngIf="formularioClientesControles.fechaInicio.touched && formularioClientesControles.fechaInicio.errors"
+                                class="invalid-feedback">
+                                <span *ngIf="formularioClientesControles.fechaInicio.errors.required">Requerido</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2">
+                        <div class="mb-3">
+                            <label class=" col-form-label">Fecha Fin</label>
+                            <input class="form-control" type="date"
+                                [ngClass]="{'is-invalid': formularioClientesControles.fechaFin.touched  && formularioClientesControles.fechaFin.errors}"
+                                formControlName="fechaFin" />
+                            <div *ngIf="formularioClientesControles.fechaFin.touched && formularioClientesControles.fechaFin.errors"
+                                class="invalid-feedback">
+                                <span *ngIf="formularioClientesControles.fechaFin.errors.required">Requerido</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 d-flex align-items-center">
+                        <button class="btn btn-success">
+                            <i class="mdi mdi-file-excel"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
         <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let pedidoVentaItem of listaPedidoVenta">
             <div class="card">
                 <div class="card-body">
-                    <div style="width: 10px;height: 10px; border-radius: 50%;" [ngStyle]="{'backgroundColor':pedidoVentaItem.color}"></div>
+                    <div style="width: 10px;height: 10px; border-radius: 50%;"
+                        [ngStyle]="{'backgroundColor':pedidoVentaItem.color}"></div>
                     <p class="card-text">
                         <strong>{{pedidoVentaItem.nombreCliente}}</strong>
                     </p>

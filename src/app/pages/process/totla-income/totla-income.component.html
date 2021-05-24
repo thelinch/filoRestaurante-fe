@@ -76,29 +76,30 @@
                             <tr *ngFor="let dataReporteItem of totalIngreso.reporte ">
                                 <td>{{dataReporteItem.fecha}}</td>
                                 <ng-template ngFor let-loteItem [ngForOf]="dataReporteItem.lotes ">
-                                    <td>{{loteItem.lineaHembra.hi}}</td>
-                                    <td>{{loteItem.lineaHembra.bbs}}</td>
-                                    <td>{{loteItem.lineaMacho.hi}}</td>
-                                    <td>{{loteItem.lineaMacho.bbs}}</td>
-
-
-
+                                    <td>{{loteItem.lineaHembra.hi | number:'1.1-3'}}</td>
+                                    <td>{{loteItem.lineaHembra.bbs | number:'1.1-3'}}</td>
+                                    <td>{{loteItem.lineaMacho.hi | number:'1.1-3'}}</td>
+                                    <td>{{loteItem.lineaMacho.bbs | number:'1.1-3'}}</td>
                                 </ng-template>
-                                <td>{{dataReporteItem.totalLineaHembra.sumaTotalHuevosIncubablesHembra}}</td>
-                                <td>{{dataReporteItem.totalLineaHembra.sumaTotalBbsHembra}}</td>
-                                <td>{{dataReporteItem.totalLineaMacho.sumaTotalHuevosIncubablesMachos}}</td>
-                                <td>{{dataReporteItem.totalLineaMacho.sumaTotalBbsMacho}}</td>
-                                <td>{{dataReporteItem.totalMacho}}</td>
-                                <td>{{dataReporteItem.totalLineaMacho.sumaTotalBbsMacho-dataReporteItem.totalMacho}}
+                                <td>{{dataReporteItem.totalLineaHembra.sumaTotalHuevosIncubablesHembra |
+                                    number:'3.1-3'}}</td>
+                                <td>{{dataReporteItem.totalLineaHembra.sumaTotalBbsHembra | number:'3.1-3'}}</td>
+                                <td>{{dataReporteItem.totalLineaMacho.sumaTotalHuevosIncubablesMachos | number:'3.1-3'}}
+                                </td>
+                                <td>{{dataReporteItem.totalLineaMacho.sumaTotalBbsMacho | number:'3.1-3'}}</td>
+                                <td>{{dataReporteItem.totalMacho | number:'3.1-3'}}</td>
+                                <td>{{dataReporteItem.totalLineaMacho.sumaTotalBbsMacho-dataReporteItem.totalMacho
+                                    |number:'3.1-3'}}
                                 </td>
 
 
                                 <ng-template ngFor let-pedidoItem [ngForOf]="dataReporteItem.pedidos ">
                                     <td class="text-white" [ngStyle]="{'backgroundColor':pedidoItem.color}">
-                                        {{pedidoItem.pedidoHembra}}</td>
+                                        {{pedidoItem.pedidoHembra |number:'3.1-3'}}</td>
                                 </ng-template>
                                 <td>
-                                    {{dataReporteItem.totalLineaHembra.sumaTotalBbsHembra-dataReporteItem.sumaTotalPedidoHembra}}
+                                    {{dataReporteItem.totalLineaHembra.sumaTotalBbsHembra-dataReporteItem.sumaTotalPedidoHembra
+                                    | number:'3.1-3'}}
                                 </td>
 
                             </tr>

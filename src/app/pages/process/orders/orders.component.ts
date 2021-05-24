@@ -1,10 +1,12 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable } from "rxjs";
 import { TableCustomGenericComponent } from "src/app/common/table-custom-generic/table-custom-generic.component";
 import { EventService } from "src/app/core/services/event.service";
 import { LoaderService } from "src/app/core/services/loader.service";
 import { PedidoVenta } from "src/app/models/pedidoVenta";
+import { Props } from "src/app/models/PropsForm";
 import { PedidoService } from "src/app/services/pedido.service";
 
 @Component({
@@ -15,21 +17,37 @@ import { PedidoService } from "src/app/services/pedido.service";
 export class OrdersComponent implements OnInit {
   @ViewChild("editAndCreateOrder")
   modalFormCreateAndEditOrder: TemplateRef<any>;
+  propsFormularioCliente: Props;
   listaPedidoVenta: Array<PedidoVenta>;
   pedidoVentaEdicion: PedidoVenta;
   estaCargandoPeticion: Observable<boolean>;
   instanciaModalFormularioPedidoVenta: any;
+  formularioFiltradoPedidos: FormGroup;
   constructor(
     private modalService: NgbModal,
     private pedidoService: PedidoService,
     private eventServie: EventService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private fb: FormBuilder
   ) {
     this.estaCargandoPeticion = this.loaderService.isLoading;
     this.listaPedidoVenta = [];
   }
 
   ngOnInit(): void {
+    this.crearFormularioFiltradoPedidos();
+    this.propsFormularioCliente = {
+      formControlName: "rucClientes",
+      name: "Clientes",
+      placeholder: "Ingrese los clientes",
+      validators: [
+        {
+          message: "Ingrese al menos un cliente",
+          validator: Validators.required,
+          validatorName: "required",
+        },
+      ],
+    };
     this.listarPedidoVenta();
     this.eventServie.subscribe(
       "submitSuccessPedidoVentaDetalle",
@@ -54,6 +72,26 @@ export class OrdersComponent implements OnInit {
       { size: "lg" }
     );
   }
+  async crearFormularioFiltradoPedidos() {
+    this.formularioFiltradoPedidos = this.fb.group({
+      rucClientes: [null, [Validators.required]],
+      fechaInicio: [null, [Validators.required]],
+      fechaFin: [null, [Validators.required]],
+    });
+  }
+
+  async exportarExcel() {
+    this.formularioFiltradoPedidos.markAllAsTouched();
+    if (this.formularioFiltradoPedidos.invalid) {
+      return;
+    }
+    const { fechaInicio, fechaFin, rucClientes } =
+      this.formularioFiltradoPedidos.value;
+    const respuesta = await this.pedidoService
+      .exportarExcel({ fechaFin, fechaInicio, rucClientes })
+      .toPromise();
+    window.open(respuesta.rutaCompletaCM);
+  }
   cerrarModalFormularioPedidoVenta() {
     this.instanciaModalFormularioPedidoVenta?.close();
   }
@@ -77,5 +115,8 @@ export class OrdersComponent implements OnInit {
       this.modalFormCreateAndEditOrder,
       { size: "lg" }
     );
+  }
+  get formularioClientesControles() {
+    return this.formularioFiltradoPedidos.controls;
   }
 }

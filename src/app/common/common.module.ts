@@ -11,6 +11,7 @@ import { SafeHtmlPipe } from "./table-custom-generic/safe-html.pipe";
 import { EstadosDirective } from "./directivas/estados.directive";
 import { OrdersFormComponent } from "./forms/orders-form/orders-form.component";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { ClientesSelectFormComponent } from "./componentes/clientes-select-form/clientes-select-form.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
     SafeHtmlPipe,
     EstadosDirective,
     OrdersFormComponent,
+    ClientesSelectFormComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,11 @@ import { NgSelectModule } from "@ng-select/ng-select";
     NgSelectModule,
     ReactiveFormsModule,
   ],
-  exports: [TableCustomGenericComponent, EstadosDirective, OrdersFormComponent],
+  exports: [
+    TableCustomGenericComponent,
+    EstadosDirective,
+    OrdersFormComponent,
+    ClientesSelectFormComponent,
+  ],
 })
 export class CommonModuleCustom {}

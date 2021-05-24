@@ -42,7 +42,13 @@ export class PedidoService {
   }
   listar(): Observable<Array<PedidoVenta>> {
     return this.http.get<Array<PedidoVenta>>(
-      environment.apiUrl + "/pedidoVenta"
+      environment.apiUrl + "/pedidoVenta/listar"
+    );
+  }
+  exportarExcel({ fechaInicio, fechaFin, rucClientes = [] }) {
+    return this.http.post<any>(
+      environment.apiUrl + "/pedidoVenta/exportarExcelPedidoVenta",
+      { fechaFin, fechaInicio, rucClientes }
     );
   }
   listarClientes() {
