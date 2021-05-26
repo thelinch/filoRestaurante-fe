@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import * as moment from "moment";
 import { Observable } from "rxjs";
 import { LoaderService } from "src/app/core/services/loader.service";
 import { IngresoLote } from "src/app/models/IngresoLote";
@@ -18,6 +19,8 @@ export class LotesComponent implements OnInit {
   @ViewChild("editAndCreateIngresoLote")
   modalFormularioIngresoLotes: TemplateRef<any>;
   listaDeLotes: Array<IngresoLote>;
+  ultimoIngresoLote: Partial<IngresoLote>;
+  cargaListaLotes: boolean;
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -26,6 +29,8 @@ export class LotesComponent implements OnInit {
   ) {
     this.isLoadingForms = loadingService.isLoading;
     this.listaDeLotes = [];
+    this.ultimoIngresoLote = { nombreIngreso: "" };
+    this.cargaListaLotes = true;
   }
 
   ngOnInit(): void {
@@ -35,14 +40,37 @@ export class LotesComponent implements OnInit {
   crearFormularioIngresoLotes() {
     this.formularioIngresoLotes = this.fb.group({
       idProyIngresoLote: [0],
+      fechaIngreso: ["", [Validators.required]],
       poblacionLh: ["", [Validators.required, Validators.min(1)]],
       poblacionLm: ["", [Validators.required, Validators.min(1)]],
       semanasLevante: ["", [Validators.required, Validators.min(1)]],
       semanasProduccion: ["", [Validators.required, Validators.min(1)]],
     });
   }
-  nuevoIngresoLotes() {
-    this.formularioIngresoLotes.reset();
+  async traerUltimoIngresoLote() {
+    const { numeroIngreso, fechaIngreso, loteInicial }: IngresoLote =
+      await this.http
+        .get<IngresoLote>(
+          environment.apiUrl + "/proyIngresoLote/ultimoIngresoLote"
+        )
+        .toPromise();
+    const ingresoLoteInicialCalculado =
+      loteInicial == 0 ? loteInicial + 1 : loteInicial + 2;
+    this.ultimoIngresoLote = {
+      numeroIngreso: numeroIngreso + 1,
+      loteInicial: ingresoLoteInicialCalculado,
+      fechaIngreso: moment(fechaIngreso).add(91, "days").format("YYYY-MM-DD"),
+      nombreIngreso: `${
+        numeroIngreso + 1
+      } ingreso LH-${ingresoLoteInicialCalculado}`,
+    };
+  }
+  async nuevoIngresoLotes() {
+    await this.traerUltimoIngresoLote();
+    this.formularioIngresoLotes.reset({
+      fechaIngreso:
+        this.ultimoIngresoLote?.fechaIngreso || moment().format("YYYY-MM-DD"),
+    });
     this.modalService
       .open(this.modalFormularioIngresoLotes)
       .dismissed.subscribe(() => {
@@ -50,6 +78,7 @@ export class LotesComponent implements OnInit {
       });
   }
   editarLote(lote: IngresoLote) {
+    this.ultimoIngresoLote.nombreIngreso = lote.nombreIngreso;
     this.formularioIngresoLotes.patchValue(lote);
     this.modalService
       .open(this.modalFormularioIngresoLotes)
@@ -58,9 +87,11 @@ export class LotesComponent implements OnInit {
       });
   }
   async listarLotes() {
+    this.cargaListaLotes = true;
     this.listaDeLotes = await this.http
       .get<Array<IngresoLote>>(environment.apiUrl + "/proyIngresoLote")
       .toPromise();
+    this.cargaListaLotes = false;
   }
   async cerrarProyIngresoLote(proyIngresoLoteId: number) {
     await this.http
@@ -74,7 +105,6 @@ export class LotesComponent implements OnInit {
     this.listarLotes();
   }
   async crearyEditaIngresoLotes(lote: IngresoLote) {
-    console.log("lote", lote);
     this.formularioIngresoLotes.markAllAsTouched();
     if (this.formularioIngresoLotes.invalid) {
       return;

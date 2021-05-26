@@ -12,40 +12,49 @@
             </div>
 
         </div>
-        <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
-            <div class="card">
-                <div class="card-header bg-success text-white d-flex justify-content-between">
-                    <div class="numero_ingreso text-white"> {{ingresoLoteItem.numeroIngreso}}</div>
-                    <p class="badge bg-danger m-0 d-flex align-items-center">{{ingresoLoteItem.estadoNombre}}</p>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        <strong>NOMBRE INGRESO :</strong><span>{{ingresoLoteItem.nombreIngreso}}</span><br>
-                        <strong>FECHA INGRESO :</strong><span>{{ingresoLoteItem.fecIngresoLevante}}</span><br>
-                        <strong>POBLACION HEMBRA : </strong><span>{{ingresoLoteItem.poblacionLh}}</span><br>
-                        <strong>POBLACION MACHO : </strong><span>{{ingresoLoteItem.poblacionLm}}</span><br>
-                        <strong>SEMANAS LEVANTE : </strong><span>{{ingresoLoteItem.semanasLevante}}</span><br>
-                        <strong>SEMANAS PRODUCCION : </strong><span>{{ingresoLoteItem.semanasProduccion}}</span><br>
+        <ngx-skeleton-loader count="9" *ngIf="this.cargaListaLotes" appearance="circle" animation="progress-dark"
+            [theme]="{
+            'width':'32%',
+            'height.px': 200,
+            'border-radius': '10px'
+          }"></ngx-skeleton-loader>
+        <ng-template [ngIf]="!this.cargaListaLotes">
 
-
-                    </p>
-                    <div class="button-items">
-                        <button appEstados [estados]="['abierto','proyectado']"
-                            [estadoActual]="ingresoLoteItem.estadoNombre" (click)="editarLote(ingresoLoteItem)"
-                            class="btn btn-success">Editar</button>
-                        <button appEstados [estados]="['abierto','proyectado']"
-                            [estadoActual]="ingresoLoteItem.estadoNombre"
-                            (click)="cerrarProyIngresoLote(ingresoLoteItem.idProyIngresoLote)"
-                            class="btn btn-primary">Cerrar</button>
+            <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
+                <div class="card">
+                    <div class="card-header bg-success text-white d-flex justify-content-between">
+                        <div class="numero_ingreso text-white"> {{ingresoLoteItem.numeroIngreso}}</div>
+                        <p class="badge bg-danger m-0 d-flex align-items-center">{{ingresoLoteItem.estadoNombre}}</p>
                     </div>
-                    <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>NOMBRE INGRESO :</strong><span>{{ingresoLoteItem.nombreIngreso}}</span><br>
+                            <strong>FECHA INGRESO :</strong><span>{{ingresoLoteItem.fecIngresoLevante}}</span><br>
+                            <strong>POBLACION HEMBRA : </strong><span>{{ingresoLoteItem.poblacionLh}}</span><br>
+                            <strong>POBLACION MACHO : </strong><span>{{ingresoLoteItem.poblacionLm}}</span><br>
+                            <strong>SEMANAS LEVANTE : </strong><span>{{ingresoLoteItem.semanasLevante}}</span><br>
+                            <strong>SEMANAS PRODUCCION : </strong><span>{{ingresoLoteItem.semanasProduccion}}</span><br>
+
+
+                        </p>
+                        <div class="button-items">
+                            <button appEstados [estados]="['abierto','proyectado']"
+                                [estadoActual]="ingresoLoteItem.estadoNombre" (click)="editarLote(ingresoLoteItem)"
+                                class="btn btn-success">Editar</button>
+                            <button appEstados [estados]="['abierto','proyectado']"
+                                [estadoActual]="ingresoLoteItem.estadoNombre"
+                                (click)="cerrarProyIngresoLote(ingresoLoteItem.idProyIngresoLote)"
+                                class="btn btn-primary">Cerrar</button>
+                        </div>
+                        <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
                     </app-table-custom-generic> -->
 
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </ng-template>
     </div>
+
     <!-- end row -->
 
 
@@ -62,12 +71,28 @@
 
 <ng-template #editAndCreateIngresoLote let-modal>
     <div class="modal-header">
-        <h5 class="modal-title">Ingreso de lotes</h5>
+        <h5 class="modal-title">Nombre Ingreso :{{ this.ultimoIngresoLote?.nombreIngreso}}</h5>
         <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body p-4">
         <form [formGroup]="formularioIngresoLotes" id="formFactorMortalidad"
             (ngSubmit)="crearyEditaIngresoLotes(formularioIngresoLotes.value)">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Fecha Ingreso</label>
+                        <input
+                            [ngClass]="{'is-invalid': formularioIngresoLotesControles.fechaIngreso.touched && formularioIngresoLotesControles.fechaIngreso.errors}"
+                            class="form-control" type="date" formControlName="fechaIngreso">
+                        <div *ngIf="formularioIngresoLotesControles.fechaIngreso.touched && formularioIngresoLotesControles.fechaIngreso.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formularioIngresoLotesControles.fechaIngreso.errors.required">Requerido</span>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="mb-3">

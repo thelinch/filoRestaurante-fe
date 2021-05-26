@@ -10,48 +10,58 @@
                 <h4 class="m-0 title-uppercase d-inline-block">Proyeccion</h4>
             </div>
         </div>
-        <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
-            <div class="card">
-                <div class="card-header bg-success text-white d-flex justify-content-between">
-                    <div class="numero_ingreso text-white"> {{ingresoLoteItem.numeroIngreso}}</div>
-                    <p class="badge bg-danger m-0 d-flex align-items-center">{{ingresoLoteItem.estadoNombre}}</p>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        <strong>NOMBRE INGRESO :</strong><span>{{ingresoLoteItem.nombreIngreso}}</span><br>
-                        <strong>FECHA INGRESO :</strong><span>{{ingresoLoteItem.fecIngresoLevante}}</span><br>
-                        <strong>POBLACION HEMBRA : </strong><span>{{ingresoLoteItem.poblacionLh}}</span><br>
-                        <strong>POBLACION MACHO : </strong><span>{{ingresoLoteItem.poblacionLm}}</span><br>
-                        <strong>SEMANAS LEVANTE : </strong><span>{{ingresoLoteItem.semanasLevante}}</span><br>
-                        <strong>SEMANAS PRODUCCION : </strong><span>{{ingresoLoteItem.semanasProduccion}}</span><br>
-
-                    </p>
-                    <div class="button-items">
-                        <button class="btn btn-primary" (click)="proyectar(ingresoLoteItem)" appEstados
-                            [estados]="['abierto','proyectado']" [estadoActual]="ingresoLoteItem.estadoNombre">
-                            <ng-template [ngIf]="ingresoLoteItem==ingresoLoteSeleccionado && mostrarCargaProyeccion">
-                                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
-                            </ng-template>
-                            <span
-                                *ngIf="!(ingresoLoteItem==ingresoLoteSeleccionado && mostrarCargaProyeccion)">Proyectar</span>
-                        </button>
-                        <button class="btn btn-secondary"
-                            (click)="openModalFormularioEdicionFactorProduccion(ingresoLoteItem)" appEstados
-                            [estados]="['proyectado']"
-                            [estadoActual]="ingresoLoteItem.estadoNombre">Ed.Produccion</button>
-
-                        <button class="btn btn-primary" appEstados [estados]="['proyectado','cerrado']"
-                            [estadoActual]="ingresoLoteItem.estadoNombre"
-                            (click)="listarProyeccionDetalle(ingresoLoteItem)">Ver</button>
+        <ngx-skeleton-loader count="9" *ngIf="this.cargaListaLotes" appearance="circle" animation="progress-dark"
+            [theme]="{
+        'width':'32%',
+        'height.px': 200,
+        'border-radius': '10px'
+      }"></ngx-skeleton-loader>
+        <ng-template [ngIf]="!this.cargaListaLotes">
+            <div class="col-sm-12 col-lg-4 col-md-6 mt-2 " *ngFor="let ingresoLoteItem of listaDeLotes">
+                <div class="card">
+                    <div class="card-header bg-success text-white d-flex justify-content-between">
+                        <div class="numero_ingreso text-white"> {{ingresoLoteItem.numeroIngreso}}</div>
+                        <p class="badge bg-danger m-0 d-flex align-items-center">{{ingresoLoteItem.estadoNombre}}</p>
                     </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>NOMBRE INGRESO :</strong><span>{{ingresoLoteItem.nombreIngreso}}</span><br>
+                            <strong>FECHA INGRESO :</strong><span>{{ingresoLoteItem.fecIngresoLevante}}</span><br>
+                            <strong>POBLACION HEMBRA : </strong><span>{{ingresoLoteItem.poblacionLh}}</span><br>
+                            <strong>POBLACION MACHO : </strong><span>{{ingresoLoteItem.poblacionLm}}</span><br>
+                            <strong>SEMANAS LEVANTE : </strong><span>{{ingresoLoteItem.semanasLevante}}</span><br>
+                            <strong>SEMANAS PRODUCCION : </strong><span>{{ingresoLoteItem.semanasProduccion}}</span><br>
+
+                        </p>
+                        <div class="button-items">
+                            <button class="btn btn-primary" (click)="proyectar(ingresoLoteItem)" appEstados
+                                [estados]="['abierto','proyectado']" [estadoActual]="ingresoLoteItem.estadoNombre">
+                                <ng-template
+                                    [ngIf]="ingresoLoteItem==ingresoLoteSeleccionado && mostrarCargaProyeccion">
+                                    <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                                </ng-template>
+                                <span
+                                    *ngIf="!(ingresoLoteItem==ingresoLoteSeleccionado && mostrarCargaProyeccion)">Proyectar</span>
+                            </button>
+                            <button class="btn btn-secondary"
+                                (click)="openModalFormularioEdicionFactorProduccion(ingresoLoteItem)" appEstados
+                                [estados]="['proyectado']"
+                                [estadoActual]="ingresoLoteItem.estadoNombre">Ed.Produccion</button>
+
+                            <button class="btn btn-primary" appEstados [estados]="['proyectado','cerrado']"
+                                [estadoActual]="ingresoLoteItem.estadoNombre"
+                                (click)="listarProyeccionDetalle(ingresoLoteItem)">Ver</button>
+                        </div>
 
 
-                    <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
+                        <!--  <app-table-custom-generic [data]="listaFactores" [haders]="headerListaFactor">
                     </app-table-custom-generic> -->
 
+                    </div>
                 </div>
             </div>
-        </div>
+
+        </ng-template>
 
     </div>
     <!-- end row -->
@@ -184,11 +194,18 @@
 
 <ng-template #listaProyLoteDetalle let-modal>
     <div class="modal-header">
-        <h5 class="modal-title">Proyeccion-{{ingresoLoteSeleccionado?.nombreIngreso}}</h5>
+        <h5 class="modal-title">Proyeccion-{{ingresoLoteSeleccionado?.nombreIngreso}}
+
+        </h5>
         <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
     </div>
-    <div class="modal-body p-4">
-
+    <div class="modal-body p-4 d-flex flex-wrap justify-content-end">
+        <button class="btn btn-success" (click)="exportarExcelLoteDetalle()">
+            <ng-template [ngIf]="cargaExportacionExcelDetalle">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            <i *ngIf="!cargaExportacionExcelDetalle" class="mdi mdi-file-excel"></i>
+        </button>
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
                 <thead>
@@ -236,7 +253,8 @@
                         <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.saldoBbs | number:'1.0-0'}}</td>
                         <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.porcentajePostura | number:'1.0-0'}}</td>
                         <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.porcentajeHi | number:'1.0-0'}}</td>
-                        <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.porcentajeNacimiento | number:'1.0-0'}}</td>
+                        <td class="fondo-celeste">{{proyDetalleItem.lineaMacho.porcentajeNacimiento | number:'1.0-0'}}
+                        </td>
 
                     </tr>
                 </tbody>

@@ -11,6 +11,7 @@ export interface IngresoLote {
   factorMortProdLh: number;
   factorMortProdLm: number;
   factorCastigo: number;
+  fechaIngreso: Date | string;
   fecIngresoLevante: Date | string;
   fecIngresoProd: Date | string;
   fecFinProd: Date | string;

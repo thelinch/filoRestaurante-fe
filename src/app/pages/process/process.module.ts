@@ -7,19 +7,24 @@ import { CommonModuleCustom } from "src/app/common/common.module";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LoaderInterceptorService } from "src/app/core/services/interceptors/loader-interceptor.service";
 import { ProjectionComponent } from "./projection/projection.component";
-import { OrdersComponent } from './orders/orders.component';
-import { TotlaIncomeComponent } from './totla-income/totla-income.component';
+import { OrdersComponent } from "./orders/orders.component";
+import { TotlaIncomeComponent } from "./totla-income/totla-income.component";
+import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 
 @NgModule({
-  declarations: [LotesComponent, ProjectionComponent, OrdersComponent, TotlaIncomeComponent],
+  declarations: [
+    LotesComponent,
+    ProjectionComponent,
+    OrdersComponent,
+    TotlaIncomeComponent,
+  ],
   imports: [
     CommonModule,
     ProcessRoutingModule,
     ReactiveFormsModule,
     CommonModuleCustom,
+    NgxSkeletonLoaderModule,
   ],
-  providers: [
-  
-  ],
+  providers: [],
 })
 export class ProcessModule {}

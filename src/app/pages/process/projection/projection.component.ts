@@ -27,6 +27,8 @@ export class ProjectionComponent implements OnInit {
   mostrarCargaEdicionLoteDetalle: boolean;
   mostrarCargaProyeccion: boolean;
   listaProyLoteFila: Array<any> = [];
+  cargaListaLotes: boolean;
+  cargaExportacionExcelDetalle: boolean;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -37,6 +39,8 @@ export class ProjectionComponent implements OnInit {
     this.listaLoteDetallePorIngresoLote = [];
     this.mostrarCargaEdicionLoteDetalle = false;
     this.mostrarCargaProyeccion = false;
+    this.cargaListaLotes = true;
+    this.cargaExportacionExcelDetalle = false;
   }
 
   ngOnInit(): void {
@@ -86,9 +90,11 @@ export class ProjectionComponent implements OnInit {
     });
   }
   async listarLotes() {
+    this.cargaListaLotes = true;
     this.listaDeLotes = await this.http
       .get<Array<IngresoLote>>(environment.apiUrl + "/proyIngresoLote")
       .toPromise();
+    this.cargaListaLotes = false;
   }
   async editarLoteDetalle(loteDetalle: any) {
     this.formularioEdicionFactorProduccion.markAllAsTouched();
@@ -127,5 +133,18 @@ export class ProjectionComponent implements OnInit {
       .toPromise();
     this.mostrarCargaProyeccion = false;
     this.listarLotes();
+  }
+  async exportarExcelLoteDetalle() {
+    this.cargaExportacionExcelDetalle = true;
+    const row = await this.http
+      .get<any>(
+        environment.apiUrl +
+          "/proyLoteDetalle/listar/" +
+          this.ingresoLoteSeleccionado.idProyIngresoLote +
+          "/exportarExcel"
+      )
+      .toPromise();
+    this.cargaExportacionExcelDetalle = false;
+    window.open(row.rutaCompletaCM);
   }
 }
