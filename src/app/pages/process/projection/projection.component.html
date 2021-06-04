@@ -51,6 +51,10 @@
                             <button class="btn btn-primary" appEstados [estados]="['proyectado','cerrado']"
                                 [estadoActual]="ingresoLoteItem.estadoNombre"
                                 (click)="listarProyeccionDetalle(ingresoLoteItem)">Ver</button>
+                            <button class="btn btn-primary" (click)="generarComparativo(ingresoLoteItem)" appEstados
+                                [estados]="['proyectado','cerrado']" [estadoActual]="ingresoLoteItem.estadoNombre">
+                                <i class="bx bx-bar-chart-alt"></i>
+                                Comparativo</button>
                         </div>
 
 

@@ -125,6 +125,16 @@ export class ProjectionComponent implements OnInit {
       .toPromise();
     this.modalService.open(this.modalListaProyLoteDetalle, { size: "xl" });
   }
+
+  async generarComparativo(ingresoLote: IngresoLote) {
+    await this.http
+      .get(
+        environment.apiUrl +
+          "/proyIngresoLote/comparativo/" +
+          ingresoLote.idProyIngresoLote
+      )
+      .toPromise();
+  }
   async proyectar(ingresoLote: IngresoLote) {
     this.ingresoLoteSeleccionado = ingresoLote;
     this.mostrarCargaProyeccion = true;
