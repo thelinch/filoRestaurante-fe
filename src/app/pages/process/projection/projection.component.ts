@@ -21,6 +21,8 @@ export class ProjectionComponent implements OnInit {
   modalFormularioFactorProduccion: TemplateRef<any>;
   @ViewChild("listaProyLoteDetalle")
   modalListaProyLoteDetalle: TemplateRef<any>;
+  @ViewChild("listaProyLoteDetalleConDatosReales")
+  modalListaLoteDetalleReales: TemplateRef<any>;
   ingresoLoteSeleccionado: IngresoLote;
   listaLoteDetallePorIngresoLote: Array<LoteDetalleView>;
   listaDeLotes: Array<IngresoLote>;
@@ -28,6 +30,7 @@ export class ProjectionComponent implements OnInit {
   mostrarCargaProyeccion: boolean;
   listaProyLoteFila: Array<any> = [];
   cargaListaLotes: boolean;
+  cargaComparativo: boolean;
   cargaExportacionExcelDetalle: boolean;
   constructor(
     private fb: FormBuilder,
@@ -40,6 +43,7 @@ export class ProjectionComponent implements OnInit {
     this.mostrarCargaEdicionLoteDetalle = false;
     this.mostrarCargaProyeccion = false;
     this.cargaListaLotes = true;
+    this.cargaComparativo = false;
     this.cargaExportacionExcelDetalle = false;
   }
 
@@ -127,13 +131,17 @@ export class ProjectionComponent implements OnInit {
   }
 
   async generarComparativo(ingresoLote: IngresoLote) {
-    await this.http
-      .get(
+    this.cargaComparativo = true;
+    this.ingresoLoteSeleccionado = ingresoLote;
+    this.listaLoteDetallePorIngresoLote = await this.http
+      .get<Array<LoteDetalleView>>(
         environment.apiUrl +
           "/proyIngresoLote/comparativo/" +
           ingresoLote.idProyIngresoLote
       )
       .toPromise();
+    this.cargaComparativo = false;
+    this.modalService.open(this.modalListaLoteDetalleReales, { size: "xl" });
   }
   async proyectar(ingresoLote: IngresoLote) {
     this.ingresoLoteSeleccionado = ingresoLote;

@@ -1,6 +1,7 @@
 export interface IngresoLote {
   idProyIngresoLote?: number;
   numeroIngreso: number;
+  estadoNombre: string;
   loteInicial: number;
   nombreIngreso: string;
   poblacionLh: number;
