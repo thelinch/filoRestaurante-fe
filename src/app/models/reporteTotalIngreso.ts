@@ -8,13 +8,14 @@ export interface PedidoReporte {
   nombreCliente: string;
   pedidoMacho: number;
   pedidoHembra: number;
+  color: string;
 }
 interface FechaConLote {
   fecha: string | Date;
   lotes: Array<LoteReporte>;
-}
-export interface ReporteTotalIngreso {
-  reporte: Array<FechaConLote>;
+  totalMacho: number;
+  pedidos: Array<PedidoReporte>;
+  sumaTotalPedidoHembra: number;
   totalLineaHembra: {
     sumaTotalHuevosIncubablesHembra: number;
     sumaTotalBbsHembra: number;
@@ -23,6 +24,9 @@ export interface ReporteTotalIngreso {
     sumaTotalHuevosIncubablesMachos: number;
     sumaTotalBbsMacho: number;
   };
+}
+export interface ReporteTotalIngreso {
+  reporte: Array<FechaConLote>;
   pedidos: Array<PedidoReporte>;
   lotes: Array<string>;
   clientes: Array<PedidoReporte>;

@@ -14,7 +14,7 @@
                     <div class="col-sm-12 col-md-4">
                         <div class="mb-3 selected">
                             <app-clientes-select-form [from]="formularioFiltradoPedidos"
-                                [props]="propsFormularioCliente" isMultiple="true">
+                                [props]="propsFormularioCliente" [isMultiple]="true">
                             </app-clientes-select-form>
                             <div *ngIf="formularioClientesControles.rucClientes.touched && formularioClientesControles.rucClientes.errors"
                                 class="invalid-feedback">

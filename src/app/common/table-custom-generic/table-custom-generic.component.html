@@ -26,7 +26,7 @@
         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
             <thead class="table-light">
                 <tr>
-                    <th class="align-middle" *ngFor="let headerItem of haders" (sort)="onSort($event)">
+                    <th class="align-middle" *ngFor="let headerItem of haders" >
                         {{headerItem.headerName}}</th>
                     <!--        <th sortable="position" (sort)="onSort($event)">Position</th>
                     <th sortable="office" (sort)="onSort($event)">Office</th>
