@@ -165,4 +165,17 @@ export class ProjectionComponent implements OnInit {
     this.cargaExportacionExcelDetalle = false;
     window.open(row.rutaCompletaCM);
   }
+  async exportarExcelLoteDetalleReales() {
+    this.cargaExportacionExcelDetalle = true;
+    const row = await this.http
+      .get<any>(
+        environment.apiUrl +
+          "/proyLoteDetalle/listar/" +
+          this.ingresoLoteSeleccionado.idProyIngresoLote +
+          "/exportarExcelReal"
+      )
+      .toPromise();
+    this.cargaExportacionExcelDetalle = false;
+    window.open(row.rutaCompletaCM);
+  }
 }
