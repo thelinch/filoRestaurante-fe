@@ -4,7 +4,7 @@ export const MENU: MenuItem[] = [
     id: 1,
     label: "Dashboard",
     isTitle: false,
-    link: "/dashboard",
+    link: "/dashboards",
   },
   {
     id: 8,

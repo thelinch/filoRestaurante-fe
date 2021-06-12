@@ -30,6 +30,17 @@
 .title-uppercase {
   text-transform: uppercase;
 }
+
+.ul-list {
+  flex-wrap: nowrap;
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 3px;
+}
+.btnSeleccionado {
+  color: white !important;
+  background-color: #e30512 !important;
+}
 .fondo-rosado {
   color: white;
   background-color: #f5cdcd !important;

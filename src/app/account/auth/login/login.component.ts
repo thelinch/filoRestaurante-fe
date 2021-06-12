@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log("direccionando")
-          this.router.navigate(["/dashboard"]);
+          this.router.navigate(["/dashboards"]);
         },
         (error) => {
           this.error = error ? error : "";

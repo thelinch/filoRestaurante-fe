@@ -12,15 +12,47 @@
             </div>
         </div>
     </div>
+    <div (click)="prueba()">prueba</div>
     <div class="row">
+        <ul class="ul-list button-items list-unstyled">
 
-        <div class="col-xs-12 ">
+            <li (click)="nombreProcesoCategoria(categoriaItem)" *ngFor="let categoriaItem of listaBotonesCategoria">
+                <button type="button" class="btn btn-outline-danger"
+                    [ngClass]="{'btnSeleccionado':categoriaItem==categoriaSeleccionado}">
+                    {{categoriaItem.nombre}}
+                </button>
+
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <ul class="ul-list button-items  list-unstyled">
+            <li (click)="nombreProcesoSubcategoria(subCategoriaItem)"
+                *ngFor="let subCategoriaItem of listaBotonesSubcategoria">
+                <button  type="button" class="btn btn-outline-danger"
+                    [ngClass]="{'btnSeleccionado':subCategoriaItem==subcategoriaSeleccionado}">
+                    {{subCategoriaItem.nombre}}
+                </button>
+
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <ul class="ul-list button-items  list-unstyled">
+            <li (click)="item(ingresoLoteItem)" *ngFor="let ingresoLoteItem of listaIngresoProduccion">
+                <button type="button" class="btn btn-outline-danger"
+                    [ngClass]="{'btnSeleccionado':ingresoLoteItem==ingresoLoteSeleccionado}">
+                    {{ingresoLoteItem.nombreIngreso}}
+                </button>
+            </li>
+
+        </ul>
+    </div>
 
 
-            
-        </div>
+
+    <div class="row mt-4">
         <router-outlet></router-outlet>
-
 
     </div>
 

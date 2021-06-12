@@ -11,8 +11,22 @@ import { PorcentajeNacimientoComponent } from "./porcentaje-nacimiento/porcentaj
 
 const routes: Routes = [
   {
-    path: "default",
+    path: "",
     component: DefaultComponent,
+    children: [
+      {
+        path: "produccion/porcentajeProduccion/:idProyingreso/grafica",
+        component: PorcentajeProduccionComponent,
+      },
+      {
+        path: "produccion/porcentajeHi/:idProyingreso/grafica",
+        component: PorcentajeHiComponent,
+      },
+      {
+        path: "produccion/porcentajeNacimiento/:idProyingreso/grafica",
+        component: PorcentajeNacimientoComponent,
+      },
+    ],
   },
   {
     path: "saas",
@@ -25,18 +39,6 @@ const routes: Routes = [
   {
     path: "blog",
     component: BlogComponent,
-  },
-  {
-    path: "produccion/porcentajeProduccion/:idProyingreso/grafica",
-    component: PorcentajeProduccionComponent,
-  },
-  {
-    path: "produccion/porcentajeHi/:idProyingreso/grafica",
-    component: PorcentajeHiComponent,
-  },
-  {
-    path: "produccion/porcentajeNacimiento/:idProyingreso/grafica",
-    component: PorcentajeNacimientoComponent,
   },
 ];
 
