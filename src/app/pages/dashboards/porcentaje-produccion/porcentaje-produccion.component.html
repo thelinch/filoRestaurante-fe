@@ -1,1 +1,16 @@
-<p>porcentaje-produccion works!</p>
+<!--The content below is only a placeholder and can be replaced.-->
+<div id="chart">
+
+
+    <apx-chart [legend]="this.chartModelLineaHembra.legend" [stroke]="this.chartModelLineaHembra.stroke" [dataLabels]="this.chartModelLineaHembra.dataLabels"
+        [noData]="this.chartModelLineaHembra.noData" [xaxis]="this.chartModelLineaHembra.xaxis"
+        [series]="this.chartModelLineaHembra.series" [chart]="this.chartModelLineaHembra.chart"
+        [title]="this.chartModelLineaHembra.title"></apx-chart>
+
+</div>
+
+<!--The content below is only a placeholder and can be replaced.-->
+<apx-chart [legend]="this.chartModelLineaMacho.legend" [stroke]="this.chartModelLineaMacho.stroke"
+    [dataLabels]="this.chartModelLineaMacho.dataLabels" [noData]="this.chartModelLineaMacho.noData"
+    [xaxis]="this.chartModelLineaMacho.xaxis" [series]="this.chartModelLineaMacho.series"
+    [chart]="this.chartModelLineaMacho.chart" [title]="this.chartModelLineaMacho.title"></apx-chart>

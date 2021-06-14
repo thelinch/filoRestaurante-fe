@@ -5,13 +5,7 @@ import {
   AfterViewInit,
   OnDestroy,
 } from "@angular/core";
-import {
-  emailSentBarChart,
-  monthlyEarningChart,
-  transactions,
-  statData,
-} from "./data";
-import { ChartType } from "./dashboard.model";
+
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Subject, Subscription } from "rxjs";
 import StateDashboard from "./stateDashboard";
@@ -33,6 +27,8 @@ export class DefaultComponent implements OnInit, OnDestroy {
   subcategoriaSeleccionado: ItemsDashboard;
   listaIngresoProduccion: Array<IngresoLote>;
   ingresoLoteSeleccionado: IngresoLote;
+  llaveStorage = "estadoDashobard";
+
   private state: StateDashboard;
   search$: Subject<any> = new Subject();
   private subscriptionState: Subscription;
@@ -42,14 +38,26 @@ export class DefaultComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private ingresoLoteRepository: IngresoLoteService
   ) {
-    console.log("efefef");
     this.listaIngresoProduccion = [];
-    this.state = {
-      link: "",
-      categoria: "",
-      subcategoria: "",
-      ingresoLoteSeleccionado: null,
-    };
+
+    const {
+      state = {
+        link: "",
+        categoria: "",
+        subcategoria: "",
+        ingresoLoteSeleccionado: null,
+      },
+      categoriaSeleccionado = {},
+      subcategoriaSeleccionado = {},
+      ingresoLoteSeleccionado = {},
+    } = sessionStorage.getItem(this.llaveStorage)
+      ? JSON.parse(sessionStorage.getItem(this.llaveStorage))
+      : {};
+    console.log(subcategoriaSeleccionado);
+    this.state = state;
+    this.categoriaSeleccionado = categoriaSeleccionado;
+    this.subcategoriaSeleccionado = subcategoriaSeleccionado;
+    this.ingresoLoteSeleccionado = ingresoLoteSeleccionado;
     this.listaBotonesCategoria = [
       {
         nombre: "PRODUCCION",
@@ -78,12 +86,6 @@ export class DefaultComponent implements OnInit, OnDestroy {
         propiedad: "subcategoria",
       },
     ];
-    this.categoriaSeleccionado = {
-      nombre: "PRODUCCION",
-      seleccionado: true,
-      nombreProceso: "produccion",
-      propiedad: "categoria",
-    };
   }
   ngOnDestroy(): void {
     this.subscriptionState?.unsubscribe();
@@ -101,7 +103,6 @@ export class DefaultComponent implements OnInit, OnDestroy {
   }
 
   async listarIngresoLote() {
-    console.log("ewntrio");
     this.listaIngresoProduccion = await this.ingresoLoteRepository
       .listar()
       .toPromise();
@@ -140,6 +141,15 @@ export class DefaultComponent implements OnInit, OnDestroy {
       this.state.subcategoria !== "" &&
       this.state.ingresoLoteSeleccionado
     ) {
+      sessionStorage.setItem(
+        this.llaveStorage,
+        JSON.stringify({
+          ingresoLoteSeleccionado: this.ingresoLoteSeleccionado,
+          categoriaSeleccionado: this.categoriaSeleccionado,
+          subcategoriaSeleccionado: this.subcategoriaSeleccionado,
+          state: this.state,
+        })
+      );
       //this.router.routeReuseStrategy.shouldReuseRoute = () => true;
 
       this.router.navigateByUrl(

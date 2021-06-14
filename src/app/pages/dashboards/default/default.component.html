@@ -18,7 +18,7 @@
 
             <li (click)="nombreProcesoCategoria(categoriaItem)" *ngFor="let categoriaItem of listaBotonesCategoria">
                 <button type="button" class="btn btn-outline-danger"
-                    [ngClass]="{'btnSeleccionado':categoriaItem==categoriaSeleccionado}">
+                    [ngClass]="{'btnSeleccionado':categoriaItem===categoriaSeleccionado}">
                     {{categoriaItem.nombre}}
                 </button>
 
@@ -30,7 +30,7 @@
             <li (click)="nombreProcesoSubcategoria(subCategoriaItem)"
                 *ngFor="let subCategoriaItem of listaBotonesSubcategoria">
                 <button  type="button" class="btn btn-outline-danger"
-                    [ngClass]="{'btnSeleccionado':subCategoriaItem==subcategoriaSeleccionado}">
+                    [ngClass]="{'btnSeleccionado':subCategoriaItem===subcategoriaSeleccionado}">
                     {{subCategoriaItem.nombre}}
                 </button>
 
@@ -41,7 +41,7 @@
         <ul class="ul-list button-items  list-unstyled">
             <li (click)="item(ingresoLoteItem)" *ngFor="let ingresoLoteItem of listaIngresoProduccion">
                 <button type="button" class="btn btn-outline-danger"
-                    [ngClass]="{'btnSeleccionado':ingresoLoteItem==ingresoLoteSeleccionado}">
+                    [ngClass]="{'btnSeleccionado':ingresoLoteItem===ingresoLoteSeleccionado}">
                     {{ingresoLoteItem.nombreIngreso}}
                 </button>
             </li>
