@@ -92,18 +92,6 @@ export class DefaultComponent implements OnInit, OnDestroy {
     this.categoriaSeleccionado = categoriaSeleccionado;
     this.subcategoriaSeleccionado = subcategoriaSeleccionado;
     this.ingresoLoteSeleccionado = ingresoLoteSeleccionado;
-  /*   const indexCategoria = this.listaBotonesCategoria.findIndex(
-      (b) => b.nombre === categoriaSeleccionado?.nombre
-    );
-    const indexSubcategoria = this.listaBotonesSubcategoria.findIndex(
-      (b) => b.nombre === subcategoriaSeleccionado.nombre
-    );
-    this.listaBotonesCategoria[
-      indexCategoria !== -1 ? indexCategoria : 0
-    ].seleccionado = true;
-    this.listaBotonesSubcategoria[
-      indexSubcategoria !== -1 ? indexSubcategoria : 0
-    ].seleccionado = true; */
     this.subscriptionState = this.search$
       .pipe(
         debounceTime(90),
