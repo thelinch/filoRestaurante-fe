@@ -46,17 +46,6 @@ export class PorcentajeProduccionComponent implements OnInit, AfterViewInit {
     };
     this.chartModelLineaHembra.chart = { type: "line", height: "350" };
 
-    this.chartModelLineaMacho.legend = {
-      formatter: function (seriesName, opts) {
-        return seriesName == "Proyectado" ? "Proy Act_AveDia" : "Act Ave/día ";
-      },
-    };
-
-    this.chartModelLineaHembra.legend = {
-      formatter: function (seriesName, opts) {
-        return seriesName == "Proyectado" ? "Proy Act_AveDia" : "Act Ave/día ";
-      },
-    };
 
     this.chartModelLineaHembra.title = {
       text: "PRODUCCION LINEA HEMBRA EN MILES",
@@ -89,28 +78,28 @@ export class PorcentajeProduccionComponent implements OnInit, AfterViewInit {
     }
     const semanas = this.listaLoteDetalleView.map((l) => l.semana);
     this.chartModelLineaHembra.series.push({
-      name: "Proyectado",
+      name: "Proy Act_AveDia",
       data: this.listaLoteDetalleView.map((l) =>
         Number((l.lineaHembra.porcentajePostura / 100).toFixed(1))
       ),
       color: "#FF0000",
     });
     this.chartModelLineaHembra.series.push({
-      name: "Real",
+      name: "Act Ave/día",
       data: this.listaLoteDetalleView.map((l) =>
         Number((l.lineaHembra.porcentajePosturaReal / 1000).toFixed(1))
       ),
       color: "#87BCEE",
     });
     this.chartModelLineaMacho.series.push({
-      name: "Proyectado",
+      name: "Proy Act_AveDia",
       data: this.listaLoteDetalleView.map((l) =>
         Number((l.lineaMacho.porcentajePostura / 1000).toFixed(1))
       ),
       color: "#FF0000",
     });
     this.chartModelLineaMacho.series.push({
-      name: "Real",
+      name: "Act Ave/día",
       data: this.listaLoteDetalleView.map((l) =>
         Number((l.lineaMacho.porcentajePosturaReal / 1000).toFixed(1))
       ),

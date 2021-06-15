@@ -40,24 +40,6 @@ export class DefaultComponent implements OnInit, OnDestroy {
   ) {
     this.listaIngresoProduccion = [];
 
-    const {
-      state = {
-        link: "",
-        categoria: "",
-        subcategoria: "",
-        ingresoLoteSeleccionado: null,
-      },
-      categoriaSeleccionado = {},
-      subcategoriaSeleccionado = {},
-      ingresoLoteSeleccionado = {},
-    } = sessionStorage.getItem(this.llaveStorage)
-      ? JSON.parse(sessionStorage.getItem(this.llaveStorage))
-      : {};
-    console.log(subcategoriaSeleccionado);
-    this.state = state;
-    this.categoriaSeleccionado = categoriaSeleccionado;
-    this.subcategoriaSeleccionado = subcategoriaSeleccionado;
-    this.ingresoLoteSeleccionado = ingresoLoteSeleccionado;
     this.listaBotonesCategoria = [
       {
         nombre: "PRODUCCION",
@@ -74,13 +56,13 @@ export class DefaultComponent implements OnInit, OnDestroy {
         propiedad: "subcategoria",
       },
       {
-        nombre: "porcentaje Nacimiento",
+        nombre: "Porcentaje Nacimiento",
         nombreProceso: "porcentajeNacimiento",
         seleccionado: false,
         propiedad: "subcategoria",
       },
       {
-        nombre: "Hi",
+        nombre: "Porcentaje de huevos incubables",
         nombreProceso: "porcentajeHi",
         seleccionado: false,
         propiedad: "subcategoria",
@@ -91,7 +73,37 @@ export class DefaultComponent implements OnInit, OnDestroy {
     this.subscriptionState?.unsubscribe();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.listarIngresoLote();
+    const {
+      state = {
+        link: "",
+        categoria: "",
+        subcategoria: "",
+        ingresoLoteSeleccionado: null,
+      },
+      categoriaSeleccionado = {},
+      subcategoriaSeleccionado = {},
+      ingresoLoteSeleccionado = {},
+    } = sessionStorage.getItem(this.llaveStorage)
+      ? JSON.parse(sessionStorage.getItem(this.llaveStorage))
+      : {};
+    this.state = state;
+    this.categoriaSeleccionado = categoriaSeleccionado;
+    this.subcategoriaSeleccionado = subcategoriaSeleccionado;
+    this.ingresoLoteSeleccionado = ingresoLoteSeleccionado;
+  /*   const indexCategoria = this.listaBotonesCategoria.findIndex(
+      (b) => b.nombre === categoriaSeleccionado?.nombre
+    );
+    const indexSubcategoria = this.listaBotonesSubcategoria.findIndex(
+      (b) => b.nombre === subcategoriaSeleccionado.nombre
+    );
+    this.listaBotonesCategoria[
+      indexCategoria !== -1 ? indexCategoria : 0
+    ].seleccionado = true;
+    this.listaBotonesSubcategoria[
+      indexSubcategoria !== -1 ? indexSubcategoria : 0
+    ].seleccionado = true; */
     this.subscriptionState = this.search$
       .pipe(
         debounceTime(90),
@@ -99,13 +111,14 @@ export class DefaultComponent implements OnInit, OnDestroy {
         switchMap(() => this.renderizarComponente())
       )
       .subscribe();
-    this.listarIngresoLote();
   }
 
   async listarIngresoLote() {
-    this.listaIngresoProduccion = await this.ingresoLoteRepository
-      .listar()
-      .toPromise();
+    this.listaIngresoProduccion = (
+      await this.ingresoLoteRepository.listar().toPromise()
+    )
+      .sort((a, b) => b.numeroIngreso - a.numeroIngreso)
+      .map((ingresoLote) => ({ ...ingresoLote, seleccionado: false }));
   }
   nombreProcesoSubcategoria(itemDashboard: ItemsDashboard) {
     this.subcategoriaSeleccionado = itemDashboard;
