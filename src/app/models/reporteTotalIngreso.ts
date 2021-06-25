@@ -19,10 +19,14 @@ interface FechaConLote {
   totalLineaHembra: {
     sumaTotalHuevosIncubablesHembra: number;
     sumaTotalBbsHembra: number;
+    totalBbsHembraReal: number;
+    totalHiHembraReal: number;
   };
   totalLineaMacho: {
     sumaTotalHuevosIncubablesMachos: number;
     sumaTotalBbsMacho: number;
+    totalHiMachoReal: number;
+    totalBbsMachoReal: number;
   };
 }
 export interface ReporteTotalIngreso {
