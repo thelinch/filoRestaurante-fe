@@ -44,6 +44,9 @@
 .fondo-rosado {
   color: white;
   background-color: #f5cdcd !important;
+  &.oscuro {
+    background-color: #c7a6a6 !important;
+  }
 }
 .selected .invalid-feedback {
   display: block !important;
@@ -54,12 +57,20 @@
 .fondo-celeste {
   color: white;
   background-color: #9fd8df !important;
+  &.oscuro {
+    background-color: #8ea6a9 !important;
+  }
 }
 .fondo-gris {
   color: black;
   font-weight: initial !important;
   background-color: #dddddd !important
   ;
+}
+.fondo-gris-oscuro {
+  color: black;
+  font-weight: initial !important;
+  background-color: #74767d !important  ;
 }
 .carousel-item.active {
   position: relative !important;
