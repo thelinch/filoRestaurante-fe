@@ -8,6 +8,8 @@ import { BlogComponent } from "./blog/blog.component";
 import { PorcentajeProduccionComponent } from "./porcentaje-produccion/porcentaje-produccion.component";
 import { PorcentajeHiComponent } from "./porcentaje-hi/porcentaje-hi.component";
 import { PorcentajeNacimientoComponent } from "./porcentaje-nacimiento/porcentaje-nacimiento.component";
+import { ComparativoHiComponent } from "./comparativo-hi/comparativo-hi.component";
+import { ComparativoBbsComponent } from "./comparativo-bbs/comparativo-bbs.component";
 
 const routes: Routes = [
   {
@@ -25,6 +27,14 @@ const routes: Routes = [
       {
         path: "produccion/porcentajeNacimiento/:idProyingreso/grafica",
         component: PorcentajeNacimientoComponent,
+      },
+      {
+        path: "produccion/comparativoHi/grafica",
+        component: ComparativoHiComponent,
+      },
+      {
+        path: "produccion/comparativoBbs/grafica",
+        component: ComparativoBbsComponent,
       },
     ],
   },

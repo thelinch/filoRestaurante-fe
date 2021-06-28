@@ -3,4 +3,5 @@ export default interface ItemsDashboard {
   seleccionado: boolean;
   nombreProceso: string;
   propiedad: string;
+  mostrarLotes: boolean;
 }

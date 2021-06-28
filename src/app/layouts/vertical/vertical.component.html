@@ -8,6 +8,16 @@
   <app-sidebar [isCondensed]="isCondensed"></app-sidebar>
 
   <div class="main-content">
+    <div class="row d-flex justify-content-end">
+      <div class="col-sm-12 col-md-2">
+        <button type="button" (click)="cerrarSesion()" class="btn btn-sm btn-danger float-end  me-2"
+          id="vertical-menu-btn">
+          Cerrar sesion
+        </button>
+      </div>
+
+    </div>
+
     <div class="page-content">
       <!-- content -->
       <router-outlet></router-outlet>

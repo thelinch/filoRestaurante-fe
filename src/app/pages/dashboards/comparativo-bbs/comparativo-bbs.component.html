@@ -1,0 +1,45 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="row">
+    <form [formGroup]="formularioFiltracion" (ngSubmit)="generarGrafico()">
+        <div class="row">
+            <div class="col-4">
+                <div class="mb-3">
+                    <input
+                        [ngClass]="{'is-invalid':formularioFiltracionControles.anio.touched  && formularioFiltracionControles.anio.errors}"
+                        class="form-control" placeholder="anio YYYY" type="text" formControlName="anio">
+                    <div *ngIf="formularioFiltracionControles.anio.touched && formularioFiltracionControles.anio.errors"
+                        class="invalid-feedback">
+                        <span *ngIf="formularioFiltracionControles.anio.errors.required">Requerido</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-2">
+                <button type="submit" [disabled]="formularioFiltracion.invalid" class="btn btn-success ms-1">
+                    <ng-template [ngIf]="isLoadingForms | async">
+                        <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                    </ng-template>
+                    Generar grafica
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+<div id="chart">
+
+
+    <apx-chart [legend]="this.chartModelLineaHembra.legend" [stroke]="this.chartModelLineaHembra.stroke"
+        [dataLabels]="this.chartModelLineaHembra.dataLabels" [noData]="this.chartModelLineaHembra.noData"
+        [xaxis]="this.chartModelLineaHembra.xaxis" [series]="this.chartModelLineaHembra.series"
+        [chart]="this.chartModelLineaHembra.chart" [title]="this.chartModelLineaHembra.title"></apx-chart>
+
+</div>
+
+<!--The content below is only a placeholder and can be replaced.-->
+<apx-chart [legend]="this.chartModelLineaMacho.legend" [stroke]="this.chartModelLineaMacho.stroke"
+    [dataLabels]="this.chartModelLineaMacho.dataLabels" [noData]="this.chartModelLineaMacho.noData"
+    [xaxis]="this.chartModelLineaMacho.xaxis" [series]="this.chartModelLineaMacho.series"
+    [chart]="this.chartModelLineaMacho.chart" [title]="this.chartModelLineaMacho.title"></apx-chart>

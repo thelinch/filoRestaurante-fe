@@ -32,6 +32,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   private state: StateDashboard;
   search$: Subject<any> = new Subject();
   private subscriptionState: Subscription;
+  mostrarLotes: boolean;
   constructor(
     private modalService: NgbModal,
     private router: Router,
@@ -46,6 +47,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
         seleccionado: true,
         nombreProceso: "produccion",
         propiedad: "categoria",
+        mostrarLotes: true,
       },
     ];
     this.listaBotonesSubcategoria = [
@@ -54,18 +56,36 @@ export class DefaultComponent implements OnInit, OnDestroy {
         nombreProceso: "porcentajeProduccion",
         seleccionado: true,
         propiedad: "subcategoria",
+        mostrarLotes: true,
       },
       {
         nombre: "Porcentaje Nacimiento",
         nombreProceso: "porcentajeNacimiento",
         seleccionado: false,
         propiedad: "subcategoria",
+        mostrarLotes: true,
       },
       {
         nombre: "Porcentaje de huevos incubables",
         nombreProceso: "porcentajeHi",
         seleccionado: false,
         propiedad: "subcategoria",
+        mostrarLotes: true,
+      },
+
+      {
+        nombre: "#HI",
+        nombreProceso: "comparativoHi",
+        seleccionado: false,
+        propiedad: "subcategoria",
+        mostrarLotes: false,
+      },
+      {
+        nombre: "#BBs",
+        nombreProceso: "comparativoBbs",
+        seleccionado: false,
+        propiedad: "subcategoria",
+        mostrarLotes: false,
       },
     ];
   }
@@ -83,7 +103,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
         ingresoLoteSeleccionado: null,
       },
       categoriaSeleccionado = {},
-      subcategoriaSeleccionado = {},
+      subcategoriaSeleccionado = { mostrarLotes: false },
       ingresoLoteSeleccionado = {},
     } = sessionStorage.getItem(this.llaveStorage)
       ? JSON.parse(sessionStorage.getItem(this.llaveStorage))
@@ -91,6 +111,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
     this.state = state;
     this.categoriaSeleccionado = categoriaSeleccionado;
     this.subcategoriaSeleccionado = subcategoriaSeleccionado;
+    this.mostrarLotes = subcategoriaSeleccionado.mostrarLotes;
     this.ingresoLoteSeleccionado = ingresoLoteSeleccionado;
     this.subscriptionState = this.search$
       .pipe(
@@ -110,6 +131,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
   }
   nombreProcesoSubcategoria(itemDashboard: ItemsDashboard) {
     this.subcategoriaSeleccionado = itemDashboard;
+    this.mostrarLotes = itemDashboard.mostrarLotes;
     const data = {};
     data[itemDashboard.propiedad] = itemDashboard.nombreProceso;
     this._set(data);
@@ -128,33 +150,33 @@ export class DefaultComponent implements OnInit, OnDestroy {
     Object.assign(this.state, object);
     this.search$.next(this.state[Object.keys(object)[0]]);
   }
-  async prueba() {
-    await this.router.navigate(
-      ["produccion", "porcentajeProduccion", 5, "grafica"],
-      { relativeTo: this.route, skipLocationChange: false }
-    );
-  }
+
   private async renderizarComponente() {
+    if (!this.state.categoria || !this.state.subcategoria) {
+      return;
+    }
+    sessionStorage.setItem(
+      this.llaveStorage,
+      JSON.stringify({
+        ingresoLoteSeleccionado: this.ingresoLoteSeleccionado,
+        categoriaSeleccionado: this.categoriaSeleccionado,
+        subcategoriaSeleccionado: this.subcategoriaSeleccionado,
+        state: this.state,
+      })
+    );
     if (
-      this.state.categoria &&
-      this.state.categoria !== "" &&
-      this.state.subcategoria &&
-      this.state.subcategoria !== "" &&
+      this.subcategoriaSeleccionado.mostrarLotes &&
       this.state.ingresoLoteSeleccionado
     ) {
-      sessionStorage.setItem(
-        this.llaveStorage,
-        JSON.stringify({
-          ingresoLoteSeleccionado: this.ingresoLoteSeleccionado,
-          categoriaSeleccionado: this.categoriaSeleccionado,
-          subcategoriaSeleccionado: this.subcategoriaSeleccionado,
-          state: this.state,
-        })
-      );
       //this.router.routeReuseStrategy.shouldReuseRoute = () => true;
 
       this.router.navigateByUrl(
         `/dashboards/${this.state.categoria}/${this.state.subcategoria}/${this.state.ingresoLoteSeleccionado.idProyIngresoLote}/grafica`
+      );
+    }
+    if (!this.subcategoriaSeleccionado.mostrarLotes) {
+      this.router.navigateByUrl(
+        `/dashboards/${this.state.categoria}/${this.state.subcategoria}/grafica`
       );
     }
   }

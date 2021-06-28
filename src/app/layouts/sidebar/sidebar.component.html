@@ -23,7 +23,7 @@
           </span>
         </a> -->
       </div>
-   
+
     </div>
   </div>
   <!--- Sidemenu -->
@@ -89,12 +89,22 @@
                     class="side-nav-link-ref">
                     {{ subSubitem.label | translate }}
                   </a>
+
                 </li>
+
+
               </ul>
             </li>
           </ul>
         </li>
       </ng-container>
+      <li>
+        <a (click)="cerrarSesion()" routerLinkActive="active" class="side-nav-link-ref btn btn-link">
+          <i class="bx bx-walk"></i>
+          <span>Cerrar sesion</span>
+        </a>
+
+      </li>
     </ul>
   </div>
 </ng-template>

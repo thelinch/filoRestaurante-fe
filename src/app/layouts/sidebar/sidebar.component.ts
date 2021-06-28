@@ -19,6 +19,7 @@ import { MENU } from "./menu";
 import { MenuItem } from "./menu.model";
 import { TranslateService } from "@ngx-translate/core";
 import { EventEmitter } from "events";
+import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
 
 @Component({
   selector: "app-sidebar",
@@ -48,7 +49,8 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     private eventService: EventService,
     private router: Router,
     public translate: TranslateService,
-    private http: HttpClient
+    private http: HttpClient,
+    private authFackservice: AuthfakeauthenticationService
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -58,7 +60,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     });
     this.mobileMenuButtonClicked = new EventEmitter();
     this.settingsButtonClicked = new EventEmitter();
-    this.mobileMenuButtonClicked.emit("d")
+    this.mobileMenuButtonClicked.emit("d");
   }
 
   ngOnInit() {
@@ -78,6 +80,10 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    */
   changeLayout(layout: string) {
     this.eventService.broadcast("changeLayout", layout);
+  }
+  cerrarSesion() {
+    this.authFackservice.logout();
+    this.router.navigate(["/account/login"]);
   }
   toggleMobileMenu(event: any) {
     event.preventDefault();

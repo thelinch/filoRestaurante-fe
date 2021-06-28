@@ -12,7 +12,6 @@
             </div>
         </div>
     </div>
-    <div (click)="prueba()">prueba</div>
     <div class="row">
         <ul class="ul-list button-items list-unstyled">
 
@@ -37,7 +36,7 @@
             </li>
         </ul>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="mostrarLotes">
         <ul class="ul-list button-items  list-unstyled">
             <li (click)="item(ingresoLoteItem)" *ngFor="let ingresoLoteItem of listaIngresoProduccion">
                 <button type="button" class="btn btn-outline-danger"

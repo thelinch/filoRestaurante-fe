@@ -18,10 +18,12 @@ import { BlogComponent } from './blog/blog.component';
 import { PorcentajeProduccionComponent } from './porcentaje-produccion/porcentaje-produccion.component';
 import { PorcentajeHiComponent } from './porcentaje-hi/porcentaje-hi.component';
 import { PorcentajeNacimientoComponent } from './porcentaje-nacimiento/porcentaje-nacimiento.component';
+import { ComparativoHiComponent } from './comparativo-hi/comparativo-hi.component';
+import { ComparativoBbsComponent } from './comparativo-bbs/comparativo-bbs.component';
 
 
 @NgModule({
-  declarations: [DefaultComponent, SaasComponent, CryptoComponent, BlogComponent, PorcentajeProduccionComponent, PorcentajeHiComponent, PorcentajeNacimientoComponent],
+  declarations: [DefaultComponent, SaasComponent, CryptoComponent, BlogComponent, PorcentajeProduccionComponent, PorcentajeHiComponent, PorcentajeNacimientoComponent, ComparativoHiComponent, ComparativoBbsComponent],
   imports: [
     CommonModule,
     FormsModule,
