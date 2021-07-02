@@ -20,6 +20,7 @@ import { MenuItem } from "./menu.model";
 import { TranslateService } from "@ngx-translate/core";
 import { EventEmitter } from "events";
 import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
+import { NgxPermissionsService } from "ngx-permissions";
 
 @Component({
   selector: "app-sidebar",
@@ -50,7 +51,8 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     private router: Router,
     public translate: TranslateService,
     private http: HttpClient,
-    private authFackservice: AuthfakeauthenticationService
+    private authFackservice: AuthfakeauthenticationService,
+    private permissionsService: NgxPermissionsService
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -64,6 +66,11 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+    this.permissionsService.loadPermissions(
+      localStorage.getItem("permisos")
+        ? JSON.parse(localStorage.getItem("permisos"))
+        : []
+    );
     this.openMobileMenu = false;
 
     this.initialize();
@@ -74,6 +81,9 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
     this.onListScroll(this);
   }
+  async hasPermission(permissions: Array<string> = []) {
+    return await this.permissionsService.hasPermission(permissions);
+  }
   /**
    * Change the layout onclick
    * @param layout Change the layout
@@ -83,6 +93,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
   cerrarSesion() {
     this.authFackservice.logout();
+    this.permissionsService.flushPermissions();
     this.router.navigate(["/account/login"]);
   }
   toggleMobileMenu(event: any) {

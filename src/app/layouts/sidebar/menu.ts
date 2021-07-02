@@ -5,41 +5,49 @@ export const MENU: MenuItem[] = [
     label: "Dashboard",
     isTitle: false,
     link: "/dashboards",
+    permissions: ["ss"],
   },
   {
     id: 8,
     label: "Consultas",
     isTitle: true,
+    permissions: ["ss"],
   },
   {
     id: 60,
     label: "Procesos",
     icon: "bx-calendar",
     link: "/calendar",
+    permissions: ["ss"],
+
     subItems: [
       {
         id: 13,
         label: "Lotes",
         link: "/procesos/lotes",
         parentId: 60,
+        permissions: ["ss"],
       },
       {
         id: 13,
         label: "Proyeccion",
         link: "/procesos/proyeccion",
         parentId: 60,
+        permissions: ["ss"],
       },
       {
         id: 18,
         label: "Pedidos",
         link: "/procesos/pedidos",
         parentId: 60,
+        permissions: ["ss"],
       },
       {
         id: 20,
         label: "Total ingresos",
         link: "/procesos/total-ingresos",
         parentId: 60,
+        permissions: ["ss"],
       },
     ],
   },
@@ -48,11 +56,13 @@ export const MENU: MenuItem[] = [
     label: "Consultas",
     icon: "bx-calendar",
     link: "/calendar",
+    permissions: ["ss"],
   },
   {
     id: 9,
     label: "Referencias",
     icon: "bx-calendar",
+    permissions: ["admin"],
 
     subItems: [
       {
@@ -60,18 +70,21 @@ export const MENU: MenuItem[] = [
         label: "Proyeccion Hembras",
         link: "/referencia/proyeccionHembras",
         parentId: 9,
+        permissions: ["admin"],
       },
       {
         id: 15,
         label: "Proyeccion Machos",
         link: "/referencia/proyeccionMacho",
         parentId: 9,
+        permissions: ["admin"],
       },
       {
         id: 13,
         label: "Factor",
         link: "/referencia/factor",
         parentId: 9,
+        permissions: ["admin"],
       },
     ],
   },
@@ -96,24 +109,29 @@ export const MENU: MenuItem[] = [
     id: 12,
     label: "Seguridad",
     icon: "bx-store",
+    permissions: ["admin"],
+
     subItems: [
       {
         id: 13,
         label: "Roles",
         link: "/seguridad/roles",
         parentId: 12,
+        permissions: ["admin"],
       },
       {
         id: 14,
         label: "Acciones",
         link: "/seguridad/acciones",
         parentId: 12,
+        permissions: ["admin"],
       },
       {
         id: 15,
         label: "Usuarios",
         link: "/seguridad/usuarios",
         parentId: 12,
+        permissions: ["admin"],
       },
 
       /*     {

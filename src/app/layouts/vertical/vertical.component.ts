@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
+import { NgxPermissionsService } from "ngx-permissions";
 import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
 
 @Component({
@@ -16,7 +17,8 @@ export class VerticalComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private authFackservice: AuthfakeauthenticationService
+    private authFackservice: AuthfakeauthenticationService,
+    private permissionsService: NgxPermissionsService
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -36,7 +38,8 @@ export class VerticalComponent implements OnInit, AfterViewInit {
   }
   cerrarSesion() {
     this.authFackservice.logout();
-    this.router.navigate(["/account/login"])
+    this.permissionsService.flushPermissions();
+    this.router.navigate(["/account/login"]);
   }
   isMobile() {
     const ua = navigator.userAgent;

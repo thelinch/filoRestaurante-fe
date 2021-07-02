@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { first } from "rxjs/operators";
 
 import { environment } from "../../../../environments/environment";
+import { NgxPermissionsService } from "ngx-permissions";
 
 @Component({
   selector: "app-login",
@@ -33,13 +34,14 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService
+    private authFackservice: AuthfakeauthenticationService,
+    private permissionsService: NgxPermissionsService
   ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ["admin@themesbrand.com", [Validators.required, Validators.email]],
-      password: ["123456", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required]],
     });
 
     // reset login status
@@ -68,8 +70,11 @@ export class LoginComponent implements OnInit {
       .login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        (data) => {
-          console.log("direccionando")
+        async (data) => {
+          this.permissionsService.loadPermissions(data);
+          console.log("p", this.permissionsService.getPermissions());
+          localStorage.setItem("permisos", JSON.stringify(data));
+
           this.router.navigate(["/dashboards"]);
         },
         (error) => {

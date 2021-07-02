@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { flatMap, map, switchMap } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
 import { User } from "../models/auth.models";
 
@@ -23,7 +23,7 @@ export class AuthfakeauthenticationService {
 
   login(email: string, Password: string) {
     return this.http
-      .post<any>(`${environment.apiUrl}/auth`, { email, Password })
+      .post<any>(`${environment.apiUrl}/auth-proyeccion`, { email, Password })
       .pipe(
         map((dataUser) => {
           // login successful if there's a jwt token in the response
@@ -33,8 +33,15 @@ export class AuthfakeauthenticationService {
             this.currentUserSubject.next(dataUser);
           }
           return dataUser;
+        }),
+        switchMap((dataUser) => {
+
+          return this.listarPermisos(dataUser.User.id);
         })
       );
+  }
+  listarPermisos(idUsuario: number) {
+    return this.http.get<Array<string>>(`${environment.apiUrl}/usuario/permisos-proyeccion/${idUsuario}`);
   }
 
   logout() {
