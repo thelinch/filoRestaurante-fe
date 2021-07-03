@@ -328,7 +328,7 @@ body[data-layout="horizontal"] .footer {
   #sidebar-menu .mm-active > .has-arrow:after {
     -webkit-transform: rotate(180deg);
             transform: rotate(180deg); }
-  #sidebar-menu .has-arrow:after {
+/*   #sidebar-menu .has-arrow:after {
     content: "\F0140";
     font-family: 'Material Design Icons';
     display: block;
@@ -337,7 +337,7 @@ body[data-layout="horizontal"] .footer {
     transition: -webkit-transform .2s;
     transition: transform .2s;
     transition: transform .2s, -webkit-transform .2s;
-    font-size: 1rem; }
+    font-size: 1rem; } */
   #sidebar-menu ul li a {
     display: block;
     padding: .625rem 1.5rem;

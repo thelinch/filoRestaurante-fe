@@ -34,7 +34,8 @@ import { JwtInterceptor } from "./core/helpers/jwt.interceptor";
 import { FakeBackendInterceptor } from "./core/helpers/fake-backend";
 import { LoaderService } from "./core/services/loader.service";
 import { ErrorsModule } from "./pages/errors/errors.module";
-import { NgxPermissionsModule } from 'ngx-permissions';
+import { NgxPermissionsModule } from "ngx-permissions";
+import { MetismenuAngularModule } from "@metismenu/angular";
 
 /* if (environment.defaultauth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);
@@ -70,8 +71,8 @@ export function createTranslateLoader(http: HttpClient): any {
     NgbTooltipModule,
     SharedModule,
     ScrollToModule.forRoot(),
-    NgxPermissionsModule.forRoot()
-
+    NgxPermissionsModule.forRoot(),
+    MetismenuAngularModule,
   ],
   bootstrap: [AppComponent],
   providers: [

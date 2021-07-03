@@ -56,7 +56,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
-        this._activateMenuDropdown();
+        //  this._activateMenuDropdown();
         this.onListScroll(this);
       }
     });
@@ -102,7 +102,11 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
   ngAfterViewInit() {
     this.menu = new MetisMenu(this.sideMenu.nativeElement);
-    this._activateMenuDropdown();
+
+    setTimeout(() => {
+      this.menu.update();
+    },400)
+    //this._activateMenuDropdown();
   }
 
   toggleMenu(event) {

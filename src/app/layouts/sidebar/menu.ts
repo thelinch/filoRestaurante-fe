@@ -5,20 +5,23 @@ export const MENU: MenuItem[] = [
     label: "Dashboard",
     isTitle: false,
     link: "/dashboards",
-    permissions: ["ss"],
+    permissions: ["ver-menu-dashboard"],
+    visible: false,
   },
   {
     id: 8,
     label: "Consultas",
     isTitle: true,
-    permissions: ["ss"],
+    permissions: ["ver-menu-consultas"],
+    visible: false,
   },
   {
     id: 60,
     label: "Procesos",
     icon: "bx-calendar",
     link: "/calendar",
-    permissions: ["ss"],
+    permissions: ["ver-consultas-procesos"],
+    visible: false,
 
     subItems: [
       {
@@ -26,43 +29,42 @@ export const MENU: MenuItem[] = [
         label: "Lotes",
         link: "/procesos/lotes",
         parentId: 60,
-        permissions: ["ss"],
+        permissions: ["ver-consultas-procesos-lotes"],
+        visible: false,
       },
       {
         id: 13,
         label: "Proyeccion",
         link: "/procesos/proyeccion",
         parentId: 60,
-        permissions: ["ss"],
+        permissions: ["ver-consultas-procesos-proyeccion"],
+        visible: false,
       },
       {
         id: 18,
         label: "Pedidos",
         link: "/procesos/pedidos",
         parentId: 60,
-        permissions: ["ss"],
+        permissions: ["ver-consultas-procesos-pedidos"],
+        visible: false,
       },
       {
         id: 20,
         label: "Total ingresos",
         link: "/procesos/total-ingresos",
         parentId: 60,
-        permissions: ["ss"],
+        permissions: ["ver-consultas-total-procesos-ingresos"],
+        visible: false,
       },
     ],
   },
-  {
-    id: 30,
-    label: "Consultas",
-    icon: "bx-calendar",
-    link: "/calendar",
-    permissions: ["ss"],
-  },
+ 
   {
     id: 9,
     label: "Referencias",
     icon: "bx-calendar",
-    permissions: ["admin"],
+    permissions: ["ver-menu-referencias"],
+    visible: false,
 
     subItems: [
       {
@@ -70,94 +72,60 @@ export const MENU: MenuItem[] = [
         label: "Proyeccion Hembras",
         link: "/referencia/proyeccionHembras",
         parentId: 9,
-        permissions: ["admin"],
+        permissions: ["ver-menu-referencias-proyeccion-hembras"],
+        visible: false,
       },
       {
         id: 15,
         label: "Proyeccion Machos",
         link: "/referencia/proyeccionMacho",
         parentId: 9,
-        permissions: ["admin"],
+        permissions: ["ver-menu-referencias-proyeccion-machos"],
+        visible: false,
       },
       {
         id: 13,
         label: "Factor",
         link: "/referencia/factor",
         parentId: 9,
-        permissions: ["admin"],
+        permissions: ["ver-menu-referencias-factor"],
+        visible: false,
       },
     ],
   },
-  /*     {
-        id: 10,
-        label: 'MENUITEMS.CHAT.TEXT',
-        icon: 'bx-chat',
-        link: '/chat',
-        
-    }, 
-    {
-        id: 11,
-        label: 'MENUITEMS.FILEMANAGER.TEXT',
-        icon: 'bx-file',
-        link: '/filemanager',
-        badge: {
-            variant: 'success',
-            text: 'MENUITEMS.FILEMANAGER.BADGE',
-        },
-    },*/
-  {
+   {
     id: 12,
     label: "Seguridad",
     icon: "bx-store",
-    permissions: ["admin"],
+    permissions: ["ver-menu-seguridad"],
 
+    visible: false,
     subItems: [
       {
         id: 13,
         label: "Roles",
         link: "/seguridad/roles",
         parentId: 12,
-        permissions: ["admin"],
+        visible: false,
+
+        permissions: ["ver-menu-seguridad-roles"],
       },
       {
         id: 14,
         label: "Acciones",
         link: "/seguridad/acciones",
         parentId: 12,
-        permissions: ["admin"],
+        permissions: ["ver-menu-seguridad-acciones"],
+        visible: false,
       },
       {
         id: 15,
         label: "Usuarios",
         link: "/seguridad/usuarios",
         parentId: 12,
-        permissions: ["admin"],
+        permissions: ["ver-menu-seguridad-usuarios"],
+        visible: false,
       },
-
-      /*     {
-        id: 17,
-        label: "MENUITEMS.ECOMMERCE.LIST.CART",
-        link: "/ecommerce/cart",
-        parentId: 12,
-      },
-      {
-        id: 18,
-        label: "MENUITEMS.ECOMMERCE.LIST.CHECKOUT",
-        link: "/ecommerce/checkout",
-        parentId: 12,
-      },
-      {
-        id: 19,
-        label: "MENUITEMS.ECOMMERCE.LIST.SHOPS",
-        link: "/ecommerce/shops",
-        parentId: 12,
-      },
-      {
-        id: 20,
-        label: "MENUITEMS.ECOMMERCE.LIST.ADDPRODUCT",
-        link: "/ecommerce/add-product",
-        parentId: 12,
-      }, */
     ],
   },
   /*  {
