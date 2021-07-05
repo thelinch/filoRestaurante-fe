@@ -9,12 +9,15 @@ import {
   ApexLegend,
   ApexPlotOptions,
   ApexResponsive,
+  ApexMarkers,
 } from "ng-apexcharts";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
+  markers: ApexMarkers;
+
   yaxis: ApexYAxis | ApexYAxis[];
   title: ApexTitleSubtitle;
   labels: string[];
