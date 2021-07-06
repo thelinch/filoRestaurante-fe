@@ -5,4 +5,5 @@ export interface ComparativoHiBbsProyectadoReal {
   hiReal: number;
   bbsProyectado: number;
   bbsReal: number;
+  fecha: string;
 }

@@ -66,7 +66,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
         mostrarLotes: true,
       },
       {
-        nombre: "Porcentaje de huevos incubables",
+        nombre: "Porcentaje de HI",
         nombreProceso: "porcentajeHi",
         seleccionado: false,
         propiedad: "subcategoria",

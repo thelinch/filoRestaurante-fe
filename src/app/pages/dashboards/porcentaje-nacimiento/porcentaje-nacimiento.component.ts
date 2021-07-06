@@ -26,15 +26,55 @@ export class PorcentajeNacimientoComponent implements OnInit {
     });
     this.chartModelLineaMacho.series = [];
     this.chartModelLineaHembra.series = [];
-    this.chartModelLineaHembra.dataLabels = { enabled: true };
-    this.chartModelLineaMacho.dataLabels = { enabled: true };
+    this.chartModelLineaHembra.dataLabels = { enabled: false };
+    this.chartModelLineaMacho.dataLabels = { enabled: false };
     this.chartModelLineaHembra.stroke = {
-      curve: "smooth",
+      width: 5,
+      dashArray: [5, 0],
+      curve: "straight",
     };
     this.chartModelLineaMacho.stroke = {
-      curve: "smooth",
+      width: 5,
+      dashArray: [5, 0],
+      curve: "straight",
     };
 
+    this.chartModelLineaHembra.tooltip = {
+      enabled: true,
+      shared: true,
+      custom: ({ series, seriesIndex, dataPointIndex, w }) => {
+        return `<div class="arrow_box_grafica">
+        <b>Semana ${w.globals.categoryLabels[dataPointIndex]}</b>
+        <p><span style="color:red">●</span>% NAC STD:<b>${
+          series[0][dataPointIndex] || 0
+        }</b></p>
+        <p><span style="color:#87BCEE">●</span>% NAC REAL:<b>${
+          series[1][dataPointIndex] || 0
+        }</b></p>
+        </div>
+
+        `;
+      },
+    };
+    this.chartModelLineaMacho.tooltip = {
+      enabled: true,
+      shared: true,
+      custom: ({ series, seriesIndex, dataPointIndex, w }) => {
+        return `<div class="arrow_box_grafica">
+        <b>Semana ${w.globals.categoryLabels[dataPointIndex]}</b>
+        <p><span style="color:red">●</span>% NAC STD:<b>${
+          series[0][dataPointIndex] || 0
+        }</b></p>
+        <p><span style="color:#87BCEE">●</span>% NAC REA:<b>${
+          series[1][dataPointIndex] || 0
+        }</b></p>
+        </div>
+
+        `;
+      },
+    };
+    this.chartModelLineaHembra.markers = { size: [6, 2] };
+    this.chartModelLineaMacho.markers = { size: [6, 2] };
     //this.chartModel.legend = { show: true, position: "bottom" };
     this.listaLoteDetalleView = [];
     this.chartModelLineaMacho.chart = {
@@ -45,10 +85,10 @@ export class PorcentajeNacimientoComponent implements OnInit {
     this.chartModelLineaHembra.chart = { type: "line", height: "350" };
 
     this.chartModelLineaHembra.title = {
-      text: "PORCENTAJE NACIMIENTO LINEA HEMBRA EN MILES",
+      text: "PORCENTAJE NACIMIENTO LINEA HEMBRA",
     };
     this.chartModelLineaMacho.title = {
-      text: "PORCENTAJE NACIMIENTO LINEA MACHO EN MILES",
+      text: "PORCENTAJE NACIMIENTO LINEA MACHO",
     };
   }
   ngAfterViewInit(): void {}
@@ -76,30 +116,30 @@ export class PorcentajeNacimientoComponent implements OnInit {
     }
     const semanas = this.listaLoteDetalleView.map((l) => l.semana);
     this.chartModelLineaHembra.series.push({
-      name: "Nac Act_AveDia",
+      name: "% NAC STD",
       data: this.listaLoteDetalleView.map((l) =>
-        Number((l.lineaHembra.porcentajeNacimiento / 1000).toFixed(1))
+        Number(Number(l.lineaHembra.porcentajeNacimiento).toFixed(2))
       ),
       color: "#FF0000",
     });
     this.chartModelLineaHembra.series.push({
-      name: "Act Ave/día",
+      name: "% NAC REA",
       data: this.listaLoteDetalleView.map((l) =>
-        Number((l.lineaHembra.porcentajeNacimientoReal / 1000).toFixed(1))
+        Number(Number(l.lineaHembra.porcentajeNacimientoReal).toFixed(2))
       ),
       color: "#87BCEE",
     });
     this.chartModelLineaMacho.series.push({
-      name: "Nac Act_AveDia",
+      name: "% NAC STD",
       data: this.listaLoteDetalleView.map((l) =>
-        Number((l.lineaMacho.porcentajeNacimiento / 1000).toFixed(1))
+        Number(Number(l.lineaMacho.porcentajeNacimiento).toFixed(2))
       ),
       color: "#FF0000",
     });
     this.chartModelLineaMacho.series.push({
-      name: "Act Ave/día",
+      name: "% NAC REA",
       data: this.listaLoteDetalleView.map((l) =>
-        Number((l.lineaMacho.porcentajeNacimientoReal / 1000).toFixed(1))
+        Number(Number(l.lineaMacho.porcentajeNacimientoReal).toFixed(2))
       ),
       color: "#87BCEE",
     });

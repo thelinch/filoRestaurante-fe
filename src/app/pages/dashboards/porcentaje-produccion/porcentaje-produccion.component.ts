@@ -47,7 +47,7 @@ export class PorcentajeProduccionComponent implements OnInit, AfterViewInit {
     this.chartModelLineaHembra.tooltip = {
       enabled: true,
       shared: true,
-      custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+      custom: ({ series, seriesIndex, dataPointIndex, w }) => {
         let dataDif = 0;
         if (
           series[0][dataPointIndex] &&

@@ -28,14 +28,61 @@ export class ComparativoHiComponent implements OnInit {
     this.isLoadingForms = loaderService.isLoading;
     this.chartModelLineaMacho.series = [];
     this.chartModelLineaHembra.series = [];
-    this.chartModelLineaHembra.dataLabels = { enabled: true };
-    this.chartModelLineaMacho.dataLabels = { enabled: true };
+    this.chartModelLineaHembra.dataLabels = { enabled: false };
+    this.chartModelLineaMacho.dataLabels = { enabled: false };
+    this.chartModelLineaHembra.tooltip = {
+      enabled: true,
+      shared: true,
+      custom: ({ series, seriesIndex, dataPointIndex, w }) => {
+        return `<div class="arrow_box_grafica">
+        <b>Semana ${w.globals.categoryLabels[dataPointIndex]}</b>
+        <p><span >●</span>FECHA:<b>${
+          this.listaComparativoHiBbsReal[dataPointIndex].fecha || 0
+        }</b></p>
+        <p><span style="color:red">●</span>#HI PROY:<b>${
+          series[0][dataPointIndex] || 0
+        }</b></p>
+        <p><span style="color:#87BCEE">●</span>#HI REAL:<b>${
+          series[1][dataPointIndex] || 0
+        }</b></p>
+        </div>
+
+        `;
+      },
+    };
+    this.chartModelLineaMacho.tooltip = {
+      enabled: true,
+      shared: true,
+      custom: ({ series, seriesIndex, dataPointIndex, w }) => {
+        return `<div class="arrow_box_grafica">
+        <b>Semana ${w.globals.categoryLabels[dataPointIndex]}</b>
+        <p><span >●</span>FECHA:<b>${
+          this.listaComparativoHiBbsReal[dataPointIndex].fecha || 0
+        }</b></p>
+        <p><span style="color:red">●</span> #HI PROY:<b>${
+          series[0][dataPointIndex] || 0
+        }</b></p>
+        <p><span style="color:#87BCEE">●</span>#HI REAL:<b>${
+          series[1][dataPointIndex] || 0
+        }</b></p>
+        
+        </div>
+
+        `;
+      },
+    };
     this.chartModelLineaHembra.stroke = {
-      curve: "smooth",
+      width: 5,
+      dashArray: [5, 0],
+      curve: "straight",
     };
     this.chartModelLineaMacho.stroke = {
-      curve: "smooth",
+      width: 5,
+      dashArray: [5, 0],
+      curve: "straight",
     };
+    this.chartModelLineaMacho.markers = { size: [6, 2] };
+    this.chartModelLineaHembra.markers = { size: [6, 2] };
 
     this.listaComparativoHiBbsReal = [];
     this.chartModelLineaMacho.chart = {
@@ -66,7 +113,6 @@ export class ComparativoHiComponent implements OnInit {
   }
 
   async generarGrafico() {
-    console.log("rnei");
     this.chartModelLineaMacho.series = [];
     this.chartModelLineaHembra.series = [];
     this.chartModelLineaHembra.noData = { text: "Cargando..." };
@@ -96,22 +142,22 @@ export class ComparativoHiComponent implements OnInit {
       this.chartModelLineaMacho.noData = { text: "Sin datos que mostrar" };
     }
     this.chartModelLineaHembra.series.push({
-      name: "Hi Proyectado",
+      name: "#HI PROY",
       data: lineaHembra.map((l) => l.hiProyectado),
       color: "#FF0000",
     });
     this.chartModelLineaHembra.series.push({
-      name: "Hi Real",
+      name: "#HI REAL",
       data: lineaHembra.map((l) => l.hiReal),
       color: "#87BCEE",
     });
     this.chartModelLineaMacho.series.push({
-      name: "Hi Proyectado",
+      name: "#HI PROY",
       data: lineaMacho.map((l) => l.hiProyectado),
       color: "#FF0000",
     });
     this.chartModelLineaMacho.series.push({
-      name: "Hi Real",
+      name: "#HI REAL",
       data: lineaMacho.map((l) => l.hiReal),
       color: "#87BCEE",
     });
