@@ -47,6 +47,14 @@ export const MENU: MenuItem[] = [
         permissions: [],
         visible: false,
       },
+      {
+        id: 154,
+        label: "Mesas",
+        link: "/master/tables",
+        parentId: 60,
+        permissions: [],
+        visible: false,
+      },
     ],
   },
   {

@@ -89,7 +89,8 @@ function matches(tables: any, term: string, pipe: PipeTransform) {
   styleUrls: ["./table-custom-generic.component.scss"],
 })
 export class TableCustomGenericComponent
-  implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+  implements OnInit, OnDestroy, OnChanges, AfterViewInit
+{
   @Input() haders: Array<HaderTable> = [];
   uuid: string;
   @Input() data: Array<any> = [];
@@ -157,16 +158,12 @@ export class TableCustomGenericComponent
   ngAfterViewInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     console.log("change", changes);
-    /*   if (!changes.data?.firstChange) {
+    if (changes?.data?.currentValue) {
       this.data = [...changes.data.currentValue];
 
       this._tablesCopy$.next([...changes.data.currentValue]);
       this._search$.next(this._state);
-    } */
-    this.data = [...changes.data.currentValue];
-
-    this._tablesCopy$.next([...changes.data.currentValue]);
-    this._search$.next(this._state);
+    }
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -268,13 +265,8 @@ export class TableCustomGenericComponent
    * Search Method
    */
   private _search(): Observable<SearchResult> {
-    const {
-      sortColumn,
-      sortDirection,
-      pageSize,
-      page,
-      searchTerm,
-    } = this._state;
+    const { sortColumn, sortDirection, pageSize, page, searchTerm } =
+      this._state;
 
     // 1. sort
     //let tables = sort(this._tables$.value, sortColumn, sortDirection);

@@ -1,0 +1,60 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="d-flex justify-content-between">
+                <h4 class="m-0 title-uppercase d-inline-block">Mesas</h4>
+                <button class="btn btn-success pull-right" (click)="newTable()">Crear</button>
+            </div>
+
+        </div>
+        <div class="col-sm-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <app-table-custom-generic [data]="tables" [haders]="headerTables">
+                    </app-table-custom-generic>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #editAndCreateTable let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Mesa</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="formTable" id="formFactorMortalidad" (ngSubmit)="createAndEditTable()">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Nombre</label>
+                        <input
+                            [ngClass]="{'is-invalid': formTableControls.name.touched && formTableControls.name.errors}"
+                            class="form-control" placeholder="Nombre de la mesa" type="text"
+                            formControlName="name">
+                        <div *ngIf="formTableControls.name.touched && formTableControls.name.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formTableControls.name.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" [disabled]="formTable.invalid" form="formFactorMortalidad" class="btn btn-success ms-1">
+            <ng-template [ngIf]="isLoadingForm | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            {{formTableControls.id.value==null? 'Guardar':'Editar'}}
+        </button>
+    </div>
+</ng-template>

@@ -97,9 +97,11 @@ const routes: Routes = [
       ),
   },
   {
-    path: "referencia",
+    path: "master",
     loadChildren: () =>
-      import("./projection/projection.module").then((m) => m.ProjectionModule),
+      import("./master-managment/master-managment.module").then(
+        (m) => m.MasterManagmentModule
+      ),
   },
   {
     path: "procesos",
