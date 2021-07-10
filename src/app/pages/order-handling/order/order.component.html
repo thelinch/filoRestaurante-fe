@@ -1,1 +1,72 @@
-<p>order works!</p>
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <!--     <app-page-title title="Invoice List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+ -->
+    <!-- end page title -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Pedidos</h4>
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-md-5">
+            <ng-select bindLabel="name" (change)="changeCategoriesSelected()" [(ngModel)]="categoriesSelected"
+                [multiple]="true" [loading]="isLoadingCategories" [items]="categories">
+            </ng-select>
+
+        </div>
+    </div>
+    <div class="board-canvas">
+        <div class="blackboard">
+            <div class="column" *ngFor="let column of columns">
+                <div class="column_body">
+                    <div class="column_title">
+                        <span class="text">{{column.title}}</span>
+                        <span class="number">{{column.items.length}}</span>
+                    </div>
+                    <div class="items">
+                        <div class="item" id="{{item.id}}" ng-click="mostrarModal(item)"
+                            *ngFor="let item in column.items" x-lvl-draggable="true">
+                            <div class="thumbnail" style="box-shadow: 0 0 8px -3px black;">
+                                <div class="caption cargo-edit">
+                                    <span class="label label-danger" style="position: absolute;">{{item.ccosto}}</span>
+                                    <h5 class="text-center mt-10" style="margin: 0 !important;">
+                                        REQ N° {{item.folio}}
+                                    </h5>
+                                    <div class="text-left">
+                                        <th><label for=""><strong>Tipo:</strong>
+                                                &nbsp;&nbsp;</label>
+                                            <label for="">{{item.Desc_tipoReq}}</label><br>
+                                        </th>
+                                    </div>
+                                    <div class="text-left">
+                                        <th><label for=""><strong>Solicitado por:</strong>
+                                                &nbsp;&nbsp;</label>
+                                            <label for="">{{item.Desc_Solicitante}}</label><br>
+                                        </th>
+                                    </div>
+                                    <div class="text-left">
+                                        <th><label for=""><strong>Fecha de Atencion</strong>
+                                                &nbsp;&nbsp;</label>
+                                            <label for="">{{item.Fecha_Requerimiento}}</label><br>
+                                        </th>
+                                    </div>
+                                    <div class="text-left">
+                                        <th><label for=""><strong>Registrado:</strong>
+                                                &nbsp;&nbsp;</label>
+                                            <label for="">{{item.Fecha_Registro}}</label><br>
+                                        </th>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -37,18 +37,30 @@ export class OrdersFormComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   pedidoVentaEdicion: PedidoVenta;
   headers = [
-    { headerName: "Fecha Pedido", bindValue: "fechaPedido", isActions: false },
+    {
+      headerName: "Fecha Pedido",
+      bindValue: "fechaPedido",
+      isActions: false,
+      isTemplate: false,
+    },
     {
       headerName: "Cantidad hembras",
       bindValue: "cantidadHembras",
       isActions: false,
+      isTemplate: false,
     },
     {
       headerName: "Cantidad Machos",
       bindValue: "cantidadMachos",
       isActions: false,
+      isTemplate: false,
     },
-    { headerName: "Acciones", bindValue: "Acciones", isActions: true },
+    {
+      headerName: "Acciones",
+      bindValue: "Acciones",
+      isActions: true,
+      isTemplate: false,
+    },
   ];
   listaPedidoDetalle: Array<pedidoVentaDetalle>;
   listaClientes: Array<any>;

@@ -25,8 +25,18 @@ export class RolesComponent implements OnInit, OnDestroy {
   roles: Array<any> = [];
   isLoadingForms;
   headers = [
-    { headerName: "Rol", bindValue: "Rol", isActions: false },
-    { headerName: "Acciones", bindValue: "Acciones", isActions: true },
+    {
+      headerName: "Rol",
+      bindValue: "Rol",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Acciones",
+      bindValue: "Acciones",
+      isActions: true,
+      isTemplate: false,
+    },
   ];
   @ViewChild(TableCustomGenericComponent)
   tableGenerico: TableCustomGenericComponent;

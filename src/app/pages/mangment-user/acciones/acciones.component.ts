@@ -25,15 +25,44 @@ export class AccionesComponent implements OnInit, OnDestroy {
   formularioMenu: FormGroup;
   formularioAcciones: FormGroup;
   headers = [
-    { headerName: "Menu", bindValue: "menu.Menu", isActions: false },
-    { headerName: "Accion", bindValue: "Accion", isActions: false },
-    { headerName: "Codigo", bindValue: "codigo", isActions: false },
-    { headerName: "Acciones", bindValue: "Acciones", isActions: true },
-
+    {
+      headerName: "Menu",
+      bindValue: "menu.Menu",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Accion",
+      bindValue: "Accion",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Codigo",
+      bindValue: "codigo",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Acciones",
+      bindValue: "Acciones",
+      isActions: true,
+      isTemplate: false,
+    },
   ];
   headerMenu = [
-    { headerName: "Menu", bindValue: "Menu", isActions: false },
-    { headerName: "Acciones", bindValue: "", isActions: true },
+    {
+      headerName: "Menu",
+      bindValue: "Menu",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Acciones",
+      bindValue: "",
+      isActions: true,
+      isTemplate: false,
+    },
   ];
   listAccionesData = [];
   listMenusData = [];

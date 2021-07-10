@@ -23,23 +23,38 @@ export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
   formularioProyeccionHembra: FormGroup;
   listaIngresoLote: Array<IngresoLote>;
   headersStandardHembra = [
-    { headerName: "semana", bindValue: "semana", isActions: false },
+    {
+      headerName: "semana",
+      bindValue: "semana",
+      isActions: false,
+      isTemplate: false,
+    },
     {
       headerName: "Porcentaje Postura",
       bindValue: "porc_postura",
       isActions: false,
+      isTemplate: false,
     },
     {
       headerName: "Porcentaje Huevos Incubable",
       bindValue: "porc_hi",
+      isTemplate: false,
+
       isActions: false,
     },
     {
       headerName: "Porcentaje Nacimiento",
       bindValue: "porc_nacimiento",
+      isTemplate: false,
+
       isActions: false,
     },
-    { headerName: "Acciones", bindValue: "Acciones", isActions: true },
+    {
+      headerName: "Acciones",
+      bindValue: "Acciones",
+      isActions: true,
+      isTemplate: false,
+    },
   ];
   listaStandardHembra: ProyStandardHembra[] = [];
   @ViewChild("editAndCreateProyStandardHembra")

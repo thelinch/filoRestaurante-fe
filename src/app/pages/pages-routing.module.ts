@@ -104,6 +104,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "process",
+    loadChildren: () =>
+      import("./order-handling/order-handling.module").then(
+        (m) => m.OrderHandlingModule
+      ),
+  },
+  {
     path: "procesos",
     loadChildren: () =>
       import("./process/process.module").then((m) => m.ProcessModule),

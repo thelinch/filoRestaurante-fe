@@ -20,10 +20,30 @@ import { environment } from "src/environments/environment";
 })
 export class UsuariosComponent implements OnInit, OnDestroy {
   headersUsuario = [
-    { headerName: "Nombre Completo", bindValue: "Nombre", isActions: false },
-    { headerName: "Correo", bindValue: "email", isActions: false },
-    { headerName: "Rol", bindValue: "rol.Rol", isActions: false },
-    { headerName: "Acciones", bindValue: "", isActions: true },
+    {
+      headerName: "Nombre Completo",
+      bindValue: "Nombre",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Correo",
+      bindValue: "email",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Rol",
+      bindValue: "rol.Rol",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Acciones",
+      bindValue: "",
+      isActions: true,
+      isTemplate: false,
+    },
   ];
   isLoadingForms: Observable<boolean>;
   formularioUsuario: FormGroup;

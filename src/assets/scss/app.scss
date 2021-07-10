@@ -65,7 +65,6 @@ File: Main Css File
 @import "custom/plugins/leaflet-maps";
 @import "custom/plugins/owl-carousel";
 
-
 // Pages
 @import "custom/pages/authentication";
 @import "custom/pages/ecommerce";
@@ -78,8 +77,7 @@ File: Main Css File
 @import "custom/pages/coming-soon";
 @import "custom/pages/timeline";
 @import "custom/pages/extras-pages";
-
-// rtl
+@import "custom/components/board"; // rtl
 // @import "custom/rtl/general-rtl";
 // @import "custom/rtl/bootstrap-rtl";
 // @import "custom/rtl/spacing-rtl";
