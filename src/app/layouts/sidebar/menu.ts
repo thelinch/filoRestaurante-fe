@@ -34,7 +34,7 @@ export const MENU: MenuItem[] = [
       {
         id: 13,
         label: "Categoria",
-        link: "/procesos/lotes",
+        link: "/master/categories",
         parentId: 60,
         permissions: [],
         visible: false,

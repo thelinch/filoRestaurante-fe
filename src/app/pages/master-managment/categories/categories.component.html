@@ -1,0 +1,74 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="d-flex justify-content-between">
+                <h4 class="m-0 title-uppercase d-inline-block">Mesas</h4>
+                <button class="btn btn-success pull-right" (click)="newCategory()">Crear</button>
+            </div>
+
+        </div>
+        <div class="col-sm-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <app-table-custom-generic [data]="categories" [haders]="headerTables">
+                    </app-table-custom-generic>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #editAndCreateCategory let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Categoria</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="formCategory" id="formFactorMortalidad" (ngSubmit)="createAndEditCategory()">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Nombre</label>
+                        <input
+                            [ngClass]="{'is-invalid': formCategoryControls.name.touched && formCategoryControls.name.errors}"
+                            class="form-control" placeholder="Nombre de la mesa" type="text" formControlName="name">
+                        <div *ngIf="formCategoryControls.name.touched && formCategoryControls.name.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formCategoryControls.name.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-check form-check-right mb-3">
+                        <input
+                            [ngClass]="{'is-invalid': formCategoryControls.isVisible.touched && formCategoryControls.isVisible.errors}"
+                            type="checkbox" class="form-check-input" id="formCheck" formControlName="isVisible">
+                        <div *ngIf="formCategoryControls.isVisible.touched && formCategoryControls.isVisible.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formCategoryControls.isVisible.errors.required">Requerido</span>
+                        </div>
+                        <label class="form-check-label" for="formCheck">visble siempre:</label>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" [disabled]="formCategory.invalid" form="formFactorMortalidad"
+            class="btn btn-success ms-1">
+            <ng-template [ngIf]="isLoadingForm | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            {{formCategoryControls.id.value==null? 'Guardar':'Editar'}}
+        </button>
+    </div>
+</ng-template>

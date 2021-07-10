@@ -95,8 +95,6 @@ export class TablesComponent implements OnInit {
       timer: 1500,
       position: "top-end",
     });
-    /*  const index = this.tables.findIndex((t) => t.id == tableId);
-    this.tables.splice(index, 1); */
     await this.listTables();
   }
   newTable() {

@@ -48,7 +48,7 @@ interface State {
   endIndex: number;
   totalRecords: number;
 }
-
+//TODO:Falta ver que pase un html en otra propiedad y renderizarlo
 const compare = (v1: string, v2: string) => (v1 < v2 ? -1 : v1 > v2 ? 1 : 0);
 
 /**
