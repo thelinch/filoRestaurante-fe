@@ -157,7 +157,6 @@ export class TableCustomGenericComponent
   }
   ngAfterViewInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("change", changes);
     if (changes?.data?.currentValue) {
       this.data = [...changes.data.currentValue];
 
@@ -169,6 +168,7 @@ export class TableCustomGenericComponent
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    $(`#${this.uuid}  button.buttonEvent`).off("click");
     this.subscriptionTable?.unsubscribe();
   }
   public setDataTable(data: Array<any>, object: string = "") {

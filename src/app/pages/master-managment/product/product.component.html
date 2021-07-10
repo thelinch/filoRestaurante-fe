@@ -1,0 +1,96 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="d-flex justify-content-between">
+                <h4 class="m-0 title-uppercase d-inline-block">Productos</h4>
+                <button class="btn btn-success pull-right" (click)="newProduct()">Crear</button>
+            </div>
+
+        </div>
+        <div class="col-sm-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <app-table-custom-generic [data]="productsView" [haders]="headerTables">
+                    </app-table-custom-generic>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #editAndCreateProduct let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Categoria</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="formProduct" id="formFactorMortalidad" (ngSubmit)="createAndEditProduct()">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Nombre</label>
+                        <input
+                            [ngClass]="{'is-invalid': formProductControls.name.touched && formProductControls.name.errors}"
+                            class="form-control" placeholder="Nombre de producto" type="text" formControlName="name">
+                        <div *ngIf="formProductControls.name.touched && formProductControls.name.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formProductControls.name.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label class="control-label">Categorias</label>
+                    <ng-select formControlName="categories" bindLabel="name" [multiple]="true"
+                        [loading]="isLoadingCategories" [items]="categories"></ng-select>
+                    <div *ngIf="formProductControls.categories.touched && formProductControls.categories.errors"
+                        class="invalid-feedback">
+                        <span *ngIf="formProductControls.categories.errors.required">Requerido</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Cantidad</label>
+                        <input
+                            [ngClass]="{'is-invalid': formProductControls.quantity.touched && formProductControls.quantity.errors}"
+                            class="form-control" placeholder="Nombre de producto" type="number"
+                            formControlName="quantity">
+                        <div *ngIf="formProductControls.quantity.touched && formProductControls.quantity.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formProductControls.quantity.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Precio</label>
+                        <input
+                            [ngClass]="{'is-invalid': formProductControls.price.touched && formProductControls.price.errors}"
+                            class="form-control" placeholder="Nombre de producto" type="number" formControlName="price">
+                        <div *ngIf="formProductControls.price.touched && formProductControls.price.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formProductControls.price.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" [disabled]="formProduct.invalid" form="formFactorMortalidad" class="btn btn-success ms-1">
+            <ng-template [ngIf]="isLoadingForm | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            {{formProductControls.id.value==null? 'Guardar':'Editar'}}
+        </button>
+    </div>
+</ng-template>

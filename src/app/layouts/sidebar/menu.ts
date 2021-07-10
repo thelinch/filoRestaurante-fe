@@ -42,7 +42,7 @@ export const MENU: MenuItem[] = [
       {
         id: 13,
         label: "Productos",
-        link: "/procesos/proyeccion",
+        link: "/master/products",
         parentId: 60,
         permissions: [],
         visible: false,

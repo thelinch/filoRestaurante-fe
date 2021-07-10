@@ -1,7 +1,13 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { EventService } from "src/app/core/services/event.service";
 import { LoaderService } from "src/app/core/services/loader.service";
 import { Table } from "src/app/models/Table";
@@ -14,15 +20,27 @@ import { v4 as uuidv4 } from "uuid";
   templateUrl: "./tables.component.html",
   styleUrls: ["./tables.component.scss"],
 })
-export class TablesComponent implements OnInit {
+export class TablesComponent implements OnInit, OnDestroy {
   formTable: FormGroup;
   isLoadingForm: Observable<boolean>;
+  subscriptionEditTableEvent: Subscription;
+  subscriptionRemoveTableEvent: Subscription;
   tables: Table[];
   @ViewChild("editAndCreateTable") modalFormTable: TemplateRef<any>;
 
   headerTables = [
-    { headerName: "Mesa", bindValue: "name", isActions: false },
-    { headerName: "Acciones", bindValue: "name", isActions: true },
+    {
+      headerName: "Mesa",
+      bindValue: "name",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Acciones",
+      bindValue: "name",
+      isActions: true,
+      isTemplate: false,
+    },
   ];
   constructor(
     private fb: FormBuilder,
@@ -33,16 +51,26 @@ export class TablesComponent implements OnInit {
   ) {
     this.isLoadingForm = loadingService.isLoading;
   }
+  ngOnDestroy(): void {
+    this.subscriptionEditTableEvent?.unsubscribe();
+    this.subscriptionRemoveTableEvent?.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.listTables();
     this.createFormTable();
-    this.eventService.subscribe("editEventTable", (table: Table) => {
-      this.editTable(table);
-    });
-    this.eventService.subscribe("removeEventTable", (table: Table) => {
-      this.removeTable(table.id);
-    });
+    this.subscriptionEditTableEvent = this.eventService.subscribe(
+      "editEventTable",
+      (table: Table) => {
+        this.editTable(table);
+      }
+    );
+    this.subscriptionRemoveTableEvent = this.eventService.subscribe(
+      "removeEventTable",
+      (table: Table) => {
+        this.removeTable(table.id);
+      }
+    );
   }
 
   async listTables() {

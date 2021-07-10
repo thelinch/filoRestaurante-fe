@@ -1,7 +1,13 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { EventService } from "src/app/core/services/event.service";
 import { LoaderService } from "src/app/core/services/loader.service";
 import { Category } from "src/app/models/CategoryBodyRequestDto";
@@ -14,16 +20,33 @@ import { v4 as uuidv4 } from "uuid";
   templateUrl: "./categories.component.html",
   styleUrls: ["./categories.component.scss"],
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   formCategory: FormGroup;
+  subscriptionEditCategoryEvent: Subscription;
+  subscriptionRemoveCategoryEvent: Subscription;
   @ViewChild("editAndCreateCategory") modalFormCategory: TemplateRef<any>;
 
   headerTables = [
-    { headerName: "Nombre", bindValue: "name", isActions: false },
-    { headerName: "Es visible", bindValue: "isVisible", isActions: false },
+    {
+      headerName: "Nombre",
+      bindValue: "name",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
+      headerName: "Es visible",
+      bindValue: "isVisible",
+      isActions: false,
+      isTemplate: false,
+    },
 
-    { headerName: "Acciones", bindValue: "ss", isActions: true },
+    {
+      headerName: "Acciones",
+      bindValue: "ss",
+      isActions: true,
+      isTemplate: false,
+    },
   ];
   isLoadingForm: Observable<boolean>;
   constructor(
@@ -35,16 +58,26 @@ export class CategoriesComponent implements OnInit {
   ) {
     this.isLoadingForm = loadingService.isLoading;
   }
+  ngOnDestroy(): void {
+    this.subscriptionEditCategoryEvent?.unsubscribe();
+    this.subscriptionRemoveCategoryEvent?.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.createFormCategory();
     this.listCategory();
-    this.eventService.subscribe("editEventCategory", (table: Category) => {
-      this.editCategory(table);
-    });
-    this.eventService.subscribe("removeEventCategory", (table: Category) => {
-      this.removeCategory(table.id);
-    });
+    this.subscriptionEditCategoryEvent = this.eventService.subscribe(
+      "editEventCategory",
+      (table: Category) => {
+        this.editCategory(table);
+      }
+    );
+    this.subscriptionRemoveCategoryEvent = this.eventService.subscribe(
+      "removeEventCategory",
+      (table: Category) => {
+        this.removeCategory(table.id);
+      }
+    );
   }
   createFormCategory() {
     this.formCategory = this.fb.group({

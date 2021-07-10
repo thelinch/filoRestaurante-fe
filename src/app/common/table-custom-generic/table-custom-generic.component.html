@@ -26,7 +26,7 @@
         <table id="basic-datatable" class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
             <thead class="table-light">
                 <tr>
-                    <th class="align-middle" *ngFor="let headerItem of haders" >
+                    <th class="align-middle" *ngFor="let headerItem of haders">
                         {{headerItem.headerName}}</th>
                     <!--        <th sortable="position" (sort)="onSort($event)">Position</th>
                     <th sortable="office" (sort)="onSort($event)">Office</th>
@@ -39,8 +39,11 @@
             <tbody>
                 <tr *ngFor="let table of tables$ | async;let i=index">
                     <td *ngFor="let header of haders">
-                        <ngb-highlight *ngIf="!header.isActions" [result]="this.getValueData(header.bindValue,table)"
-                            [term]="searchTerm">
+                        <ng-template [ngIf]="header.isTemplate">
+                            <div [innerHTML]="table[header.bindValue].join('')| safeHtml"></div>
+                        </ng-template>
+                        <ngb-highlight *ngIf="!header.isActions && !header.isTemplate"
+                            [result]="this.getValueData(header.bindValue,table)" [term]="searchTerm">
                         </ngb-highlight>
                         <ng-template [ngIf]="header.isActions">
                             <div [innerHTML]="table.acciones.join('')| safeHtml"></div>
