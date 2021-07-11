@@ -71,9 +71,10 @@ export class OrderComponent implements OnInit {
     const indexColumn = this.columns.findIndex((c) => c.id == column.id);
     const listItems = this.columns[indexColumn].items;
     listItems.splice(indexItem, 1);
-    this.columns[indexColumn].items = listItems;
+    if (this.columnSource?.id !== this.colmnDestine?.id) {
+      this.columns[indexColumn].items = listItems;
+    }
   }
- 
 
   onDrop(event: DndDropEvent, column: any) {
     this.colmnDestine = column;

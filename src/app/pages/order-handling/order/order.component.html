@@ -8,6 +8,7 @@
         <div class="col-sm-12 ">
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <h4 class="mb-0 font-size-18">Pedidos</h4>
+                
             </div>
 
         </div>
@@ -20,7 +21,7 @@
     </div>
     <div class="board-canvas">
         <div class="blackboard">
-            <div class="column" dndDropzone dndEffectAllowed="move" (dndDrop)="onDrop($event,column)"
+            <div class="column" [dndDropzone]="" dndEffectAllowed="move" (dndDrop)="onDrop($event,column)"
                 *ngFor="let column of columns">
                 <div class="column_body">
                     <div class="column_title">

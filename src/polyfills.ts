@@ -74,3 +74,6 @@ polyfill({
   // use this to make use of the scroll behaviour
   dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride,
 });
+try {
+  window.addEventListener("touchmove", function () {}, { passive: false });
+} catch (e) {}

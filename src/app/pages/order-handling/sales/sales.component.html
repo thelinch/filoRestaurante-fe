@@ -1,1 +1,57 @@
-<p>sales works!</p>
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <!--     <app-page-title title="Invoice List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+ -->
+    <!-- end page title -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Ventas</h4>
+                <div class="pull-right">
+
+                    <ng-select bindLabel="name" style="width:200px" [items]="tables$ | async">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-3 mesa" *ngFor="let table of tables$ |async">
+            <div class="mesa-data mx-auto">
+                <i class="mesa-estado dripicons-dot {{table.state}}"></i>
+                <span class="badge rounded-pill bg-primary p-2">{{table.name}}</span>
+                <img class="img-fluid   mx-auto d-block" src="assets/images/mesa.jfif">
+                <div class="mesa-background d-flex align-items-center justify-content-center">
+                    <div class="button-items">
+                        <button class="btn btn-success">
+                            <i class="bx bx-euro d-block font-size-16"></i>
+                        </button>
+                        <button class="btn btn-primary" (click)="newOrder()">
+                            <i class="bx bx-plus-circle d-block font-size-16"></i>
+
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #editAndCreateOrder let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Crear Pedido</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <app-order-detail-form></app-order-detail-form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" form="formFactorMortalidad" class="btn btn-success ms-1">
+            Crear
+        </button>
+    </div>
+</ng-template>
