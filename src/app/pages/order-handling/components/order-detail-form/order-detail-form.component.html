@@ -1,4 +1,5 @@
-<form [formGroup]="formOrder" id="formOrder">
+<form [formGroup]="formOrder" id="formOrder" (ngSubmit)="createOrder()">
+
     <div class="row" formArrayName="orderDetails">
         <div class="col-sm-12 mb-3" *ngFor="let orderDetailItem of orderDetails.controls;let i=index,let last=last">
             <div [formGroupName]="i" class="row">
@@ -17,7 +18,8 @@
 
                 </div>
                 <div class="col-sm-6">
-                    <ng-select bindLabel="name" class="p-0" formControlName="product" [items]="products">
+                    <ng-select bindLabel="name" placeholder="selecciona el producto" class="p-0"
+                        formControlName="product" [items]="products">
                     </ng-select>
                 </div>
                 <div class="col-sm-2">

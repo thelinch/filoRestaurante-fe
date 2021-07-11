@@ -8,7 +8,7 @@
         <div class="col-sm-12 ">
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <h4 class="mb-0 font-size-18">Pedidos</h4>
-                
+
             </div>
 
         </div>
@@ -36,7 +36,15 @@
                                     <p>
                                         <strong>Mesa:</strong><span>{{item.table.name}}</span>
                                     </p>
-                                    <p class="text-muted mb-4">{{item.resume}}</p>
+                                    <ul>
+                                        <li class="text-muted mb-1" *ngFor="let resume of item.resume.split('*')">
+                                            {{resume}}
+
+                                        </li>
+                                    </ul>
+                                    <p class="text-muted" style="font-size:10px">
+                                        {{item.observation}}
+                                    </p>
                                 </div>
                             </div>
                             <!--     <div class="thumbnail" style="box-shadow: 0 0 8px -3px black;">

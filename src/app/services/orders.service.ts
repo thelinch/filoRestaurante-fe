@@ -16,4 +16,7 @@ export class OrdersService {
       categories
     );
   }
+  create(order: Order) {
+    return this.http.post<void>(environment.apiUrl + "/orders", order);
+  }
 }
