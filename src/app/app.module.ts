@@ -36,6 +36,7 @@ import { LoaderService } from "./core/services/loader.service";
 import { ErrorsModule } from "./pages/errors/errors.module";
 import { NgxPermissionsModule } from "ngx-permissions";
 import { MetismenuAngularModule } from "@metismenu/angular";
+import { DndModule } from "ngx-drag-drop";
 
 /* if (environment.defaultauth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);
@@ -62,6 +63,7 @@ export function createTranslateLoader(http: HttpClient): any {
         deps: [HttpClient],
       },
     }),
+    DndModule,
     LayoutsModule,
     AppRoutingModule,
     ExtrapagesModule,

@@ -12,7 +12,7 @@
 
         </div>
         <div class="col-sm-12 col-md-5">
-            <ng-select bindLabel="name" (change)="changeCategoriesSelected()" [(ngModel)]="categoriesSelected"
+            <ng-select bindLabel="name" (change)="listOrderForCategories()" [(ngModel)]="categoriesSelected"
                 [multiple]="true" [loading]="isLoadingCategories" [items]="categories">
             </ng-select>
 
@@ -20,16 +20,25 @@
     </div>
     <div class="board-canvas">
         <div class="blackboard">
-            <div class="column" *ngFor="let column of columns">
+            <div class="column" dndDropzone dndEffectAllowed="move" (dndDrop)="onDrop($event,column)"
+                *ngFor="let column of columns">
                 <div class="column_body">
                     <div class="column_title">
                         <span class="text">{{column.title}}</span>
                         <span class="number">{{column.items.length}}</span>
                     </div>
                     <div class="items">
-                        <div class="item" id="{{item.id}}" ng-click="mostrarModal(item)"
-                            *ngFor="let item in column.items" x-lvl-draggable="true">
-                            <div class="thumbnail" style="box-shadow: 0 0 8px -3px black;">
+                        <div class="item" [dndDraggable]="item" dndEffectAllowed="move"
+                            (dndMoved)="onDragMoved($event,column,i)" *ngFor="let item of column.items;let i=index">
+                            <div class="card border border-primary">
+                                <div class="card-body">
+                                    <p>
+                                        <strong>Mesa:</strong><span>{{item.table.name}}</span>
+                                    </p>
+                                    <p class="text-muted mb-4">{{item.resume}}</p>
+                                </div>
+                            </div>
+                            <!--     <div class="thumbnail" style="box-shadow: 0 0 8px -3px black;">
                                 <div class="caption cargo-edit">
                                     <span class="label label-danger" style="position: absolute;">{{item.ccosto}}</span>
                                     <h5 class="text-center mt-10" style="margin: 0 !important;">
@@ -61,7 +70,7 @@
                                     </div>
                                     <br>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

@@ -32,10 +32,13 @@
               "src/assets/scss/bootstrap-dark.scss",
               "src/assets/scss/app.scss",
               "src/assets/scss/icons.scss",
-              "./node_modules/metismenujs/dist/metismenujs.css"
+              "./node_modules/metismenujs/dist/metismenujs.css",
+              "./node_modules/mobile-drag-drop/default.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.js"
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/mobile-drag-drop/index.min.js",
+              "./node_modules/mobile-drag-drop/scroll-behaviour.min.js"
             ]
           
           },
