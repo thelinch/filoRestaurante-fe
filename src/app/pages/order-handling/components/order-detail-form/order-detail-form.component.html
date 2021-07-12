@@ -5,13 +5,13 @@
             <div [formGroupName]="i" class="row">
                 <div class="col-sm-4 d-flex justify-content-end mb-1">
                     <div class="button-items">
-                        <button class="btn btn-primary btn-small" *ngIf="last" (click)="addOrderDetail()">
+                        <button type="button" class="btn btn-primary btn-small" *ngIf="last" (click)="addOrderDetail()">
                             <i class="bx bx-plus-circle"></i>
                         </button>
-                        <button class="btn btn-success btn-small" (click)="addAmount(i)">
+                        <button type="button" class="btn btn-success btn-small" (click)="addAmount(i)">
                             <i class=" bx bx-up-arrow-alt"></i>
                         </button>
-                        <button class="btn btn-danger btn-small " (click)="substractAmount(i)">
+                        <button  type="button" class="btn btn-danger btn-small " (click)="substractAmount(i)">
                             <i class="bx bx-down-arrow-alt"></i>
                         </button>
                     </div>

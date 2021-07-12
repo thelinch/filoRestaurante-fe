@@ -37,7 +37,9 @@ import { ErrorsModule } from "./pages/errors/errors.module";
 import { NgxPermissionsModule } from "ngx-permissions";
 import { MetismenuAngularModule } from "@metismenu/angular";
 import { DndModule } from "ngx-drag-drop";
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+const config: SocketIoConfig = { url: environment.socketUrl, options: {}};
 /* if (environment.defaultauth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);
 } else {
@@ -56,6 +58,7 @@ export function createTranslateLoader(http: HttpClient): any {
     BrowserAnimationsModule,
     HttpClientModule,
     ErrorsModule,
+    SocketIoModule.forRoot(config),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -1,5 +1,7 @@
+import { OnDestroy } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
 import { DndDropEvent } from "ngx-drag-drop";
+import { Subscription } from "rxjs";
 import { OrderState } from "src/app/core/states/OrderState";
 import { Category } from "src/app/models/CategoryBodyRequestDto";
 import { Order } from "src/app/models/Order";
@@ -12,11 +14,12 @@ import { v4 as uuidv4 } from "uuid";
   templateUrl: "./order.component.html",
   styleUrls: ["./order.component.scss"],
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, OnDestroy {
   columns: any[];
   categories: Category[];
   isLoadingCategories: boolean;
   categoriesSelected: Category[];
+  orderEventReciveEvent: Subscription;
   columnSource: any;
   colmnDestine: any;
   constructor(
@@ -52,18 +55,45 @@ export class OrderComponent implements OnInit {
     this.categories = [];
     this.categoriesSelected = [];
   }
+  ngOnDestroy(): void {
+    this.orderEventReciveEvent?.unsubscribe();
+  }
 
   ngOnInit(): void {
+    this.orderService.connect();
     this.listarCategorias();
+    this.orderEventReciveEvent = this.orderService
+      .reciveOrder()
+      .subscribe((order: Order) => {
+        const music = new Audio("assets/sounds/samsung_silbido_mensaje.mp3");
+
+        const categoiesSelectedName = this.categoriesSelected.map(
+          (c) => c.name
+        );
+        const hasContainsCategory =
+          []
+            .concat(
+              ...order.orderDetails.map((oD) =>
+                oD.product.categories.map((c) => c.name)
+              )
+            )
+            .filter((c) => categoiesSelectedName.includes(c)).length > 0;
+        if (hasContainsCategory) {
+          this.columns[0].items.push(order);
+          music.play();
+        }
+      });
   }
   async listOrderForCategories() {
-    const orders: Order[] = await this.orderService
-      .listForCategories(this.categoriesSelected)
-      .toPromise();
-    for (let i = 0; i < this.columns.length; i++) {
-      this.columns[i].items = orders.filter((o) =>
-        this.columns[i].states.includes(o.state)
-      );
+    if (this.categoriesSelected.length > 0) {
+      const orders: Order[] = await this.orderService
+        .listForCategories(this.categoriesSelected)
+        .toPromise();
+      for (let i = 0; i < this.columns.length; i++) {
+        this.columns[i].items = orders.filter((o) =>
+          this.columns[i].states.includes(o.state)
+        );
+      }
     }
   }
   onDragMoved(event, column: any, indexItem: number) {
