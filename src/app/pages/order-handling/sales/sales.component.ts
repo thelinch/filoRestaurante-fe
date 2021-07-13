@@ -8,10 +8,12 @@ import {
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable, Subscription } from "rxjs";
 import { EventService } from "src/app/core/services/event.service";
+import { OrderEventState } from "src/app/events/orderEventState";
 import { Order } from "src/app/models/Order";
 import { Table } from "src/app/models/Table";
 import { OrdersService } from "src/app/services/orders.service";
 import { TableService } from "src/app/services/table.service";
+import { WebsocketService } from "src/app/services/websocket.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -32,7 +34,8 @@ export class SalesComponent implements OnInit, OnDestroy {
     private tableService: TableService,
     private modalService: NgbModal,
     private eventService: EventService,
-    private orderService: OrdersService
+    private orderService: OrdersService,
+    private websocketService: WebsocketService
   ) {
     this.orders = [];
     this.totalPaymentForOrder = 0;
@@ -50,6 +53,18 @@ export class SalesComponent implements OnInit, OnDestroy {
         this.listTables();
       }
     );
+    this.websocketService
+      .reciveEvent(OrderEventState.AttendOrder)
+      .subscribe((order: Order) => {
+        //TODO:falta integrar el sonido
+        Swal.fire({
+          text: `La orden para la mesa ${order.table?.name} esta lista!!`,
+          icon: "info",
+          toast: true,
+          confirmButtonText: "Entendido",
+          position: "top-right",
+        });
+      });
   }
   async listOrderFindTable(table: Table) {
     this.tableSelected = table;
@@ -68,8 +83,9 @@ export class SalesComponent implements OnInit, OnDestroy {
       icon: "success",
       showConfirmButton: false,
       position: "top-right",
-      timer: 1500,
+      timer: 2000,
     });
+    this.modalService.dismissAll()
     this.listTables();
   }
   newOrder(table: Table) {

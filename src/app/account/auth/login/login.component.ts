@@ -9,6 +9,7 @@ import { first } from "rxjs/operators";
 
 import { environment } from "../../../../environments/environment";
 import { NgxPermissionsService } from "ngx-permissions";
+import { WebsocketService } from "src/app/services/websocket.service";
 
 @Component({
   selector: "app-login",
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private authFackservice: AuthfakeauthenticationService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private webSocketService: WebsocketService
   ) {}
 
   ngOnInit() {
@@ -60,7 +62,7 @@ export class LoginComponent implements OnInit {
    * Form submit
    */
   onSubmit() {
-   /*  this.submitted = true;
+    /*  this.submitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -81,6 +83,7 @@ export class LoginComponent implements OnInit {
           this.error = error ? error : "";
         }
       ); */
-    
+      this.router.navigate(["/dashboards"]);
+    this.webSocketService.connect();
   }
 }

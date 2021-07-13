@@ -3,10 +3,12 @@ import { Component, OnInit } from "@angular/core";
 import { DndDropEvent } from "ngx-drag-drop";
 import { Subscription } from "rxjs";
 import { OrderState } from "src/app/core/states/OrderState";
+import { OrderEventState } from "src/app/events/orderEventState";
 import { Category } from "src/app/models/CategoryBodyRequestDto";
 import { Order } from "src/app/models/Order";
 import { CategoriesService } from "src/app/services/categories.service";
 import { OrdersService } from "src/app/services/orders.service";
+import { WebsocketService } from "src/app/services/websocket.service";
 import { v4 as uuidv4 } from "uuid";
 
 @Component({
@@ -24,7 +26,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   colmnDestine: any;
   constructor(
     private categoryService: CategoriesService,
-    private orderService: OrdersService
+    private orderService: OrdersService,
+    private webSocketService: WebsocketService
   ) {
     this.columns = [
       {
@@ -45,7 +48,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         id: uuidv4(),
         title: "Atendidos",
         items: [],
-        states: [OrderState.ATENDIDO],
+        states: [OrderState.ATENDIDO, OrderState.PAGADO],
         statesPermit: ["En Realizacion"],
       },
       {
@@ -53,7 +56,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         title: "Rechazados",
         items: [],
         states: [OrderState.RECHAZADO],
-        statesPermit: ["Pedidos"],
+        statesPermit: ["Pedidos", "En Realizacion"],
       },
     ];
     this.categories = [];
@@ -64,10 +67,9 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.orderService.connect();
     this.listarCategorias();
-    this.orderEventReciveEvent = this.orderService
-      .reciveOrder()
+    this.orderEventReciveEvent = this.webSocketService
+      .reciveEvent(OrderEventState.ReciveOrder)
       .subscribe((order: Order) => {
         const music = new Audio("assets/sounds/samsung_silbido_mensaje.mp3");
 
@@ -102,31 +104,38 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
   onDragMoved(event, column: any, indexItem: number) {
     this.columnSource = column;
-    /* const indexColumn = this.columns.findIndex((c) => c.id == column.id);
+  }
+  async onDragEnd(event, indexItem: number) {
+    if (!this.colmnDestine?.statesPermit.includes(this.columnSource?.title)) {
+      return;
+    }
+
+    const indexColumn = this.columns.findIndex(
+      (c) => c.id == this.columnSource?.id
+    );
     const listItems = this.columns[indexColumn].items;
     listItems.splice(indexItem, 1);
     if (this.columnSource?.id !== this.colmnDestine?.id) {
       this.columns[indexColumn].items = listItems;
-    } */
-  }
-  onDragEnd(event, indexItem: number) {
-    if (this.colmnDestine?.statesPermit.includes(this.columnSource?.title)) {
-      const indexColumn = this.columns.findIndex(
-        (c) => c.id == this.columnSource?.id
-      );
-      const listItems = this.columns[indexColumn].items;
-      listItems.splice(indexItem, 1);
-      if (this.columnSource?.id !== this.colmnDestine?.id) {
-        this.columns[indexColumn].items = listItems;
-      }
     }
   }
   onDrop(event: DndDropEvent, column: any) {
     this.colmnDestine = column;
-    if (this.colmnDestine.statesPermit.includes(this.columnSource.title)) {
-      const index = this.columns.findIndex((c) => c.id == column.id);
-      this.columns[index].items = [...this.columns[index].items, event.data];
+    if (!this.colmnDestine.statesPermit.includes(this.columnSource.title)) {
+      return;
     }
+    const order = event.data as Order;
+    if (this.colmnDestine.title == "En Realizacion") {
+      this.orderService.inProgress(order.id).toPromise();
+    }
+    if (this.colmnDestine.title == "Atendidos") {
+      this.orderService.attend(order.id).toPromise();
+    }
+    if (this.colmnDestine.title == "Rechazados") {
+      this.orderService.reject(order.id).toPromise();
+    }
+    const index = this.columns.findIndex((c) => c.id == column.id);
+    this.columns[index].items = [...this.columns[index].items, event.data];
   }
   async listarCategorias() {
     this.isLoadingCategories = true;

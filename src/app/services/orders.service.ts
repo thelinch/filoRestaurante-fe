@@ -10,7 +10,7 @@ import { Table } from "../models/Table";
   providedIn: "root",
 })
 export class OrdersService {
-  constructor(private http: HttpClient, private socket: Socket) {}
+  constructor(private http: HttpClient) {}
   listForCategories(categories: Category[]): Observable<Order[]> {
     return this.http.post<Order[]>(
       environment.apiUrl + "/orders/categories/orders",
@@ -28,12 +28,24 @@ export class OrdersService {
   payment(orders: Order[]) {
     return this.http.post<void>(environment.apiUrl + "/orders/payment", orders);
   }
-  connect() {
-    return this.socket.on("connect", () => {
-      console.log("connect");
-    });
+  attend(orderId: string) {
+    return this.http.get<void>(
+      environment.apiUrl + "/orders/" + orderId + "/attend"
+    );
   }
-  reciveOrder() {
-    return this.socket.fromEvent("reciveOrder");
+  remove(orderId: string) {
+    return this.http.get<void>(
+      environment.apiUrl + "/orders/" + orderId + "/remove"
+    );
+  }
+  reject(orderId: string) {
+    return this.http.get<void>(
+      environment.apiUrl + "/orders/" + orderId + "/reject"
+    );
+  }
+  inProgress(orderId: string){
+    return this.http.get<void>(
+      environment.apiUrl + "/orders/" + orderId + "/inProgress"
+    );
   }
 }

@@ -4,4 +4,5 @@ export enum OrderState {
   ELIMINADO = "eliminado",
   ATENDIDO = "atendido",
   ENREALIZACION = "en realizacion",
+  PAGADO = "pagado",
 }
