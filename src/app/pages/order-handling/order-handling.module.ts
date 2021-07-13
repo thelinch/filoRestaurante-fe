@@ -6,7 +6,8 @@ import { OrderHandlingRoutingModule } from "./order-handling-routing.module";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DndModule } from "ngx-drag-drop";
-import { OrderDetailFormComponent } from './components/order-detail-form/order-detail-form.component';
+import { OrderDetailFormComponent } from "./components/order-detail-form/order-detail-form.component";
+import { NgbCollapseModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [OrderComponent, SalesComponent, OrderDetailFormComponent],
@@ -17,7 +18,8 @@ import { OrderDetailFormComponent } from './components/order-detail-form/order-d
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    DndModule
+    NgbModule,
+    DndModule,
   ],
 })
 export class OrderHandlingModule {}

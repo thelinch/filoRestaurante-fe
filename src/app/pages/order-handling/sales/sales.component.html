@@ -24,7 +24,7 @@
                 <img class="img-fluid   mx-auto d-block" src="assets/images/mesa.jfif">
                 <div class="mesa-background d-flex align-items-center justify-content-center">
                     <div class="button-items">
-                        <button class="btn btn-success">
+                        <button class="btn btn-success" (click)="listOrderFindTable(table)">
                             <i class="bx bx-euro d-block font-size-16"></i>
                         </button>
                         <button class="btn btn-primary" (click)="newOrder(table)">
@@ -52,6 +52,39 @@
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
         <button type="submit" form="formOrder" class="btn btn-success ms-1">
             Crear pedido
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #sales let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Ordenes:{{tableSelected?.name}}</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel title="Pedido # {{i+1}}" *ngFor="let order of orders;let i=index">
+                <ng-template ngbPanelContent>
+                    <ul>
+                        <li *ngFor="let orderDetail of order.orderDetails">
+                            <strong>
+                                {{orderDetail.product.name}}
+                            </strong><span>({{orderDetail.orderedQuantity}})</span>
+                            <strong class="ml-2 float-end">{{orderDetail.orderedQuantity*orderDetail.product.price |
+                                number:'1.1-3'}}</strong>
+                        </li>
+                    </ul>
+                    <p class="text-end">Total:<strong>{{order.total | number:'1.1-3' | currency:'S/. '}}</strong></p>
+
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+        <p class="text-end">Total:<strong>{{totalPaymentForOrder | number:'1.1-3' | currency:'S/. '}}</strong></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="button" (click)="payment()" class="btn btn-success ms-1">
+            Pagar
         </button>
     </div>
 </ng-template>

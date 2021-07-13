@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { Category } from "../models/CategoryBodyRequestDto";
 import { Order } from "../models/Order";
 import { Socket } from "ngx-socket-io";
+import { Table } from "../models/Table";
 @Injectable({
   providedIn: "root",
 })
@@ -16,8 +17,16 @@ export class OrdersService {
       categories
     );
   }
+  listForTable(table: Table): Observable<Order[]> {
+    return this.http.get<Order[]>(
+      environment.apiUrl + "/orders/mesas/" + table.id + "/orders"
+    );
+  }
   create(order: Order) {
     return this.http.post<void>(environment.apiUrl + "/orders", order);
+  }
+  payment(orders: Order[]) {
+    return this.http.post<void>(environment.apiUrl + "/orders/payment", orders);
   }
   connect() {
     return this.socket.on("connect", () => {
