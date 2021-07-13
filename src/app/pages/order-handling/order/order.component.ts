@@ -32,24 +32,28 @@ export class OrderComponent implements OnInit, OnDestroy {
         title: "Pedidos",
         items: [],
         states: [OrderState.CREADO],
+        statesPermit: [],
       },
       {
         id: uuidv4(),
         title: "En Realizacion",
         items: [],
         states: [OrderState.ENREALIZACION],
+        statesPermit: ["Pedidos"],
       },
       {
         id: uuidv4(),
         title: "Atendidos",
         items: [],
         states: [OrderState.ATENDIDO],
+        statesPermit: ["En Realizacion"],
       },
       {
         id: uuidv4(),
         title: "Rechazados",
         items: [],
         states: [OrderState.RECHAZADO],
+        statesPermit: ["Pedidos"],
       },
     ];
     this.categories = [];
@@ -98,18 +102,31 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
   onDragMoved(event, column: any, indexItem: number) {
     this.columnSource = column;
-    const indexColumn = this.columns.findIndex((c) => c.id == column.id);
+    /* const indexColumn = this.columns.findIndex((c) => c.id == column.id);
     const listItems = this.columns[indexColumn].items;
     listItems.splice(indexItem, 1);
     if (this.columnSource?.id !== this.colmnDestine?.id) {
       this.columns[indexColumn].items = listItems;
+    } */
+  }
+  onDragEnd(event, indexItem: number) {
+    if (this.colmnDestine?.statesPermit.includes(this.columnSource?.title)) {
+      const indexColumn = this.columns.findIndex(
+        (c) => c.id == this.columnSource?.id
+      );
+      const listItems = this.columns[indexColumn].items;
+      listItems.splice(indexItem, 1);
+      if (this.columnSource?.id !== this.colmnDestine?.id) {
+        this.columns[indexColumn].items = listItems;
+      }
     }
   }
-
   onDrop(event: DndDropEvent, column: any) {
     this.colmnDestine = column;
-    const index = this.columns.findIndex((c) => c.id == column.id);
-    this.columns[index].items = [...this.columns[index].items, event.data];
+    if (this.colmnDestine.statesPermit.includes(this.columnSource.title)) {
+      const index = this.columns.findIndex((c) => c.id == column.id);
+      this.columns[index].items = [...this.columns[index].items, event.data];
+    }
   }
   async listarCategorias() {
     this.isLoadingCategories = true;

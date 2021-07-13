@@ -30,7 +30,8 @@
                     </div>
                     <div class="items">
                         <div class="item" [dndDraggable]="item" dndEffectAllowed="move"
-                            (dndMoved)="onDragMoved($event,column,i)" *ngFor="let item of column.items;let i=index">
+                            (dndStart)="onDragMoved($event,column,i)" (dndEnd)="onDragEnd($event,i)"
+                            *ngFor="let item of column.items;let i=index">
                             <div class="card border border-primary">
                                 <div class="card-body">
                                     <p>
