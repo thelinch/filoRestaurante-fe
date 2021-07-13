@@ -25,6 +25,8 @@ export class SalesComponent implements OnInit, OnDestroy {
   tables$: Observable<Table[]>;
   tableSelected: Table;
   orderCreatedEventSubscription: Subscription;
+  orderAttendEventSubscription: Subscription;
+
   orders: Order[];
   totalPaymentForOrder: number;
   @ViewChild("editAndCreateOrder") modalFormOrder: TemplateRef<any>;
@@ -42,6 +44,7 @@ export class SalesComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.orderCreatedEventSubscription?.unsubscribe();
+    this.orderAttendEventSubscription?.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -53,10 +56,11 @@ export class SalesComponent implements OnInit, OnDestroy {
         this.listTables();
       }
     );
-    this.websocketService
+    this.orderAttendEventSubscription = this.websocketService
       .reciveEvent(OrderEventState.AttendOrder)
       .subscribe((order: Order) => {
-        //TODO:falta integrar el sonido
+        const music = new Audio("assets/sounds/sonido-orden-atendida.mp3");
+        music.play();
         Swal.fire({
           text: `La orden para la mesa ${order.table?.name} esta lista!!`,
           icon: "info",
@@ -85,7 +89,7 @@ export class SalesComponent implements OnInit, OnDestroy {
       position: "top-right",
       timer: 2000,
     });
-    this.modalService.dismissAll()
+    this.modalService.dismissAll();
     this.listTables();
   }
   newOrder(table: Table) {
