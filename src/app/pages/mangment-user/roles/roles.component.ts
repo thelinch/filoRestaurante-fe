@@ -14,6 +14,7 @@ import { TableCustomGenericComponent } from "src/app/common/table-custom-generic
 import { EventService } from "src/app/core/services/event.service";
 import { LoaderService } from "src/app/core/services/loader.service";
 import { environment } from "src/environments/environment";
+import { v4 as uuidv4 } from "uuid";
 
 @Component({
   selector: "app-roles",
@@ -27,7 +28,7 @@ export class RolesComponent implements OnInit, OnDestroy {
   headers = [
     {
       headerName: "Rol",
-      bindValue: "Rol",
+      bindValue: "name",
       isActions: false,
       isTemplate: false,
     },
@@ -75,9 +76,9 @@ export class RolesComponent implements OnInit, OnDestroy {
   }
   crearFormularioRol() {
     this.formularioRole = this.fb.group({
-      idRol: [0],
-      Rol: ["", [Validators.required]],
-      acciones: [[], [Validators.required]],
+      id: [0],
+      name: ["", [Validators.required]],
+      actions: [[], [Validators.required]],
     });
   }
   crearNuevoRol() {
@@ -89,7 +90,7 @@ export class RolesComponent implements OnInit, OnDestroy {
   async listRoles() {
     this.isLoadingRoles = true;
     const roles = await this.http
-      .get<Array<any>>(environment.apiUrl + "/proyRol/todos")
+      .get<Array<any>>(environment.apiUrl + "/role")
       .toPromise();
     this.tableGenerico.setDataTable(
       roles.map((rol, index) => ({
@@ -106,7 +107,7 @@ export class RolesComponent implements OnInit, OnDestroy {
   }
   async listAcciones() {
     const acciones = await this.http
-      .get<Array<any>>(environment.apiUrl + "/proyAccion/")
+      .get<Array<any>>(environment.apiUrl + "/action/")
       .toPromise();
     this.listAccionesData = acciones;
   }
@@ -118,19 +119,22 @@ export class RolesComponent implements OnInit, OnDestroy {
     if (this.formularioRole.invalid) {
       return;
     }
-    let url = "/proyRol";
-    if (rol.idRol != null) {
-      url = url.concat("/actualizar");
+    const uuid = uuidv4();
+
+    if (!rol.id) {
+      await this.http
+        .post(environment.apiUrl + "/role", { ...rol, id: uuid })
+        .toPromise();
+    } else {
+      await this.http
+        .post(environment.apiUrl + "/role/" + rol.id + "/update", { ...rol })
+        .toPromise();
     }
-    await this.http.post(environment.apiUrl + url, rol).toPromise();
     this.modalService.dismissAll();
   }
 
   async editRol(rol: any) {
-    const nuevoRol = await this.http
-      .get(environment.apiUrl + "/proyRol/" + rol.idRol)
-      .toPromise();
-    this.formularioRole.patchValue(nuevoRol);
+    this.formularioRole.patchValue(rol);
     this.modalService.open(this.modalFormRol).hidden.subscribe(() => {
       this.listRoles();
     });
@@ -139,6 +143,6 @@ export class RolesComponent implements OnInit, OnDestroy {
     console.log("delete rol", rol);
   }
   compareWithAccion(a: any, b: any) {
-    return a?.idAcciones === b?.idAcciones;
+    return a?.id === b?.id;
   }
 }

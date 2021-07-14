@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
+        <!--      <div class="col-sm-12">
             <div class="d-flex justify-content-between">
                 <h4 class="m-0 title-uppercase d-inline-block">Menus</h4>
                 <button class="btn btn-success pull-right" (click)="nuevoMenu()">Crear</button>
@@ -32,7 +32,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -42,41 +42,7 @@
 
 
 </div>
-<ng-template #editAndCreateMenu let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title">Menu</h5>
-        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body p-4">
-        <form [formGroup]="formularioMenu" id="formMenu" (ngSubmit)="crearYActualizarMenu(formularioMenu.value)">
-            <div class="row">
-                <div class="col-12">
-                    <div class="mb-3">
-                        <label class="control-label">Menu</label>
-                        <input
-                            [ngClass]="{'is-invalid': menuFormularioControles.Menu.touched && menuFormularioControles.Menu.errors}"
-                            class="form-control" placeholder="Nombre del menu" type="text" name="Rol"
-                            formControlName="Menu">
-                        <div *ngIf="menuFormularioControles.Menu.touched && menuFormularioControles.Menu.errors"
-                            class="invalid-feedback">
-                            <span *ngIf="menuFormularioControles.Menu.errors.required">Requerido</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
-        <button type="submit" form="formMenu" class="btn btn-success ms-1">
-            <ng-template [ngIf]="isLoadingForms | async">
-                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
-            </ng-template>
-            {{formularioMenu.get('idMenu').value==0?
-            'Guardar':'Editar'}}
-        </button>
-    </div>
-</ng-template>
+
 <ng-template #editAndCreateAccion let-modalAccion>
     <div class="modal-header">
         <h5 class="modal-title">Accion</h5>
@@ -90,47 +56,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="mb-3">
-                        <label class="control-label">Menu</label>
-                        <select
-                            [ngClass]="{'is-invalid': accionFormularioControles.menu.touched && accionFormularioControles.menu.errors}"
-                            [compareWith]="compareMenus" class="form-control" name="acciones" formControlName="menu">
-                            <option *ngFor="let menu of listMenusData" [ngValue]="menu"> {{ menu.Menu
-                                }}
-                            </option>
-                        </select>
-                        <div *ngIf="accionFormularioControles.menu.touched && accionFormularioControles.menu.errors"
-                            class="invalid-feedback">
-                            <span *ngIf="accionFormularioControles.menu.errors.required">Requerido</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="mb-3">
                         <label class="control-label">Accion</label>
                         <input
-                            [ngClass]="{'is-invalid': accionFormularioControles.Accion.touched && accionFormularioControles.Accion.errors}"
+                            [ngClass]="{'is-invalid': accionFormularioControles.name.touched && accionFormularioControles.name.errors}"
                             class="form-control" placeholder="Nombre de la accion" type="text" name="Rol"
-                            formControlName="Accion">
-                        <div *ngIf=" accionFormularioControles.Accion.touched && accionFormularioControles.Accion.errors"
+                            formControlName="name">
+                        <div *ngIf=" accionFormularioControles.name.touched && accionFormularioControles.name.errors"
                             class="invalid-feedback">
-                            <span *ngIf="accionFormularioControles.Accion.errors.required">Requerido</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="mb-3">
-                        <label class="control-label">Codigo</label>
-                        <input
-                            [ngClass]="{'is-invalid': accionFormularioControles.codigo.touched && accionFormularioControles.codigo.errors}"
-                            class="form-control" placeholder="Codigo de la accion" type="text" name="Rol"
-                            formControlName="codigo">
-                        <div *ngIf=" accionFormularioControles.codigo.touched && accionFormularioControles.codigo.errors"
-                            class="invalid-feedback">
-                            <span *ngIf="accionFormularioControles.codigo.errors.required">Requerido</span>
+                            <span *ngIf="accionFormularioControles.name.errors.required">Requerido</span>
                         </div>
                     </div>
                 </div>
@@ -143,8 +76,8 @@
             <ng-template [ngIf]="isLoadingForms | async">
                 <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
             </ng-template>
-            {{formularioAcciones.get('idAcciones').value==0?
-            'Guardar':'Editar'}}
+            {{formularioAcciones.get('id').value?
+            'Editar':'Guardar'}}
         </button>
     </div>
 </ng-template>

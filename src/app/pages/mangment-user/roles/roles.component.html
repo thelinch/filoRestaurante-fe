@@ -34,11 +34,11 @@
                 <div class="col-12">
                     <div class="mb-3">
                         <label class="control-label">Rol</label>
-                        <input [ngClass]="{'is-invalid': submitFormRol && controlsFormularioRoles.Rol.errors}"
+                        <input [ngClass]="{'is-invalid': submitFormRol && controlsFormularioRoles.name.errors}"
                             class="form-control" placeholder="Nombre de rol" type="text" name="Rol"
-                            formControlName="Rol">
-                        <div *ngIf="submitFormRol && controlsFormularioRoles.Rol.errors" class="invalid-feedback">
-                            <span *ngIf="controlsFormularioRoles.Rol.errors.required">Requerido</span>
+                            formControlName="name">
+                        <div *ngIf="submitFormRol && controlsFormularioRoles.name.errors" class="invalid-feedback">
+                            <span *ngIf="controlsFormularioRoles.name.errors.required">Requerido</span>
                         </div>
                     </div>
                 </div>
@@ -47,15 +47,15 @@
                 <div class="col-12">
                     <div class="mb-3">
                         <label class="control-label">Acciones</label>
-                        <select [ngClass]="{'is-invalid': submitFormRol && controlsFormularioRoles.acciones.errors}"
-                            multiple [compareWith]="compareWithAccion" class="form-control" name="acciones"
-                            formControlName="acciones">
-                            <option *ngFor="let accion of listAccionesData" [value]="accion"> {{ accion.Accion
+                        <select [ngClass]="{'is-invalid': submitFormRol && controlsFormularioRoles.actions.errors}"
+                            multiple [compareWith]="compareWithAccion" class="form-control" name="actions"
+                            formControlName="actions">
+                            <option *ngFor="let accion of listAccionesData" [value]="accion"> {{ accion.name
                                 }}
                             </option>
                         </select>
-                        <div *ngIf="submitFormRol && controlsFormularioRoles.acciones.errors" class="invalid-feedback">
-                            <span *ngIf="controlsFormularioRoles.acciones.errors.required">Requerido</span>
+                        <div *ngIf="submitFormRol && controlsFormularioRoles.actions.errors" class="invalid-feedback">
+                            <span *ngIf="controlsFormularioRoles.actions.errors.required">Requerido</span>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
             <ng-template [ngIf]="isLoadingForms | async">
                 <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
             </ng-template>
-            {{formularioRole.get('idRol').value==null? 'Guardar':'Editar'}}
+            {{formularioRole.get('id').value==null? 'Guardar':'Editar'}}
         </button>
     </div>
 </ng-template>

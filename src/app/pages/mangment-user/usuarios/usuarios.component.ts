@@ -12,6 +12,7 @@ import { Observable, Subscription } from "rxjs";
 import { EventService } from "src/app/core/services/event.service";
 import { LoaderService } from "src/app/core/services/loader.service";
 import { environment } from "src/environments/environment";
+import { v4 as uuidv4 } from "uuid";
 
 @Component({
   selector: "app-usuarios",
@@ -22,22 +23,17 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   headersUsuario = [
     {
       headerName: "Nombre Completo",
-      bindValue: "Nombre",
+      bindValue: "name",
       isActions: false,
       isTemplate: false,
     },
     {
-      headerName: "Correo",
-      bindValue: "email",
+      headerName: "nombre del usuario",
+      bindValue: "userName",
       isActions: false,
       isTemplate: false,
     },
-    {
-      headerName: "Rol",
-      bindValue: "rol.Rol",
-      isActions: false,
-      isTemplate: false,
-    },
+
     {
       headerName: "Acciones",
       bindValue: "",
@@ -77,9 +73,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
   async listarUsuarios() {
     this.dataUsuarios = (
-      await this.http
-        .get<Array<any>>(environment.apiUrl + "/usuario/usuarios/usuariosProy")
-        .toPromise()
+      await this.http.get<Array<any>>(environment.apiUrl + "/user/").toPromise()
     ).map((usuario, index) => ({
       ...usuario,
       acciones: [
@@ -88,20 +82,19 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     </div>`,
       ],
     }));
-    console.log(this.dataUsuarios);
   }
   async listarRoles() {
     this.roles = await this.http
-      .get<Array<any>>(environment.apiUrl + "/proyRol/todos")
+      .get<Array<any>>(environment.apiUrl + "/role")
       .toPromise();
   }
   crearFormularioUsuario() {
     this.formularioUsuario = this.fb.group({
-      idUsuario: [0],
-      Nombre: ["", [Validators.required]],
-      email: ["", [Validators.required, Validators.email]],
-      Password: [{ value: "", disabled: false }, [Validators.required]],
-      rol: ["", [Validators.required]],
+      id: [null],
+      name: ["", [Validators.required]],
+      userName: ["", [Validators.required]],
+      password: [{ value: "", disabled: false }, [Validators.required]],
+      roles: ["", [Validators.required]],
     });
   }
   crearNuevoUsuario() {
@@ -111,24 +104,29 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   async crearYActualizarUsuario(usuario: any) {
-    console.log("entro al metodo");
     this.formularioUsuario.markAllAsTouched();
     if (this.formularioUsuario.invalid) {
       return;
     }
-    let url = "/usuario/usuarioPro/proyUsuario/";
-    if (usuario.idUsuario > 0) {
-      url = url.concat("editar");
+    const uuid = uuidv4();
+
+    if (!usuario.id) {
+      await this.http
+        .post(environment.apiUrl + "/user", { ...usuario, id: uuid })
+        .toPromise();
+    } else {
+      await this.http
+        .post(environment.apiUrl + "/user/" + usuario.id + "/update", usuario)
+        .toPromise();
     }
-    await this.http.post(environment.apiUrl + url, usuario).toPromise();
     this.modalService.dismissAll();
   }
   get formularioUsuarioControles() {
     return this.formularioUsuario.controls;
   }
   editarUsuario(usuario: any) {
-    this.formularioUsuarioControles.Password.clearValidators();
-    this.formularioUsuarioControles.Password.disable();
+    this.formularioUsuarioControles.password.clearValidators();
+    this.formularioUsuarioControles.password.disable();
 
     this.formularioUsuario.patchValue(usuario);
     this.modalService.open(this.modalFormUsuario).hidden.subscribe(() => {
@@ -138,6 +136,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   compareWithRol(a: any, b: any) {
-    return a?.idRol === b?.idRol;
+    return a?.id === b?.id;
   }
 }

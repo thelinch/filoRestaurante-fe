@@ -21,22 +21,18 @@ export class AuthfakeauthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, Password: string) {
+  login(userName: string, password: string) {
     return this.http
-      .post<any>(`${environment.apiUrl}/auth-proyeccion`, { email, Password })
+      .post<any>(`${environment.apiUrl}/auth/login`, { userName, password })
       .pipe(
         map((dataUser) => {
           // login successful if there's a jwt token in the response
-          if (dataUser && dataUser.token) {
+          if (dataUser && dataUser.access_token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem("currentUser", JSON.stringify(dataUser));
             this.currentUserSubject.next(dataUser);
           }
           return dataUser;
-        }),
-        switchMap((dataUser) => {
-
-          return this.listarPermisos(dataUser.User.id);
         })
       );
   }

@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ["", [Validators.required, Validators.email]],
+      userName: ["", [Validators.required]],
       password: ["", [Validators.required]],
     });
 
@@ -62,28 +62,30 @@ export class LoginComponent implements OnInit {
    * Form submit
    */
   onSubmit() {
-    /*  this.submitted = true;
+    this.submitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
     this.authFackservice
-      .login(this.f.email.value, this.f.password.value)
+      .login(this.f.userName.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         async (data) => {
-          this.permissionsService.loadPermissions(data);
+          const permission = [].concat(
+            ...data.roles.map((r) => r.actions.map((a) => a.name))
+          );
+          console.log(permission);
+          this.permissionsService.loadPermissions(permission);
           console.log("p", this.permissionsService.getPermissions());
-          localStorage.setItem("permisos", JSON.stringify(data));
-
+          localStorage.setItem("permisos", JSON.stringify(permission));
+          this.webSocketService.connect();
           this.router.navigate(["/dashboards"]);
         },
         (error) => {
           this.error = error ? error : "";
         }
-      ); */
-      this.router.navigate(["/dashboards"]);
-    this.webSocketService.connect();
+      );
   }
 }

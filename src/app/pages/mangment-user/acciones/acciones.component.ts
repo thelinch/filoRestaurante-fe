@@ -13,6 +13,7 @@ import { TableCustomGenericComponent } from "src/app/common/table-custom-generic
 import { EventService } from "src/app/core/services/event.service";
 import { LoaderService } from "src/app/core/services/loader.service";
 import { environment } from "src/environments/environment";
+import { v4 as uuidv4 } from "uuid";
 
 @Component({
   selector: "app-acciones",
@@ -22,24 +23,11 @@ import { environment } from "src/environments/environment";
 export class AccionesComponent implements OnInit, OnDestroy {
   isLoadingAcciones = true;
 
-  formularioMenu: FormGroup;
   formularioAcciones: FormGroup;
   headers = [
     {
-      headerName: "Menu",
-      bindValue: "menu.Menu",
-      isActions: false,
-      isTemplate: false,
-    },
-    {
       headerName: "Accion",
-      bindValue: "Accion",
-      isActions: false,
-      isTemplate: false,
-    },
-    {
-      headerName: "Codigo",
-      bindValue: "codigo",
+      bindValue: "name",
       isActions: false,
       isTemplate: false,
     },
@@ -50,26 +38,11 @@ export class AccionesComponent implements OnInit, OnDestroy {
       isTemplate: false,
     },
   ];
-  headerMenu = [
-    {
-      headerName: "Menu",
-      bindValue: "Menu",
-      isActions: false,
-      isTemplate: false,
-    },
-    {
-      headerName: "Acciones",
-      bindValue: "",
-      isActions: true,
-      isTemplate: false,
-    },
-  ];
   listAccionesData = [];
   listMenusData = [];
   subscriptionEditAccionEvent: Subscription;
   subscriptionEditMenuEvent: Subscription;
   isLoadingForms;
-  @ViewChild("editAndCreateMenu") modalFormMenu: TemplateRef<any>;
   @ViewChild("editAndCreateAccion") modalFormAccion: TemplateRef<any>;
 
   constructor(
@@ -87,21 +60,12 @@ export class AccionesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.crearFormularioMenu();
     this.crearFormularioAcciones();
-    this.listarMenus();
     this.listAcciones();
     this.subscriptionEditAccionEvent = this.eventService.subscribe(
       "editAccion",
       (accion) => {
         this.editarAccion(accion);
-      }
-    );
-
-    this.subscriptionEditMenuEvent = this.eventService.subscribe(
-      "editMenu",
-      (menu) => {
-        this.editarMenu(menu);
       }
     );
   }
@@ -118,62 +82,34 @@ export class AccionesComponent implements OnInit, OnDestroy {
       this.formularioAcciones.reset({ idAcciones: 0 });
     });
   }
-  editarMenu(menu: any) {
-    this.formularioMenu.patchValue(menu);
-    this.modalService.open(this.modalFormMenu).hidden.subscribe(() => {
-      this.formularioMenu.reset({ idMenu: 0 });
-      this.listarMenus();
-    });
-  }
-  nuevoMenu() {
-    this.modalService.open(this.modalFormMenu).hidden.subscribe(() => {
-      this.formularioMenu.reset({ idMenu: 0 });
-      this.listarMenus();
-    });
-  }
-  async crearYActualizarMenu(menu: any) {
-    this.formularioMenu.markAllAsTouched();
-    if (this.formularioMenu.invalid) {
-      return;
-    }
-    let url = "/proyMenu/";
-    if (menu.idMenu != 0) {
-      url = url.concat("editar");
-    }
-    await this.http.post(environment.apiUrl + url, menu).toPromise();
-    this.modalService.dismissAll();
-  }
+
   async crearYActualizarAccion(accion: any) {
-    console.log("a", accion);
     this.formularioAcciones.markAllAsTouched();
+    const uuid = uuidv4();
     if (this.formularioAcciones.invalid) {
       return;
     }
-    let url = "/proyAccion/";
-    if (accion.idAcciones != 0) {
-      url = url.concat("editar");
+    let url = "/action/";
+    if (!accion.id) {
+      await this.http
+        .post(environment.apiUrl + url, { ...accion, id: uuid })
+        .toPromise();
+    } else {
+      await this.http
+        .post(environment.apiUrl + url + `${accion.id}/update`, accion)
+        .toPromise();
     }
-    await this.http.post(environment.apiUrl + url, accion).toPromise();
     this.modalService.dismissAll();
   }
-  get menuFormularioControles() {
-    return this.formularioMenu.controls;
-  }
+
   get accionFormularioControles() {
     return this.formularioAcciones.controls;
   }
-  crearFormularioMenu() {
-    this.formularioMenu = this.fb.group({
-      idMenu: [0],
-      Menu: ["", [Validators.required]],
-    });
-  }
+
   crearFormularioAcciones() {
     this.formularioAcciones = this.fb.group({
-      idAcciones: [0],
-      Accion: ["", [Validators.required]],
-      codigo: ["", [Validators.required]],
-      menu: ["", [Validators.required]],
+      id: [null],
+      name: ["", [Validators.required]],
     });
   }
   compareMenus(a: any, b: any) {
@@ -182,7 +118,7 @@ export class AccionesComponent implements OnInit, OnDestroy {
   async listAcciones() {
     this.isLoadingAcciones = true;
     const acciones = await this.http
-      .get<Array<any>>(environment.apiUrl + "/proyAccion")
+      .get<Array<any>>(environment.apiUrl + "/action")
       .toPromise();
     this.listAccionesData = [
       ...acciones.map((accion, index) => ({
@@ -195,20 +131,5 @@ export class AccionesComponent implements OnInit, OnDestroy {
       })),
     ];
     this.isLoadingAcciones = false;
-  }
-  async listarMenus() {
-    const menus = await this.http
-      .get<Array<any>>(environment.apiUrl + "/proyMenu")
-      .toPromise();
-    this.listMenusData = [
-      ...menus.map((accion, index) => ({
-        ...accion,
-        acciones: [
-          `<div class="button-items">
-          <button type="button" data-index=${index}   data-function="editMenu" class="btn btn-success buttonEvent mr2">Editar</button>
-          </div>`,
-        ],
-      })),
-    ];
   }
 }
