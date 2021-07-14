@@ -25,7 +25,6 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const currentUser = this.authfackservice.currentUserValue;
     if (currentUser && currentUser.access_token) {
-      console.log("nto al in");
       request = request.clone({
         setHeaders: {
           authorization: `Bearer ${currentUser.access_token}`,

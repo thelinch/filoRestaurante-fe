@@ -1,3 +1,4 @@
+import { User } from "../core/models/auth.models";
 import { OrderDetail } from "./OrderDetail";
 import { Table } from "./Table";
 
@@ -9,4 +10,5 @@ export interface Order {
   table: Table;
   state: string;
   orderDetails: OrderDetail[];
+  user:User
 }

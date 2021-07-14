@@ -34,6 +34,7 @@
                             *ngFor="let item of column.items;let i=index">
                             <div class="card border border-primary">
                                 <div class="card-body">
+                                    <p><strong>Mozo:</strong>{{item.user?.name}}</p>
                                     <p>
                                         <strong>Mesa:</strong><span>{{item.table.name}}</span>
                                     </p>
