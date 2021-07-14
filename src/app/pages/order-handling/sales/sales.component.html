@@ -63,7 +63,7 @@
     </div>
     <div class="modal-body p-4">
         <ngb-accordion #acc="ngbAccordion">
-            <ngb-panel title="Pedido # {{i+1}}" *ngFor="let order of orders;let i=index">
+            <ngb-panel title="Pedido # {{i+1}} {{order.user?.name}}" *ngFor="let order of orders;let i=index">
                 <ng-template ngbPanelContent>
                     <ul>
                         <li *ngFor="let orderDetail of order.orderDetails">
@@ -83,7 +83,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
-        <button type="button" (click)="payment()" class="btn btn-success ms-1">
+        <button type="button" [disabled]="orders.length==0" (click)="payment()" class="btn btn-success ms-1">
             Pagar
         </button>
     </div>

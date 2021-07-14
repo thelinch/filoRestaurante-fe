@@ -11,20 +11,32 @@
                         <button type="button" class="btn btn-success btn-small" (click)="addAmount(i)">
                             <i class=" bx bx-up-arrow-alt"></i>
                         </button>
-                        <button  type="button" class="btn btn-danger btn-small " (click)="substractAmount(i)">
+                        <button type="button" class="btn btn-danger btn-small " (click)="substractAmount(i)">
                             <i class="bx bx-down-arrow-alt"></i>
                         </button>
                     </div>
 
                 </div>
                 <div class="col-sm-6">
-                    <ng-select bindLabel="name" placeholder="selecciona el producto" class="p-0"
-                        formControlName="product" [items]="products">
+                    <ng-select bindLabel="name"
+                        [ngClass]="{'is-invalid':orderDetailItem.get('product').touched && orderDetailItem.get('product').errors}"
+                        placeholder="selecciona el producto" class="p-0" formControlName="product" [items]="products">
                     </ng-select>
+                    <div *ngIf="orderDetailItem.get('product').touched && orderDetailItem.get('product').errors"
+                        class="invalid-feedback">
+                        <span *ngIf="orderDetailItem.get('product').errors.required">Requerido</span>
+                    </div>
                 </div>
                 <div class="col-sm-2">
-                    <input type="number" formControlName="orderedQuantity" class="form-control" />
+                    <input type="number"
+                        [ngClass]="{'is-invalid':orderDetailItem.get('orderedQuantity').touched && orderDetailItem.get('orderedQuantity').errors}"
+                        formControlName="orderedQuantity" class="form-control" />
+                    <div *ngIf="orderDetailItem.get('orderedQuantity').touched && orderDetailItem.get('orderedQuantity').errors"
+                        class="invalid-feedback">
+                        <span *ngIf="orderDetailItem.get('orderedQuantity').errors.required">Requerido</span>
+                        <span *ngIf="orderDetailItem.get('orderedQuantity').errors.min">valor minimo 1</span>
 
+                    </div>
                 </div>
             </div>
 
@@ -34,7 +46,7 @@
         <div class="col-12">
             <div class="mb-3">
                 <label class="control-label">Observacion</label>
-                <textarea formControlName="observation" class="form-control ng-pristine ng-valid ng-touched"></textarea>
+                <textarea formControlName="observation" class="form-control"></textarea>
             </div>
         </div>
     </div>

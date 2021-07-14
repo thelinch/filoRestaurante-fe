@@ -63,7 +63,7 @@ export const MENU: MenuItem[] = [
     id: 12,
     label: "Seguridad",
     icon: "bx-store",
-    permissions: ["ver-menu-seguridad"],
+    permissions: [],
 
     visible: false,
     subItems: [
@@ -74,14 +74,14 @@ export const MENU: MenuItem[] = [
         parentId: 12,
         visible: false,
 
-        permissions: ["ver-menu-seguridad-roles"],
+        permissions: [],
       },
       {
         id: 14,
         label: "Acciones",
         link: "/seguridad/acciones",
         parentId: 12,
-        permissions: ["ver-menu-seguridad-acciones"],
+        permissions: [],
         visible: false,
       },
       {
@@ -89,7 +89,7 @@ export const MENU: MenuItem[] = [
         label: "Usuarios",
         link: "/seguridad/usuarios",
         parentId: 12,
-        permissions: ["ver-menu-seguridad-usuarios"],
+        permissions: [],
         visible: false,
       },
     ],

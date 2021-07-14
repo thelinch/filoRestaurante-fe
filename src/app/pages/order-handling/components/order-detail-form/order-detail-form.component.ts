@@ -44,18 +44,22 @@ export class OrderDetailFormComponent implements OnInit {
   }
   newOrderDetail() {
     return this.fb.group({
-      product: [null, [Validators.required]],
-      orderedQuantity: [1, [Validators.required]],
+      product: [null, [Validators.required ]],
+      orderedQuantity: [1, [Validators.required,Validators.min(1)]],
     });
   }
   async createOrder() {
+    this.formOrder.markAllAsTouched();
+    this.orderDetails.markAllAsTouched();
+    if (this.formOrder.invalid || this.orderDetails.invalid) {
+      return;
+    }
     let orderModel: Order = this.formOrder.value as Order;
     orderModel.table = this.table;
     orderModel = util.generateId(orderModel);
     orderModel.orderDetails = orderModel.orderDetails.map((orderDetail) =>
       util.generateId(orderDetail)
     );
-    console.log(orderModel);
     await this.orderService.create(orderModel).toPromise();
     this.eventService.broadcast("orderCreated", {
       order: orderModel,
