@@ -12,4 +12,6 @@ export const environment = {
     measurementId: "",
   },
   apiUrl: "http://159.65.47.181:3001",
+  socketUrl:"http://localhost:3000"
+
 };
