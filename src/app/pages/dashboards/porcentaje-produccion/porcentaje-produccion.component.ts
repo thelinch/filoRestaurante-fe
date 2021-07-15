@@ -149,7 +149,6 @@ export class PorcentajeProduccionComponent implements OnInit, AfterViewInit {
     this.listaLoteDetalleView = (
       await this.listarLoteDetallePorIngreso(ingresoLoteId)
     ).filter((a) => (a.tipo = TipoIngresoLoteDetalle.Produccion));
-    console.log(this.listaLoteDetalleView);
     if (this.listaLoteDetalleView.length === 0) {
       this.chartModelLineaHembra.noData = { text: "Sin datos que mostrar" };
       this.chartModelLineaMacho.noData = { text: "Sin datos que mostrar" };

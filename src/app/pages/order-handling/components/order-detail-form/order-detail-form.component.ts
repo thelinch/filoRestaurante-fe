@@ -44,8 +44,8 @@ export class OrderDetailFormComponent implements OnInit {
   }
   newOrderDetail() {
     return this.fb.group({
-      product: [null, [Validators.required ]],
-      orderedQuantity: [1, [Validators.required,Validators.min(1)]],
+      product: [null, [Validators.required]],
+      orderedQuantity: [1, [Validators.required, Validators.min(1)]],
     });
   }
   async createOrder() {
@@ -79,7 +79,12 @@ export class OrderDetailFormComponent implements OnInit {
   }
   addAmount(indexOrderDetail: number) {
     const orderDetailsValues = this.orderDetails.value;
-    orderDetailsValues[indexOrderDetail].orderedQuantity += 1;
+    if (
+      orderDetailsValues[indexOrderDetail].orderedQuantity <
+      orderDetailsValues[indexOrderDetail].product.quantity
+    ) {
+      orderDetailsValues[indexOrderDetail].orderedQuantity += 1;
+    }
     this.orderDetails.patchValue(orderDetailsValues);
   }
   substractAmount(indexOrderDetail: number) {

@@ -52,7 +52,6 @@ export class OrdersComponent implements OnInit {
     this.eventServie.subscribe(
       "submitSuccessPedidoVentaDetalle",
       (pedidoVenta: PedidoVenta) => {
-        console.log("pedidoVenta", pedidoVenta);
         const index = this.listaPedidoVenta.findIndex(
           (pedido) => pedido.id == pedidoVenta.id
         );

@@ -92,7 +92,6 @@ export class ProjectionStandardMaleComponent implements OnInit {
       )
       .toPromise();
     this.isLoadingProyeccion = false;
-    console.log("a", ingresoLotes);
   }
   crearNuevoStandardMacho() {
     this.formularioProyeccionMacho.reset();
@@ -114,7 +113,6 @@ export class ProjectionStandardMaleComponent implements OnInit {
   async crearYActualizarProyStandardHembra(
     proyeccionStandardHembra: ProyStandardMacho
   ) {
-    console.log("ss", proyeccionStandardHembra);
     this.formularioProyeccionMacho.markAllAsTouched();
     if (this.formularioProyeccionMacho.invalid) {
       return;
@@ -135,7 +133,6 @@ export class ProjectionStandardMaleComponent implements OnInit {
       });
   }
   async removeStandardHembra(proyStandardHembra: ProyStandardMacho) {
-    console.log(proyStandardHembra);
     await this.http
       .get(
         environment.apiUrl +

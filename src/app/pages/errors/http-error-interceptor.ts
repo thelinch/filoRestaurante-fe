@@ -20,7 +20,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log("err", error);
         this.errorDialogService.openDialog(
           JSON.stringify(error),
           error.status

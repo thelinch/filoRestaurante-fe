@@ -76,9 +76,7 @@ export class LoginComponent implements OnInit {
           const permission = [].concat(
             ...data.roles.map((r) => r.actions.map((a) => a.name))
           );
-          console.log(permission);
           this.permissionsService.loadPermissions(permission);
-          console.log("p", this.permissionsService.getPermissions());
           localStorage.setItem("permisos", JSON.stringify(permission));
           this.webSocketService.connect();
           this.router.navigate(["/dashboards"]);

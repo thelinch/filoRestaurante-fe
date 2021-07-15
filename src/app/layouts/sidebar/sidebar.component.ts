@@ -21,6 +21,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { EventEmitter } from "events";
 import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
 import { NgxPermissionsService } from "ngx-permissions";
+import { WebsocketService } from "src/app/services/websocket.service";
 
 @Component({
   selector: "app-sidebar",
@@ -52,7 +53,8 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     public translate: TranslateService,
     private http: HttpClient,
     private authFackservice: AuthfakeauthenticationService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private webSocketService: WebsocketService
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -92,6 +94,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     this.eventService.broadcast("changeLayout", layout);
   }
   cerrarSesion() {
+    this.webSocketService.disconnect();
     this.authFackservice.logout();
     this.permissionsService.flushPermissions();
     this.router.navigate(["/account/login"]);
@@ -105,7 +108,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
     setTimeout(() => {
       this.menu.update();
-    },400)
+    }, 400);
     //this._activateMenuDropdown();
   }
 

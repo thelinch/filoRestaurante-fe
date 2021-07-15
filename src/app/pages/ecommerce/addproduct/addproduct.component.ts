@@ -72,7 +72,6 @@ export class AddproductComponent implements OnInit {
 
     this.http.post<any>(`http://localhost:8000/api/products`, formData)
       .subscribe((data) => {
-        // console.log('da', data);
         return data;
       });
   }

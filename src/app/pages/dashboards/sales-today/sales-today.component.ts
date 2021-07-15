@@ -18,6 +18,5 @@ export class SalesTodayComponent implements OnInit {
     this.sumSalesToday = await this.http
       .get<number>(environment.apiUrl + "/orders/sumSalesToday")
       .toPromise();
-      console.log("s",this.sumSalesToday)
   }
 }

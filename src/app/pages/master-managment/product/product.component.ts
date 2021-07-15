@@ -121,7 +121,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
   async createAndEditProduct() {
     const product = this.formProduct.value as Product;
-    console.log(product);
     const uuid = uuidv4();
     if (!product.id) {
       await this.productService.create({ ...product, id: uuid }).toPromise();

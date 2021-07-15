@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from "@angular/router";
 import { EventEmitter } from "events";
 import { NgxPermissionsService } from "ngx-permissions";
 import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
+import { WebsocketService } from "src/app/services/websocket.service";
 
 @Component({
   selector: "app-vertical",
@@ -20,7 +21,8 @@ export class VerticalComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private authFackservice: AuthfakeauthenticationService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private webSocketService: WebsocketService
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -39,6 +41,7 @@ export class VerticalComponent implements OnInit, AfterViewInit {
     document.body.removeAttribute("data-sidebar-size");
   }
   cerrarSesion() {
+    this.webSocketService.disconnect();
     this.authFackservice.logout();
     this.permissionsService.flushPermissions();
     this.router.navigate(["/account/login"]);
@@ -63,7 +66,6 @@ export class VerticalComponent implements OnInit, AfterViewInit {
    * On mobile toggle button clicked
    */
   onToggleMobileMenu() {
-    console.log("aa")
     this.isCondensed = !this.isCondensed;
     document.body.classList.toggle("sidebar-enable");
     document.body.classList.toggle("vertical-collpsed");

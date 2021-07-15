@@ -209,7 +209,6 @@ export class OrdersFormComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.formGroupPedidoDetalle.reset();
     } catch (error) {
-      console.log("e", error);
     } finally {
       this.indiceEdicionPedidoDetalle = -1;
     }
@@ -271,7 +270,6 @@ export class OrdersFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   validacionQueExistaSolaUnaFecha(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      console.log("value", control.value);
       const fechaMoment = moment(control.value);
       let fechaEncontrada = this.listaPedidoDetalle.find(
         (pedidoDetalleVenta, index) =>

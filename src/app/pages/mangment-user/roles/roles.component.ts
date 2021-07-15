@@ -140,7 +140,6 @@ export class RolesComponent implements OnInit, OnDestroy {
     });
   }
   deleteRol(rol: any) {
-    console.log("delete rol", rol);
   }
   compareWithAccion(a: any, b: any) {
     return a?.id === b?.id;

@@ -21,6 +21,18 @@
                     <ng-select bindLabel="name"
                         [ngClass]="{'is-invalid':orderDetailItem.get('product').touched && orderDetailItem.get('product').errors}"
                         placeholder="selecciona el producto" class="p-0" formControlName="product" [items]="products">
+                        <ng-template ng-label-tmp let-item="item">
+                            {{item.name}} <strong [ngClass]="{'text-danger':item.quantity<=1}">
+                                ({{item.quantity}})
+                            </strong>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                            {{item.name}}
+                            <strong [ngClass]="{'text-danger':item.quantity<=1}">
+                                ({{item.quantity}})
+                            </strong>
+
+                        </ng-template>
                     </ng-select>
                     <div *ngIf="orderDetailItem.get('product').touched && orderDetailItem.get('product').errors"
                         class="invalid-feedback">
@@ -30,7 +42,8 @@
                 <div class="col-sm-2">
                     <input type="number"
                         [ngClass]="{'is-invalid':orderDetailItem.get('orderedQuantity').touched && orderDetailItem.get('orderedQuantity').errors}"
-                        formControlName="orderedQuantity" class="form-control" />
+                        formControlName="orderedQuantity" class="form-control"
+                        [max]="orderDetailItem.get('product').value" />
                     <div *ngIf="orderDetailItem.get('orderedQuantity').touched && orderDetailItem.get('orderedQuantity').errors"
                         class="invalid-feedback">
                         <span *ngIf="orderDetailItem.get('orderedQuantity').errors.required">Requerido</span>

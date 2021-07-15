@@ -88,7 +88,6 @@ export class TablesComponent implements OnInit, OnDestroy {
   }
   async createAndEditTable() {
     const table = this.formTable.value as Table;
-    console.log(table);
     const uuid = uuidv4();
     if (!table.id) {
       await this.tableService.save({ ...table, id: uuid }).toPromise();

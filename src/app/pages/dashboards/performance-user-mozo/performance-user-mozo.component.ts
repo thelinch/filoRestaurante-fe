@@ -19,7 +19,7 @@ export class PerformanceUserMozoComponent implements OnInit {
       height: "250",
     };
     this.chartModelPerformaceUser.title = {
-      text: "Ventas diarias de los mozos",
+      text: "Ventas diarias en soles de los mozos",
     };
     this.chartModelPerformaceUser.plotOptions = {
       bar: {

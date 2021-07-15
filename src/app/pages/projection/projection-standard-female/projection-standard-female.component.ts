@@ -159,7 +159,6 @@ export class ProjectionStandardFemaleComponent implements OnInit, OnDestroy {
       });
   }
   async removeStandardHembra(proyStandardHembra: ProyStandardHembra) {
-    console.log(proyStandardHembra);
     await this.http
       .get(
         environment.apiUrl +

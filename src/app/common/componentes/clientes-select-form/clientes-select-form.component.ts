@@ -50,7 +50,6 @@ export class ClientesSelectFormComponent implements OnInit {
     this.cargaClientes = false;
   }
   onChange(cliente: any) {
-    console.log("clientes Se", cliente);
     this.from.get(this.props.formControlName).setValue(cliente);
   }
   get invalid() {
