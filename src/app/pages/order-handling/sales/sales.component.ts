@@ -75,7 +75,7 @@ export class SalesComponent implements OnInit, OnDestroy {
     this.orders = await this.orderService.listForTable(table).toPromise();
     this.modalService.open(this.modalSales);
     this.totalPaymentForOrder = this.orders.reduce((prev, curr) => {
-      prev += curr.total;
+      prev += Number(curr.total);
       return prev;
     }, 0);
   }
