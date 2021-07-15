@@ -15,28 +15,7 @@ const routes: Routes = [
   {
     path: "",
     component: DefaultComponent,
-    children: [
-      {
-        path: "produccion/porcentajeProduccion/:idProyingreso/grafica",
-        component: PorcentajeProduccionComponent,
-      },
-      {
-        path: "produccion/porcentajeHi/:idProyingreso/grafica",
-        component: PorcentajeHiComponent,
-      },
-      {
-        path: "produccion/porcentajeNacimiento/:idProyingreso/grafica",
-        component: PorcentajeNacimientoComponent,
-      },
-      {
-        path: "produccion/comparativoHi/grafica",
-        component: ComparativoHiComponent,
-      },
-      {
-        path: "produccion/comparativoBbs/grafica",
-        component: ComparativoBbsComponent,
-      },
-    ],
+
   },
   {
     path: "saas",

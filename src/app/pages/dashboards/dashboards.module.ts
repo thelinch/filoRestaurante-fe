@@ -20,10 +20,13 @@ import { PorcentajeHiComponent } from './porcentaje-hi/porcentaje-hi.component';
 import { PorcentajeNacimientoComponent } from './porcentaje-nacimiento/porcentaje-nacimiento.component';
 import { ComparativoHiComponent } from './comparativo-hi/comparativo-hi.component';
 import { ComparativoBbsComponent } from './comparativo-bbs/comparativo-bbs.component';
+import { SalesTodayComponent } from './sales-today/sales-today.component';
+import { ProductMustSalesComponent } from './product-must-sales/product-must-sales.component';
+import { PerformanceUserMozoComponent } from './performance-user-mozo/performance-user-mozo.component';
 
 
 @NgModule({
-  declarations: [DefaultComponent, SaasComponent, CryptoComponent, BlogComponent, PorcentajeProduccionComponent, PorcentajeHiComponent, PorcentajeNacimientoComponent, ComparativoHiComponent, ComparativoBbsComponent],
+  declarations: [DefaultComponent, SaasComponent, CryptoComponent, BlogComponent, PorcentajeProduccionComponent, PorcentajeHiComponent, PorcentajeNacimientoComponent, ComparativoHiComponent, ComparativoBbsComponent, SalesTodayComponent, ProductMustSalesComponent, PerformanceUserMozoComponent],
   imports: [
     CommonModule,
     FormsModule,

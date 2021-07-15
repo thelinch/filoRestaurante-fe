@@ -13,46 +13,20 @@
         </div>
     </div>
     <div class="row">
-        <ul class="ul-list button-items list-unstyled">
+        <div class="col-sm-12">
+            <app-sales-today></app-sales-today>
 
-            <li (click)="nombreProcesoCategoria(categoriaItem)" *ngFor="let categoriaItem of listaBotonesCategoria">
-                <button type="button" class="btn btn-outline-danger"
-                    [ngClass]="{'btnSeleccionado':categoriaItem.nombre===categoriaSeleccionado?.nombre}">
-                    {{categoriaItem.nombre}}
-                </button>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <app-performance-user-mozo></app-performance-user-mozo>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <app-product-must-sales></app-product-must-sales>
+        </div>
 
-            </li>
-        </ul>
-    </div>
-    <div class="row">
-        <ul class="ul-list button-items  list-unstyled">
-            <li (click)="nombreProcesoSubcategoria(subCategoriaItem)"
-                *ngFor="let subCategoriaItem of listaBotonesSubcategoria">
-                <button type="button" class="btn btn-outline-danger"
-                    [ngClass]="{'btnSeleccionado':subCategoriaItem.nombre===subcategoriaSeleccionado?.nombre}">
-                    {{subCategoriaItem.nombre}}
-                </button>
-
-            </li>
-        </ul>
-    </div>
-    <div class="row" *ngIf="mostrarLotes">
-        <ul class="ul-list button-items  list-unstyled">
-            <li (click)="item(ingresoLoteItem)" *ngFor="let ingresoLoteItem of listaIngresoProduccion">
-                <button type="button" class="btn btn-outline-danger"
-                    [ngClass]="{'btnSeleccionado':ingresoLoteItem.idProyIngresoLote===ingresoLoteSeleccionado?.idProyIngresoLote}">
-                    {{ingresoLoteItem.nombreIngreso}}
-                </button>
-            </li>
-
-        </ul>
-    </div>
-
-
-
-    <div class="row mt-4">
-        <router-outlet></router-outlet>
 
     </div>
 
-    <!-- end page title -->
+</div>
+
+<!-- end page title -->

@@ -74,12 +74,13 @@
                                 number:'1.1-3'}}</strong>
                         </li>
                     </ul>
-                    <p class="text-end">Total:<strong>{{order.total | number:'1.1-3' | currency:'S/. '}}</strong></p>
+                    <p class="text-end">Total:<strong>S/. {{order.total | number:'1.1-3' }}</strong>
+                    </p>
 
                 </ng-template>
             </ngb-panel>
         </ngb-accordion>
-        <p class="text-end">Total:<strong>{{totalPaymentForOrder | number:'1.1-3' | currency:'S/. '}}</strong></p>
+        <p class="text-end">Total:<strong> S/.{{totalPaymentForOrder | number:'1.1-3'}}</strong></p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>

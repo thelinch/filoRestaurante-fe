@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, Output } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
+import { EventEmitter } from "events";
 import { NgxPermissionsService } from "ngx-permissions";
 import { AuthfakeauthenticationService } from "src/app/core/services/authfake.service";
 
@@ -14,6 +15,7 @@ import { AuthfakeauthenticationService } from "src/app/core/services/authfake.se
  */
 export class VerticalComponent implements OnInit, AfterViewInit {
   isCondensed = false;
+  @Output() mobileMenuButtonClicked = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -61,6 +63,7 @@ export class VerticalComponent implements OnInit, AfterViewInit {
    * On mobile toggle button clicked
    */
   onToggleMobileMenu() {
+    console.log("aa")
     this.isCondensed = !this.isCondensed;
     document.body.classList.toggle("sidebar-enable");
     document.body.classList.toggle("vertical-collpsed");
