@@ -5,31 +5,33 @@ export const MENU: MenuItem[] = [
     label: "Dashboard",
     isTitle: false,
     link: "/dashboards",
-    permissions: [],
+    icon: "bx bx-line-chart",
+    permissions: ["dashboard-ver-dashboard"],
     visible: false,
   },
   {
     id: 8,
     label: "Ventas",
     isTitle: false,
+    icon: "fas fa-cash-register",
     link: "/process/sales",
-    permissions: [],
+    permissions: ["ventas-ver-ventas"],
     visible: false,
   },
   {
     id: 9,
     label: "Pedidos",
+    icon: "fas fa-rocket",
     link: "/process/orders",
     isTitle: false,
-    permissions: [],
+    permissions: ["pedidos-ver-perdidos"],
     visible: false,
   },
   {
     id: 60,
     label: "Configuracion",
-    icon: "bx-calendar",
-    link: "/calendar",
-    permissions: [],
+    icon: "fas fa-cog",
+    permissions: ["configuracion-ver-configuracion"],
     visible: false,
 
     subItems: [
@@ -38,7 +40,7 @@ export const MENU: MenuItem[] = [
         label: "Categoria",
         link: "/master/categories",
         parentId: 60,
-        permissions: [],
+        permissions: ["configuracion-ver-categorias"],
         visible: false,
       },
       {
@@ -46,7 +48,7 @@ export const MENU: MenuItem[] = [
         label: "Productos",
         link: "/master/products",
         parentId: 60,
-        permissions: [],
+        permissions: ["configuracion-ver-productos"],
         visible: false,
       },
       {
@@ -54,7 +56,7 @@ export const MENU: MenuItem[] = [
         label: "Mesas",
         link: "/master/tables",
         parentId: 60,
-        permissions: [],
+        permissions: ["configuracion-ver-mesas"],
         visible: false,
       },
     ],
@@ -62,8 +64,8 @@ export const MENU: MenuItem[] = [
   {
     id: 12,
     label: "Seguridad",
-    icon: "bx-store",
-    permissions: [],
+    icon: "bx bx-shield-quarter",
+    permissions: ["seguridad-ver-seguridad"],
 
     visible: false,
     subItems: [
@@ -74,14 +76,14 @@ export const MENU: MenuItem[] = [
         parentId: 12,
         visible: false,
 
-        permissions: [],
+        permissions: ["seguridad-ver-roles"],
       },
       {
         id: 14,
         label: "Acciones",
         link: "/seguridad/acciones",
         parentId: 12,
-        permissions: [],
+        permissions: ["seguridad-ver-acciones"],
         visible: false,
       },
       {
@@ -89,7 +91,7 @@ export const MENU: MenuItem[] = [
         label: "Usuarios",
         link: "/seguridad/usuarios",
         parentId: 12,
-        permissions: [],
+        permissions: ["seguridad-ver-usuarios"],
         visible: false,
       },
     ],

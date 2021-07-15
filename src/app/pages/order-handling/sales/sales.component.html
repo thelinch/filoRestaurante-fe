@@ -24,13 +24,18 @@
                 <img class="img-fluid   mx-auto d-block" src="assets/images/mesa.jfif">
                 <div class="mesa-background d-flex align-items-center justify-content-center">
                     <div class="button-items">
-                        <button class="btn btn-success" (click)="listOrderFindTable(table)">
-                            <i class="bx bx-euro d-block font-size-16"></i>
-                        </button>
-                        <button class="btn btn-primary" (click)="newOrder(table)">
-                            <i class="bx bx-plus-circle d-block font-size-16"></i>
+                        <ng-template ngxPermissionsOnly="ventas-realizar-pagos">
+                            <button class="btn btn-success" (click)="listOrderFindTable(table)">
+                                <i class="bx bx-euro d-block font-size-16"></i>
+                            </button>
 
-                        </button>
+                        </ng-template>
+                        <ng-template ngxPermissionsOnly="ventas-realizas-pedidos">
+                            <button class="btn btn-primary" (click)="newOrder(table)">
+                                <i class="bx bx-plus-circle d-block font-size-16"></i>
+
+                            </button>
+                        </ng-template>
 
                     </div>
                 </div>

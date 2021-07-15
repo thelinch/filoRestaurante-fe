@@ -8,11 +8,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DndModule } from "ngx-drag-drop";
 import { OrderDetailFormComponent } from "./components/order-detail-form/order-detail-form.component";
 import { NgbCollapseModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPermissionsModule } from "ngx-permissions";
 
 @NgModule({
   declarations: [OrderComponent, SalesComponent, OrderDetailFormComponent],
 
   imports: [
+    NgxPermissionsModule.forChild(),
     CommonModule,
     OrderHandlingRoutingModule,
     NgSelectModule,
