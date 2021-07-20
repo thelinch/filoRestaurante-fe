@@ -81,7 +81,7 @@ export class OrderDetailFormComponent implements OnInit {
     const orderDetailsValues = this.orderDetails.value;
     if (
       orderDetailsValues[indexOrderDetail].orderedQuantity <
-      orderDetailsValues[indexOrderDetail].product.quantity
+      orderDetailsValues[indexOrderDetail]?.product?.quantity
     ) {
       orderDetailsValues[indexOrderDetail].orderedQuantity += 1;
     }

@@ -11,7 +11,7 @@ export const environment = {
     appId: "",
     measurementId: "",
   },
-  apiUrl: "http://165.227.204.114/:3000",
-  socketUrl:"http://165.227.204.114/:3000"
+  apiUrl: "http://165.227.204.114:3000",
+  socketUrl:"http://165.227.204.114:3000"
 
 };

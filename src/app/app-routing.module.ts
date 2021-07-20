@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () =>
       import("./account/account.module").then((m) => m.AccountModule),
   },
+  {
+    path: "public",
+    loadChildren: () =>
+      import("./pages/public/public.module").then((m) => m.PublicModule),
+  },
   // tslint:disable-next-line: max-line-length
   {
     path: "",
