@@ -47,18 +47,19 @@
 
 <ng-template #editAndCreateOrder let-modal>
     <div class="modal-header">
-        <h5 class="modal-title">Crear Pedido:{{tableSelected?.name}}</h5>
+        <h5 class="modal-title">Mesa:{{tableSelected?.name}}</h5>
         <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body p-4">
-        <app-order-detail-form [table]="tableSelected"></app-order-detail-form>
+        <app-process-order [table]="tableSelected"></app-process-order>
+        <!--  <app-order-detail-form [table]="tableSelected"></app-order-detail-form> -->
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
-        <button type="submit" form="formOrder" class="btn btn-success ms-1">
+<!--     <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Cancelar</button>
+          <button type="submit" form="formOrder" class="btn btn-success ms-1">
             Crear pedido
-        </button>
-    </div>
+        </button> 
+    </div> -->
 </ng-template>
 
 <ng-template #sales let-modal>

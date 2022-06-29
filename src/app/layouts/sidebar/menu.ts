@@ -59,6 +59,14 @@ export const MENU: MenuItem[] = [
         permissions: ["configuracion-ver-mesas"],
         visible: false,
       },
+      {
+        id: 155,
+        label: "Tipo de ordenes",
+        link: "/master/type-orders",
+        parentId: 60,
+        permissions: [],
+        visible: false,
+      },
     ],
   },
   {

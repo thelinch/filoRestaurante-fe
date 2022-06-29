@@ -7,9 +7,10 @@ import { MasterManagmentRoutingModule } from "./master-managment-routing.module"
 import { CategoriesComponent } from './categories/categories.component';
 import { ProductComponent } from './product/product.component';
 import { NgSelectModule } from "@ng-select/ng-select";
+import { TypeOrdersComponent } from './type-orders/type-orders.component';
 
 @NgModule({
-  declarations: [TablesComponent, CategoriesComponent, ProductComponent],
+  declarations: [TablesComponent, CategoriesComponent, ProductComponent, TypeOrdersComponent],
   imports: [
     CommonModule,
     CommonModuleCustom,

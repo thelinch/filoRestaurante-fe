@@ -32,7 +32,8 @@
                         <div class="item" [dndDraggable]="item" dndEffectAllowed="move"
                             (dndStart)="onDragMoved($event,column,i)" (dndEnd)="onDragEnd($event,i)"
                             *ngFor="let item of column.items;let i=index">
-                            <div class="card border border-primary">
+                            <div class="card" style="border-style: solid;border-width: 1px;"
+                                [ngStyle]="{borderColor:item.type.color}">
                                 <div class="card-body">
                                     <p><strong>Mozo:</strong>{{item.user?.name}}</p>
                                     <p>

@@ -1,0 +1,85 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 ">
+            <div class="d-flex justify-content-between">
+                <h4 class="m-0 title-uppercase d-inline-block">Tipo de Ordenes</h4>
+                <button class="btn btn-success pull-right" (click)="newCategory()">Crear</button>
+            </div>
+
+        </div>
+        <div class="col-sm-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <app-table-custom-generic [data]="typeOrders" [haders]="headerTables">
+                    </app-table-custom-generic>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #editAndCreateCategory let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Tipo de ordenes</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <form [formGroup]="form" id="formFactorMortalidad" (ngSubmit)="createAndEditTypeOrder()">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Nombre (*)</label>
+                        <input
+                            [ngClass]="{'is-invalid': formCategoryControls.name.touched && formCategoryControls.name.errors}"
+                            class="form-control" type="text" formControlName="name">
+                        <div *ngIf="formCategoryControls.name.touched && formCategoryControls.name.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formCategoryControls.name.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label">Precio Adicional (*)</label>
+                        <input
+                            [ngClass]="{'is-invalid': formCategoryControls.price.touched && formCategoryControls.price.errors}"
+                            class="form-control" type="number"  formControlName="price">
+                        <div *ngIf="formCategoryControls.price.touched && formCategoryControls.price.errors"
+                            class="invalid-feedback">
+                            <span *ngIf="formCategoryControls.price.errors.required">Requerido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label class="control-label">Color (*)</label>
+                    <input
+                        [ngClass]="{'is-invalid': formCategoryControls.color.touched && formCategoryControls.color.errors}"
+                        type="color" class="form-control" formControlName="color">
+                    <div *ngIf="formCategoryControls.color.touched && formCategoryControls.color.errors"
+                        class="invalid-feedback">
+                        <span *ngIf="formCategoryControls.color.errors.required">Requerido</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Close</button>
+        <button type="submit" [disabled]="form.invalid" form="formFactorMortalidad" class="btn btn-success ms-1">
+            <ng-template [ngIf]="isLoadingForm | async">
+                <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+            </ng-template>
+            {{formCategoryControls.id.value==null? 'Guardar':'Editar'}}
+        </button>
+    </div>
+</ng-template>

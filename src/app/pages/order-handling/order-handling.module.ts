@@ -7,15 +7,26 @@ import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DndModule } from "ngx-drag-drop";
 import { OrderDetailFormComponent } from "./components/order-detail-form/order-detail-form.component";
-import { NgbCollapseModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import {
+  NgbCollapseModule,
+  NgbModule,
+  NgbNavModule,
+} from "@ng-bootstrap/ng-bootstrap";
 import { NgxPermissionsModule } from "ngx-permissions";
+import { ProcessOrderComponent } from "./components/process-order/process-order.component";
 
 @NgModule({
-  declarations: [OrderComponent, SalesComponent, OrderDetailFormComponent],
+  declarations: [
+    OrderComponent,
+    SalesComponent,
+    OrderDetailFormComponent,
+    ProcessOrderComponent,
+  ],
 
   imports: [
     NgxPermissionsModule.forChild(),
     CommonModule,
+    NgbNavModule,
     OrderHandlingRoutingModule,
     NgSelectModule,
     FormsModule,

@@ -1,9 +1,18 @@
 <form [formGroup]="formOrder" id="formOrder" (ngSubmit)="createOrder()">
-
+    <div class="row mb-3">
+        <label class="col-sm-12 col-md-1 col-form-label">Tipo:</label>
+        <div class="col-sm-12 col-md-10">
+            <ng-select bindLabel="name" class=""
+                [ngClass]="{'is-invalid':formOrder.get('type').touched && formOrder.get('type').errors}" class="p-0"
+                formControlName="type" [items]="typeOrders">
+            </ng-select>
+        </div>
+    </div>
+    <h3>Pedido:</h3>
     <div class="row" formArrayName="orderDetails">
         <div class="col-sm-12 mb-3" *ngFor="let orderDetailItem of orderDetails.controls;let i=index,let last=last">
             <div [formGroupName]="i" class="row">
-                <div class="col-sm-4 d-flex justify-content-end mb-1">
+                <div class="col-sm-3 d-flex justify-content-end mb-1">
                     <div class="button-items">
                         <button type="button" class="btn btn-primary btn-small" *ngIf="last" (click)="addOrderDetail()">
                             <i class="bx bx-plus-circle"></i>
@@ -42,7 +51,7 @@
                 <div class="col-sm-2">
                     <input type="number"
                         [ngClass]="{'is-invalid':orderDetailItem.get('orderedQuantity').touched && orderDetailItem.get('orderedQuantity').errors}"
-                        formControlName="orderedQuantity" class="form-control"
+                        formControlName="orderedQuantity" class="form-control mt-sm-12"
                         [max]="orderDetailItem.get('product').value" />
                     <div *ngIf="orderDetailItem.get('orderedQuantity').touched && orderDetailItem.get('orderedQuantity').errors"
                         class="invalid-feedback">
@@ -51,16 +60,14 @@
 
                     </div>
                 </div>
+                <div class="col-8 offset-sm-3">
+                    <div class="mb-3">
+                        <label class="control-label">Nota Adicional:</label>
+                        <textarea formControlName="observation" rows="1" class="form-control"></textarea>
+                    </div>
+                </div>
             </div>
 
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="mb-3">
-                <label class="control-label">Observacion</label>
-                <textarea formControlName="observation" class="form-control"></textarea>
-            </div>
         </div>
     </div>
 </form>

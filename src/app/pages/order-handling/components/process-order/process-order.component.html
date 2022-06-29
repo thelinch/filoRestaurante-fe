@@ -1,0 +1,80 @@
+<ng-template #formOrder>
+    <app-order-detail-form [(dataForm)]="dataForm" (onSuccessForm)="setSucessForm($event)" class="mt-2 p-2"
+        [table]="table">
+    </app-order-detail-form>
+</ng-template>
+
+<ng-template #confirm>
+    <h2 class="text-center mt-4">Confirma tu pedido</h2>
+    <p>
+        <span>Tipo: </span>
+        <strong>{{dataForm?.type.name}}(S./{{dataForm?.type.price}})</strong>
+    </p>
+    <h3>Pedido:</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Nota adicional</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Total S./</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let detail of dataForm?.orderDetails">
+                            <td>{{detail?.product.name}}</td>
+                            <td>{{detail?.observation}}</td>
+                            <td>{{detail?.product.price}}</td>
+                            <td>{{detail?.orderedQuantity}}</td>
+                            <td>{{detail?.orderedQuantity*detail.product.price | number :'1.2-2' }}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <p class="text-end">
+            <span>TOTAL:<strong>{{totalPayment |number:"1.2-2"}}</strong></span>
+        </p>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-sm-12 col-md-2 ">
+            <button type="button" (click)="createOrder()" class="btn btn-success">Ordenar</button>
+        </div>
+    </div>
+
+</ng-template>
+
+<ul ngbNav #nav="ngbNav" [destroyOnHide]="false" [(activeId)]="activeIdNav" class="nav-tabs">
+    <li [ngbNavItem]="1">
+        <a ngbNavLink>
+            <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+            <span class="d-none d-sm-block">Crea tu pedido</span>
+        </a>
+        <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="formOrder"></ng-template>
+            <div class="row justify-content-end">
+                <div class="col-sm-12 col-md-2 ">
+                    <button class="btn btn-success" (click)="showConfirmTab()"
+                        [disabled]="tabsDisabled.confirm">Siguiente</button>
+                </div>
+            </div>
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="2" [disabled]="tabsDisabled.confirm">
+        <a ngbNavLink>
+            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+            <span class="d-none d-sm-block">Confirmar</span>
+        </a>
+        <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="confirm"></ng-template>
+        </ng-template>
+    </li>
+
+</ul>
+<div [ngbNavOutlet]="nav" class="ml-4 w-100"></div>
