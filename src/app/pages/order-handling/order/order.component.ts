@@ -71,6 +71,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orderEventReciveEvent = this.webSocketService
       .reciveEvent(OrderEventState.ReciveOrder)
       .subscribe((order: Order) => {
+        console.log("Order", order);
         const music = new Audio("assets/sounds/samsung_silbido_mensaje.mp3");
 
         const categoiesSelectedName = this.categoriesSelected.map(

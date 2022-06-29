@@ -29,6 +29,12 @@ export class TypeOrdersComponent implements OnInit {
       isTemplate: false,
     },
     {
+      headerName: "Se atiende en local",
+      bindValue: "localAttentionMap",
+      isActions: false,
+      isTemplate: false,
+    },
+    {
       headerName: "Precio adicional",
       bindValue: "price",
       isActions: false,
@@ -79,6 +85,7 @@ export class TypeOrdersComponent implements OnInit {
       name: [null, [Validators.required]],
       color: [null, [Validators.required]],
       price: [null, [Validators.required]],
+      localAttention: [false],
     });
   }
   newCategory() {
@@ -89,6 +96,7 @@ export class TypeOrdersComponent implements OnInit {
     this.typeOrders = (await this.typeOrderService.list().toPromise()).map(
       (factor, index) => ({
         ...factor,
+        localAttentionMap: factor.localAttention ? "Si" : "No",
         acciones: [
           `<div class="button-items">
     <button type="button" data-index=${index}   data-function="editEventTypeOrder" class="btn btn-success buttonEvent mr2">Editar</button>

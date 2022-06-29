@@ -36,18 +36,16 @@
                                 [ngStyle]="{borderColor:item.type.color}">
                                 <div class="card-body">
                                     <p><strong>Mozo:</strong>{{item.user?.name}}</p>
-                                    <p>
-                                        <strong>Mesa:</strong><span>{{item.table.name}}</span>
+                                    <p *ngIf="item.table.name">
+                                        <strong>Mesa:</strong><span>{{item.table?.name}}</span>
                                     </p>
                                     <ul>
-                                        <li class="text-muted mb-1" *ngFor="let resume of item.resume.split('*')">
-                                            {{resume}}
-
+                                        <li class="text-muted mb-1" *ngFor="let orderD of item.orderDetails">
+                                            {{orderD.product.name}}({{orderD.orderedQuantity}})
+                                            <span>{{orderD.observation}}</span>
                                         </li>
                                     </ul>
-                                    <p class="text-muted" style="font-size:10px">
-                                        {{item.observation}}
-                                    </p>
+                                
                                 </div>
                             </div>
                             <!--     <div class="thumbnail" style="box-shadow: 0 0 8px -3px black;">

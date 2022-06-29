@@ -48,7 +48,7 @@
                         <label class="control-label">Precio Adicional (*)</label>
                         <input
                             [ngClass]="{'is-invalid': formCategoryControls.price.touched && formCategoryControls.price.errors}"
-                            class="form-control" type="number"  formControlName="price">
+                            class="form-control" type="number" formControlName="price">
                         <div *ngIf="formCategoryControls.price.touched && formCategoryControls.price.errors"
                             class="invalid-feedback">
                             <span *ngIf="formCategoryControls.price.errors.required">Requerido</span>
@@ -66,6 +66,17 @@
                         class="invalid-feedback">
                         <span *ngIf="formCategoryControls.color.errors.required">Requerido</span>
                     </div>
+
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" formControlName="localAttention" id="exampleCheck1">
+                        <label class="form-check-label"  for="exampleCheck1">Se Atiende
+                            Local (*)</label>
+                    </div>
+
 
                 </div>
             </div>
