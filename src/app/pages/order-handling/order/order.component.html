@@ -36,6 +36,7 @@
                                 [ngStyle]="{borderColor:item.type.color}">
                                 <div class="card-body">
                                     <p><strong>Mozo:</strong>{{item.user?.name}}</p>
+                                    <p><strong>Tipo:</strong>{{item.type?.name}}</p>
                                     <p *ngIf="item.table?.name">
                                         <strong>Mesa:</strong><span>{{item.table?.name}}</span>
                                     </p>
@@ -45,7 +46,7 @@
                                             <span>{{orderD.observation}}</span>
                                         </li>
                                     </ul>
-                                
+
                                 </div>
                             </div>
                             <!--     <div class="thumbnail" style="box-shadow: 0 0 8px -3px black;">
