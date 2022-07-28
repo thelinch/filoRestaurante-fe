@@ -1,5 +1,6 @@
 import { User } from "../core/models/auth.models";
 import { OrderDetail } from "./OrderDetail";
+import { StatusModel } from "./StatusModel";
 import { Table } from "./Table";
 
 export interface Order {
@@ -10,5 +11,6 @@ export interface Order {
   table: Table;
   state: string;
   orderDetails: OrderDetail[];
-  user:User
+  user: User;
+  status: StatusModel;
 }

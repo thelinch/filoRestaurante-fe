@@ -8,12 +8,14 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DndModule } from "ngx-drag-drop";
 import { OrderDetailFormComponent } from "./components/order-detail-form/order-detail-form.component";
 import {
-  NgbCollapseModule,
+  NgbDropdownModule,
   NgbModule,
   NgbNavModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { NgxPermissionsModule } from "ngx-permissions";
 import { ProcessOrderComponent } from "./components/process-order/process-order.component";
+import { StatesComponent } from "./components/states/states.component";
+import { StatesDropDownComponent } from "./components/states-drop-down/states-drop-down.component";
 
 @NgModule({
   declarations: [
@@ -21,9 +23,12 @@ import { ProcessOrderComponent } from "./components/process-order/process-order.
     SalesComponent,
     OrderDetailFormComponent,
     ProcessOrderComponent,
+    StatesComponent,
+    StatesDropDownComponent,
   ],
 
   imports: [
+    NgbDropdownModule,
     NgxPermissionsModule.forChild(),
     CommonModule,
     NgbNavModule,

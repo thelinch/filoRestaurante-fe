@@ -22,6 +22,11 @@ export class OrdersService {
       environment.apiUrl + "/orders/mesas/" + table.id + "/orders"
     );
   }
+  getStates(): Observable<{ id: string; name: string; color: string }[]> {
+    return this.http.get<{ id: string; name: string; color: string }[]>(
+      environment.apiUrl + "/orders/states"
+    );
+  }
   create(order: Order) {
     return this.http.post<void>(environment.apiUrl + "/orders", order);
   }
@@ -43,7 +48,7 @@ export class OrdersService {
       environment.apiUrl + "/orders/" + orderId + "/reject"
     );
   }
-  inProgress(orderId: string){
+  inProgress(orderId: string) {
     return this.http.get<void>(
       environment.apiUrl + "/orders/" + orderId + "/inProgress"
     );

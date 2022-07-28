@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
     <!-- start page title -->
     <!--     <app-page-title title="Invoice List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
  -->
@@ -22,12 +21,16 @@
     <div class="board-canvas">
         <div class="blackboard">
             <div class="column" [dndDropzone]="" dndEffectAllowed="move" (dndDrop)="onDrop($event,column)"
-                *ngFor="let column of columns">
-                <div class="column_body">
-                    <div class="column_title">
-                        <span class="text">{{column.title}}</span>
+                *ngFor="let column of states">
+                <section class="column_title mb-4">
+                    <div class="bar" [ngStyle]="{'border-color':column.color}"></div>
+                    <div class="w-100 d-flex  p-4 justify-content-center">
+                        <span class="text pr-1">{{column.name}}</span>
                         <span class="number">{{column.items.length}}</span>
+
                     </div>
+                </section>
+                <div class="column_body">
                     <div class="items">
                         <div class="item" [dndDraggable]="item" dndEffectAllowed="move"
                             (dndStart)="onDragMoved($event,column,i)" (dndEnd)="onDragEnd($event,i)"
@@ -40,12 +43,13 @@
                                     <p *ngIf="item.table?.name">
                                         <strong>Mesa:</strong><span>{{item.table?.name}}</span>
                                     </p>
-                                    <ul>
-                                        <li class="text-muted mb-1" *ngFor="let orderD of item.orderDetails">
-                                            {{orderD.product.name}}({{orderD.orderedQuantity}})
+                                    <div class="text-muted mb-1 d-flex" *ngFor="let orderD of item.orderDetails">
+                                        <app-states-drop-down [state]="orderD.status"></app-states-drop-down>
+                                        <div>
+                                            ({{orderD.orderedQuantity}}){{orderD.product.name}}
                                             <span>{{orderD.observation}}</span>
-                                        </li>
-                                    </ul>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>

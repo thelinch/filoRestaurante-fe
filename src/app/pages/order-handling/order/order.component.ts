@@ -24,6 +24,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   orderEventReciveEvent: Subscription;
   columnSource: any;
   colmnDestine: any;
+  states: { id: string; name: string; color: string; items: any[] }[] = [];
   constructor(
     private categoryService: CategoriesService,
     private orderService: OrdersService,
@@ -68,6 +69,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.listarCategorias();
+    this.getStates();
     this.orderEventReciveEvent = this.webSocketService
       .reciveEvent(OrderEventState.ReciveOrder)
       .subscribe((order: Order) => {
@@ -86,19 +88,24 @@ export class OrderComponent implements OnInit, OnDestroy {
             )
             .filter((c) => categoiesSelectedName.includes(c)).length > 0;
         if (hasContainsCategory) {
-          this.columns[0].items.push(order);
+          this.states[0].items.push(order);
           music.play();
         }
       });
+  }
+
+  async getStates() {
+    const states = await this.orderService.getStates().toPromise();
+    this.states = states.map((a) => ({ ...a, items: [] }));
   }
   async listOrderForCategories() {
     if (this.categoriesSelected.length > 0) {
       const orders: Order[] = await this.orderService
         .listForCategories(this.categoriesSelected)
         .toPromise();
-      for (let i = 0; i < this.columns.length; i++) {
-        this.columns[i].items = orders.filter((o) =>
-          this.columns[i].states.includes(o.state)
+      for (let i = 0; i < this.states.length; i++) {
+        this.states[i].items = orders.filter(
+          (o) => this.states[i].id == o.status.id
         );
       }
     }
