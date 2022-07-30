@@ -10,6 +10,8 @@ import { CategoriesService } from "src/app/services/categories.service";
 import { OrdersService } from "src/app/services/orders.service";
 import { WebsocketService } from "src/app/services/websocket.service";
 import { v4 as uuidv4 } from "uuid";
+import { EventService } from "../../../core/services/event.service";
+import { StatusModel } from "../../../models/StatusModel";
 
 @Component({
   selector: "app-order",
@@ -21,14 +23,15 @@ export class OrderComponent implements OnInit, OnDestroy {
   categories: Category[];
   isLoadingCategories: boolean;
   categoriesSelected: Category[];
-  orderEventReciveEvent: Subscription;
   columnSource: any;
   colmnDestine: any;
   states: { id: string; name: string; color: string; items: any[] }[] = [];
+  subscriptions: Subscription;
   constructor(
     private categoryService: CategoriesService,
     private orderService: OrdersService,
-    private webSocketService: WebsocketService
+    private webSocketService: WebsocketService,
+    private eventService: EventService
   ) {
     this.columns = [
       {
@@ -64,13 +67,13 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.categoriesSelected = [];
   }
   ngOnDestroy(): void {
-    this.orderEventReciveEvent?.unsubscribe();
+    this.subscriptions?.unsubscribe();
   }
 
   ngOnInit(): void {
     this.listarCategorias();
     this.getStates();
-    this.orderEventReciveEvent = this.webSocketService
+    this.subscriptions = this.webSocketService
       .reciveEvent(OrderEventState.ReciveOrder)
       .subscribe((order: Order) => {
         console.log("Order", order);
@@ -92,6 +95,29 @@ export class OrderComponent implements OnInit, OnDestroy {
           music.play();
         }
       });
+    const subscriptionChangeStateEvent = this.eventService.subscribe(
+      "changeState",
+      ({ newState, objectId }: { newState: StatusModel; objectId: string }) => {
+        this.orderService
+          .changeState({
+            id: objectId,
+            statusId: newState.id,
+            type: "orderDetail",
+          })
+          .toPromise();
+        for (const state of this.states) {
+          for (const item of state.items) {
+            const indexOrderDetail = item.orderDetails.findIndex(
+              (o) => o.id == objectId
+            );
+            if (indexOrderDetail >= 0) {
+              item.orderDetails[indexOrderDetail].status = newState;
+            }
+          }
+        }
+      }
+    );
+    this.subscriptions.add(subscriptionChangeStateEvent);
   }
 
   async getStates() {
@@ -105,7 +131,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         .toPromise();
       for (let i = 0; i < this.states.length; i++) {
         this.states[i].items = orders.filter(
-          (o) => this.states[i].id == o.status.id
+          (o) => this.states[i].id === o.status.id
         );
       }
     }
@@ -114,36 +140,30 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.columnSource = column;
   }
   async onDragEnd(event, indexItem: number) {
-    if (!this.colmnDestine?.statesPermit.includes(this.columnSource?.title)) {
-      return;
-    }
-
-    const indexColumn = this.columns.findIndex(
-      (c) => c.id == this.columnSource?.id
+    const indexColumn = this.states.findIndex(
+      (c) => c.id === this.columnSource?.id
     );
-    const listItems = this.columns[indexColumn].items;
-    listItems.splice(indexItem, 1);
-    if (this.columnSource?.id !== this.colmnDestine?.id) {
-      this.columns[indexColumn].items = listItems;
+    if (indexColumn >= 0 && this.columnSource?.id !== this.colmnDestine?.id) {
+      const listItems = this.states[indexColumn].items;
+      listItems.splice(indexItem, 1);
+      this.states[indexColumn].items = listItems;
     }
   }
   onDrop(event: DndDropEvent, column: any) {
     this.colmnDestine = column;
-    if (!this.colmnDestine.statesPermit.includes(this.columnSource.title)) {
-      return;
+    const index = this.states.findIndex((c) => c.id === column.id);
+    console.log("DROP", this.states[index]);
+    if (index >= 0 && this.colmnDestine !== this.columnSource) {
+      const newState = this.states[index];
+      this.states[index].items = [...this.states[index].items, event.data];
+      this.orderService
+        .changeState({
+          id: event.data.id,
+          statusId: newState.id,
+          type: "order",
+        })
+        .toPromise();
     }
-    const order = event.data as Order;
-    if (this.colmnDestine.title == "En Realizacion") {
-      this.orderService.inProgress(order.id).toPromise();
-    }
-    if (this.colmnDestine.title == "Atendidos") {
-      this.orderService.attend(order.id).toPromise();
-    }
-    if (this.colmnDestine.title == "Rechazados") {
-      this.orderService.reject(order.id).toPromise();
-    }
-    const index = this.columns.findIndex((c) => c.id == column.id);
-    this.columns[index].items = [...this.columns[index].items, event.data];
   }
   async listarCategorias() {
     this.isLoadingCategories = true;

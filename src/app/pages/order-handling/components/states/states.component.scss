@@ -9,22 +9,19 @@
         0s;
       position: relative;
       border-radius: 4px;
-      padding: 8px 8px 8px 26px;
+      padding: 10px 10px 10px 26px;
       white-space: nowrap;
       cursor: pointer;
       overflow: hidden;
+      box-sizing: border-box;
+
       display: flex;
       align-items: center;
       .status-list__status {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         font-size: 11px;
         font-weight: 500;
         line-height: 1;
-        color: #bbb;
         text-transform: uppercase;
-        transition: background-color 0.1s;
-        -webkit-user-select: none;
         user-select: none;
         padding-right: 10px;
         display: flex;
@@ -42,14 +39,14 @@
         border-radius: 2px;
         background-color: currentColor;
       }
-      :hover {
-        background-color: currentColor;
-        color: white;
-      }
     }
   }
 }
+.status-list__item :hover {
+  background: currentColor !important;
+  color: #bbb;
 
+}
 .status-list__scroll-view {
   overflow-y: auto;
   overflow-x: hidden;

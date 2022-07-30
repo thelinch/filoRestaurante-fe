@@ -1,10 +1,12 @@
 <div class="dropdown " ngbDropdown>
     <div [ngStyle]="{'color':state.color}" class="lv-task__status dropdown-toggle" id="dropdownMenuButton"
         ngbDropdownToggle>
-
+        <div class="block">
+            
+        </div>
     </div>
     <div class="dropdown-menu" ngbDropdownMenu>
-        <app-states></app-states>
+        <app-states [objectId]="this.objectId"></app-states>
 
     </div>
 </div>

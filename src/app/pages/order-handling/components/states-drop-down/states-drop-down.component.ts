@@ -8,6 +8,7 @@ import { StatusModel } from "../../../../models/StatusModel";
 })
 export class StatesDropDownComponent implements OnInit {
   @Input() state: StatusModel;
+  @Input() objectId: string | any;
   constructor() {}
 
   ngOnInit(): void {}

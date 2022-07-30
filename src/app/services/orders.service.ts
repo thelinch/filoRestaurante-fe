@@ -27,6 +27,21 @@ export class OrdersService {
       environment.apiUrl + "/orders/states"
     );
   }
+  changeState({
+    id,
+    type,
+    statusId,
+  }: {
+    id: string;
+    type: string;
+    statusId: string;
+  }) {
+    return this.http.post<void>(environment.apiUrl + "/orders/changeState", {
+      id,
+      type,
+      statusId,
+    });
+  }
   create(order: Order) {
     return this.http.post<void>(environment.apiUrl + "/orders", order);
   }

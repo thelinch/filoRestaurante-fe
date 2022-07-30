@@ -2,7 +2,7 @@
     <div class="status-list">
 
         <div class="status-list__container">
-            <div class="status-list__item" *ngFor="let state of states">
+            <div class="status-list__item" (click)="selectState(state)" *ngFor="let state of states">
                 <div class="status-list__status" [ngStyle]="{'color':state.color}">{{state.name}}</div>
 
             </div>

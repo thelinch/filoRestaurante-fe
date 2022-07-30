@@ -44,10 +44,11 @@
                                         <strong>Mesa:</strong><span>{{item.table?.name}}</span>
                                     </p>
                                     <div class="text-muted mb-1 d-flex" *ngFor="let orderD of item.orderDetails">
-                                        <app-states-drop-down [state]="orderD.status"></app-states-drop-down>
+                                        <app-states-drop-down [objectId]="orderD.id" [state]="orderD.status">
+                                        </app-states-drop-down>
                                         <div>
-                                            ({{orderD.orderedQuantity}}){{orderD.product.name}}
-                                            <span>{{orderD.observation}}</span>
+                                            ({{orderD.orderedQuantity}}) {{orderD.product.name}}
+                                            [<span>{{orderD.observation}}</span>]
                                         </div>
                                     </div>
 
