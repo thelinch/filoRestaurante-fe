@@ -9,9 +9,14 @@
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <h4 class="mb-0 font-size-18">Ventas</h4>
                 <div class="pull-right">
+                    <button class="btn btn-primary" [disabled]="isLoadingOrdersDelivery" type="button"
+                        (click)="loadOrdersOnlyDelivery()">
 
-                    <ng-select bindLabel="name" style="width:200px" [items]="tables$ | async">
-                    </ng-select>
+                        <i *ngIf="isLoadingOrdersDelivery"
+                            class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>Ventas
+                        para
+                        llevar</button>
+
                 </div>
             </div>
         </div>
@@ -54,7 +59,7 @@
         <app-process-order [table]="tableSelected"></app-process-order>
         <!--  <app-order-detail-form [table]="tableSelected"></app-order-detail-form> -->
     </div>
-<!--     <div class="modal-footer">
+    <!--     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Cancelar</button>
           <button type="submit" form="formOrder" class="btn btn-success ms-1">
             Crear pedido
@@ -73,11 +78,13 @@
                 <ng-template ngbPanelContent>
                     <ul>
                         <li *ngFor="let orderDetail of order.orderDetails">
+                            <span>({{orderDetail.orderedQuantity}})</span>
                             <strong>
                                 {{orderDetail.product.name}}
-                            </strong><span>({{orderDetail.orderedQuantity}})</span>
+                            </strong>
                             <strong class="ml-2 float-end">{{orderDetail.orderedQuantity*orderDetail.product.price |
                                 number:'1.1-3'}}</strong>
+
                         </li>
                     </ul>
                     <p class="text-end">Total:<strong>S/. {{order.total | number:'1.1-3' }}</strong>
@@ -93,5 +100,46 @@
         <button type="button" [disabled]="orders.length==0" (click)="payment()" class="btn btn-success ms-1">
             Pagar
         </button>
+    </div>
+</ng-template>
+
+<ng-template #salesDelivery let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Ordenes Para Llevar</h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel *ngFor="let order of orderOnlyDelivery;let i=index">
+                <ng-template ngbPanelTitle>
+                    <span>Pedido # {{i+1}}({{order.code}}) {{order.user?.name}}</span>
+                    <button (click)="paymentDelivery(order.id)" class="btn btn-success ms-1">Pagar</button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <ul>
+                        <li *ngFor="let orderDetail of order.orderDetails">
+                            <span>({{orderDetail.orderedQuantity}})</span>
+                            <strong>
+                                {{orderDetail.product.name}}
+                            </strong>
+                            <span>[{{orderDetail.observation}}]</span>
+                            <strong class="ml-2 float-end">{{orderDetail.orderedQuantity*orderDetail.product.price |
+                                number:'1.1-3'}}</strong>
+                        </li>
+                    </ul>
+                    <p class="text-end">
+                        <span>{{order?.type.name}}</span>
+                        <strong>S./{{order?.type.price}}</strong>
+                    </p>
+                    <p class="text-end">Total:<strong>S/. {{order.total | number:'1.1-3' }}</strong>
+                    </p>
+
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close')">Cerrar </button>
+
     </div>
 </ng-template>

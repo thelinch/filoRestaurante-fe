@@ -31,7 +31,9 @@ export class SalesComponent implements OnInit, OnDestroy {
   totalPaymentForOrder: number;
   @ViewChild("editAndCreateOrder") modalFormOrder: TemplateRef<any>;
   @ViewChild("sales") modalSales: TemplateRef<any>;
-
+  @ViewChild("salesDelivery") modalSalesDelivery: TemplateRef<any>;
+  orderOnlyDelivery: Order[] = [];
+  isLoadingOrdersDelivery = false;
   constructor(
     private tableService: TableService,
     private modalService: NgbModal,
@@ -113,5 +115,32 @@ export class SalesComponent implements OnInit, OnDestroy {
   }
   listTables() {
     this.tables$ = this.tableService.list();
+  }
+  async loadOrdersOnlyDelivery() {
+    try {
+      this.isLoadingOrdersDelivery = true;
+      this.orderOnlyDelivery = await this.orderService
+        .ordersOnlyDelivery()
+        .toPromise();
+      this.modalService.open(this.modalSalesDelivery, {
+        size: "lg",
+        keyboard: false,
+        backdrop: "static",
+      });
+    } catch (error) {
+    } finally {
+      this.isLoadingOrdersDelivery = false;
+    }
+  }
+
+  async paymentDelivery(id: string) {
+    await this.orderService.paymentDelivery([id]).toPromise();
+    Swal.fire({
+      toast: true,
+      text: "Se creo correctamente el pago",
+      icon: "success",
+      timer: 2500,
+      position: "top-right",
+    });
   }
 }

@@ -7,6 +7,8 @@ export interface Order {
   id: string;
   observation?: string;
   resume: string;
+  code: string;
+  type: any;
   total: number;
   table: Table;
   state: string;

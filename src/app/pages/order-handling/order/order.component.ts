@@ -95,7 +95,7 @@ export class OrderComponent implements OnInit, OnDestroy {
           music.play();
         }
       });
-   
+
     const subscriptionChangeStateEvent = this.eventService.subscribe(
       "changeState",
       ({ newState, objectId }: { newState: StatusModel; objectId: string }) => {
