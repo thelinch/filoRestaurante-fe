@@ -95,16 +95,11 @@ export class OrderComponent implements OnInit, OnDestroy {
           music.play();
         }
       });
+   
     const subscriptionChangeStateEvent = this.eventService.subscribe(
       "changeState",
       ({ newState, objectId }: { newState: StatusModel; objectId: string }) => {
-        this.orderService
-          .changeState({
-            id: objectId,
-            statusId: newState.id,
-            type: "orderDetail",
-          })
-          .toPromise();
+        let orderDetailName = "";
         for (const state of this.states) {
           for (const item of state.items) {
             const indexOrderDetail = item.orderDetails.findIndex(
@@ -112,9 +107,18 @@ export class OrderComponent implements OnInit, OnDestroy {
             );
             if (indexOrderDetail >= 0) {
               item.orderDetails[indexOrderDetail].status = newState;
+              orderDetailName = item.orderDetails[indexOrderDetail].name;
             }
           }
         }
+        this.orderService
+          .changeState({
+            id: objectId,
+            statusId: newState.id,
+            name: orderDetailName,
+            type: "orderDetail",
+          })
+          .toPromise();
       }
     );
     this.subscriptions.add(subscriptionChangeStateEvent);
@@ -152,7 +156,6 @@ export class OrderComponent implements OnInit, OnDestroy {
   onDrop(event: DndDropEvent, column: any) {
     this.colmnDestine = column;
     const index = this.states.findIndex((c) => c.id === column.id);
-    console.log("DROP", this.states[index]);
     if (index >= 0 && this.colmnDestine !== this.columnSource) {
       const newState = this.states[index];
       this.states[index].items = [...this.states[index].items, event.data];

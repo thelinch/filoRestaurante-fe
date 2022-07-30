@@ -57,19 +57,30 @@ export class SalesComponent implements OnInit, OnDestroy {
       }
     );
     this.orderAttendEventSubscription = this.websocketService
-      .reciveEvent(OrderEventState.AttendOrder)
-      .subscribe((order: Order) => {
-        const music = new Audio("assets/sounds/sonido-orden-atendida.mp3");
-        music.play();
-        Swal.fire({
-          text: `La orden para la mesa ${order.table?.name} esta lista!!`,
-          icon: "info",
-          toast: true,
-          confirmButtonText: "Entendido",
-          position: "top-right",
-        });
-      });
+      .reciveEvent(OrderEventState.itemLastState)
+      .subscribe(
+        ({
+          tableName,
+          productName,
+        }: {
+          tableName: string;
+          productName: string;
+        }) => {
+          const music = new Audio("assets/sounds/sonido-orden-atendida.mp3");
+          music.play();
+          Swal.fire({
+            text: `El producto ${productName} ${
+              tableName ? `para la mesa ${tableName}` : ""
+            } esta lista!!`,
+            icon: "info",
+            toast: true,
+            confirmButtonText: "Entendido",
+            position: "top-right",
+          });
+        }
+      );
   }
+
   async listOrderFindTable(table: Table) {
     this.tableSelected = table;
     this.orders = await this.orderService.listForTable(table).toPromise();

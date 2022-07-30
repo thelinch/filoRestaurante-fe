@@ -30,16 +30,19 @@ export class OrdersService {
   changeState({
     id,
     type,
+    name,
     statusId,
   }: {
     id: string;
     type: string;
     statusId: string;
+    name?: string;
   }) {
     return this.http.post<void>(environment.apiUrl + "/orders/changeState", {
       id,
       type,
       statusId,
+      name,
     });
   }
   create(order: Order) {

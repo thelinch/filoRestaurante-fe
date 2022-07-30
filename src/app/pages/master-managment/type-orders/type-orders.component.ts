@@ -108,12 +108,16 @@ export class TypeOrdersComponent implements OnInit {
   async createAndEditTypeOrder() {
     const typeOrder = this.form.value as TypeOrder;
     const uuid = uuidv4();
+    const typeOrderProcess = {
+      ...typeOrder,
+      localAttention: typeOrder.localAttention ?? false,
+    };
     if (!typeOrder.id) {
       await this.typeOrderService
-        .create({ ...typeOrder, id: uuid })
+        .create({ ...typeOrderProcess, id: uuid })
         .toPromise();
     } else {
-      await this.typeOrderService.update(typeOrder).toPromise();
+      await this.typeOrderService.update(typeOrderProcess).toPromise();
     }
     Swal.fire({
       icon: "success",
