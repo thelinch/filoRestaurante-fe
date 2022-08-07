@@ -34,12 +34,17 @@
                             {{item.name}} <strong [ngClass]="{'text-danger':item.quantity<=1}">
                                 ({{item.quantity}})
                             </strong>
+
+
                         </ng-template>
                         <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                            {{item.name}}
-                            <strong [ngClass]="{'text-danger':item.quantity<=1}">
-                                ({{item.quantity}})
-                            </strong>
+                            <div [ngClass]="{'user-select-none':item.quantity==0}">
+                                {{item.name}}
+                                <strong [ngClass]="{'text-danger':item.quantity<=1}">
+                                    ({{item.quantity}})
+                                </strong>
+                            </div>
+
 
                         </ng-template>
                     </ng-select>
